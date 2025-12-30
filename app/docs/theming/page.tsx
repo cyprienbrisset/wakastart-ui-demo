@@ -5,7 +5,7 @@ import { CodeBlock } from "@/components/docs/code-block"
 
 export default function ThemingPage() {
   return (
-    <article className="max-w-4xl">
+    <article className="w-full">
       <header className="mb-8">
         <h1 className="text-3xl font-bold">Theming</h1>
         <p className="text-lg text-muted-foreground mt-2">

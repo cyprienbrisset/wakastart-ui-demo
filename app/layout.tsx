@@ -27,7 +27,7 @@ export default function RootLayout({
             <div className="flex-1 flex">
               <SidebarNav />
               <main className="flex-1 overflow-auto">
-                <div className="container py-6 lg:py-8">
+                <div className="w-full py-6 lg:py-8 px-6 lg:px-10">
                   {children}
                 </div>
               </main>

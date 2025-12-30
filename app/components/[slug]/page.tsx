@@ -77,7 +77,7 @@ export default function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div className="flex gap-10">
       {/* Main Content */}
-      <article className="flex-1 max-w-4xl min-w-0">
+      <article className="flex-1 min-w-0">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link href="/components" className="hover:text-foreground transition-colors">
