@@ -59,13 +59,10 @@ import {
 } from "@wakastellar/ui"
 import { Home, Users, Settings, FileText, Bell, Shield, CreditCard, Mail, Calendar, DollarSign, ShoppingCart, Activity, Folder, ChevronRight, Twitter, Github, Plus, Search, Upload, Zap, Globe } from "lucide-react"
 
-// Preview wrapper with border and max height
-function PreviewWrapper({ children, fullWidth = false, height = "400px" }: { children: React.ReactNode, fullWidth?: boolean, height?: string }) {
+// Preview wrapper without scroll
+function PreviewWrapper({ children, fullWidth = false }: { children: React.ReactNode, fullWidth?: boolean }) {
   return (
-    <div
-      className={`border rounded-lg overflow-hidden bg-background ${fullWidth ? 'w-full' : ''}`}
-      style={{ maxHeight: height, overflow: 'auto' }}
-    >
+    <div className={`border rounded-lg overflow-hidden bg-background ${fullWidth ? 'w-full' : ''}`}>
       {children}
     </div>
   )
@@ -74,7 +71,7 @@ function PreviewWrapper({ children, fullWidth = false, height = "400px" }: { chi
 // Layout Preview
 export function LayoutPreview() {
   return (
-    <PreviewWrapper height="300px">
+    <PreviewWrapper>
       <div className="flex flex-col h-[300px]">
         <header className="h-14 border-b bg-card flex items-center px-4">
           <span className="font-semibold">Header</span>
@@ -105,7 +102,7 @@ export function SidebarPreview() {
   ]
 
   return (
-    <PreviewWrapper height="350px">
+    <PreviewWrapper>
       <WakaSidebar
         menu={navigation}
         header={<div className="flex items-center gap-2 px-2"><div className="w-6 h-6 bg-primary rounded" /><span className="font-semibold">WakaStellar</span></div>}
@@ -119,7 +116,7 @@ export function SidebarPreview() {
 // Login Preview
 export function LoginPreview() {
   return (
-    <PreviewWrapper height="500px">
+    <PreviewWrapper>
       <div className="p-4">
         <Login
           onSubmit={(data) => console.log(data)}
@@ -137,7 +134,7 @@ export function LoginPreview() {
 // Footer Preview
 export function FooterPreview() {
   return (
-    <PreviewWrapper height="250px">
+    <PreviewWrapper>
       <Footer
         columns={[
           {
@@ -168,7 +165,7 @@ export function FooterPreview() {
 // Headtab Preview
 export function HeadtabPreview() {
   return (
-    <PreviewWrapper height="120px">
+    <PreviewWrapper>
       <Headtab
         items={[
           { id: "overview", label: "Vue d'ensemble" },
@@ -186,7 +183,7 @@ export function HeadtabPreview() {
 // SidebarLayout Preview
 export function SidebarLayoutPreview() {
   return (
-    <PreviewWrapper height="350px">
+    <PreviewWrapper>
       <div className="flex h-[350px]">
         <div className="w-56 border-r bg-card p-4">
           <div className="space-y-2">
@@ -223,7 +220,7 @@ export function HeaderPreview() {
   const [search, setSearch] = useState("")
 
   return (
-    <PreviewWrapper height="80px">
+    <PreviewWrapper>
       <WakaHeader
         title="Partenaires"
         primaryAction={{
@@ -252,7 +249,7 @@ export function HeaderPreview() {
 // Dashboard Preview
 export function DashboardPreview() {
   return (
-    <PreviewWrapper height="500px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaDashboard
           title="Tableau de bord"
@@ -317,7 +314,7 @@ export function SettingsPreview() {
   })
 
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaSettings
           title="Paramètres"
@@ -367,7 +364,7 @@ export function SettingsPreview() {
 // Profile Preview
 export function ProfilePreview() {
   return (
-    <PreviewWrapper height="500px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaProfile
           profile={{
@@ -402,7 +399,7 @@ export function ProfilePreview() {
 // User Management Preview
 export function UserManagementPreview() {
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaUserManagement
           users={[
@@ -448,7 +445,7 @@ export function UserManagementPreview() {
 // Error Pages Preview
 export function ErrorPagesPreview() {
   return (
-    <PreviewWrapper height="400px">
+    <PreviewWrapper>
       <WakaErrorPage
         type="404"
         showHomeButton
@@ -463,7 +460,7 @@ export function ErrorPagesPreview() {
 // Landing Preview
 export function LandingPreview() {
   return (
-    <PreviewWrapper height="600px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="transform scale-75 origin-top-left w-[133%]">
         <WakaLanding
           brandName="WakaStellar"
@@ -516,7 +513,7 @@ export function PricingPreview() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly")
 
   return (
-    <PreviewWrapper height="550px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaPricing
           title="Tarification"
@@ -564,7 +561,7 @@ export function PricingPreview() {
 // Empty States Preview
 export function EmptyStatesPreview() {
   return (
-    <PreviewWrapper height="300px">
+    <PreviewWrapper>
       <div className="p-4">
         <WakaEmptyState
           type="no-data"
@@ -586,7 +583,7 @@ export function EmptyStatesPreview() {
 // Wizard Preview
 export function WizardPreview() {
   return (
-    <PreviewWrapper height="400px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaWizard
           title="Configuration"
@@ -628,7 +625,7 @@ export function WizardPreview() {
 // FAQ Preview
 export function FAQPreview() {
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaFAQ
           title="Questions fréquentes"
@@ -669,7 +666,7 @@ export function FAQPreview() {
 // Activity Timeline Preview
 export function ActivityTimelinePreview() {
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaActivityTimeline
           title="Activité récente"
@@ -746,7 +743,7 @@ export function KanbanBoardPreview() {
   ]
 
   return (
-    <PreviewWrapper height="400px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4 overflow-x-auto">
         <WakaKanbanBoard
           columns={columns}
@@ -766,7 +763,7 @@ export function ChatPreview() {
   const currentUser = { id: "1", name: "John Doe", status: "online" as const }
 
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <WakaChat
         currentUser={currentUser}
         conversations={[
@@ -818,7 +815,7 @@ export function CalendarViewPreview() {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   return (
-    <PreviewWrapper height="500px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaCalendarView
           events={[
@@ -857,7 +854,7 @@ export function FileManagerPreview() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
   return (
-    <PreviewWrapper height="450px" fullWidth>
+    <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaFileManager
           files={[
@@ -904,7 +901,7 @@ export function FileManagerPreview() {
 // Theme Creator Block Preview
 export function ThemeCreatorBlockPreview() {
   return (
-    <PreviewWrapper height="600px" fullWidth>
+    <PreviewWrapper fullWidth>
       <WakaThemeCreatorBlock
         themes={defaultThemes}
         onSave={async () => {}}
@@ -985,7 +982,7 @@ export function I18nEditorPreview() {
   ])
 
   return (
-    <PreviewWrapper height="600px" fullWidth>
+    <PreviewWrapper fullWidth>
       <WakaI18nEditor
         config={{
           languages: [

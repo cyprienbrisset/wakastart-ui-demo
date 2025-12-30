@@ -852,11 +852,9 @@ export default function BlockPage({ params }: BlockPageProps) {
         {/* Preview Section */}
         {PreviewComponent && (
           <Section id="preview" title="Preview">
-            <div className="rounded-lg border overflow-hidden">
-              <Suspense fallback={<PreviewFallback />}>
-                <PreviewComponent />
-              </Suspense>
-            </div>
+            <Suspense fallback={<PreviewFallback />}>
+              <PreviewComponent />
+            </Suspense>
           </Section>
         )}
 
