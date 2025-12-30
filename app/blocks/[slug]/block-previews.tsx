@@ -852,46 +852,186 @@ export function CalendarViewPreview() {
 // File Manager Preview
 export function FileManagerPreview() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [currentPath, setCurrentPath] = useState("/")
+  const [selectedFiles, setSelectedFiles] = useState<string[]>([])
+  const [files, setFiles] = useState([
+    {
+      id: "1",
+      name: "Documents",
+      type: "folder" as const,
+      path: "/Documents",
+      parentId: null,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      id: "2",
+      name: "Images",
+      type: "folder" as const,
+      path: "/Images",
+      parentId: null,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+      starred: true,
+    },
+    {
+      id: "3",
+      name: "rapport-2024.pdf",
+      type: "document" as const,
+      size: 2048000,
+      path: "/rapport-2024.pdf",
+      parentId: null,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      id: "4",
+      name: "photo.jpg",
+      type: "image" as const,
+      size: 1024000,
+      path: "/photo.jpg",
+      parentId: null,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      id: "5",
+      name: "Projet.docx",
+      type: "document" as const,
+      size: 512000,
+      path: "/Documents/Projet.docx",
+      parentId: "1",
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      id: "6",
+      name: "Notes.txt",
+      type: "document" as const,
+      size: 1024,
+      path: "/Documents/Notes.txt",
+      parentId: "1",
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      id: "7",
+      name: "Vacances",
+      type: "folder" as const,
+      path: "/Images/Vacances",
+      parentId: "2",
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+  ])
+
+  // Filter files based on current path
+  const currentFiles = files.filter(f => {
+    if (currentPath === "/") {
+      return f.parentId === null
+    }
+    const parentFolder = files.find(folder => folder.path === currentPath)
+    return parentFolder ? f.parentId === parentFolder.id : false
+  })
+
+  // Build breadcrumbs
+  const buildBreadcrumbs = () => {
+    if (currentPath === "/") return []
+    const parts = currentPath.split("/").filter(Boolean)
+    const breadcrumbs = []
+    let path = ""
+    for (const part of parts) {
+      path += "/" + part
+      breadcrumbs.push({ id: path, name: part, path })
+    }
+    return breadcrumbs
+  }
+
+  const handleNavigate = (path: string, folderId?: string) => {
+    setCurrentPath(path)
+    setSelectedFiles([])
+  }
+
+  const handleCreateFolder = (name: string, parentPath: string) => {
+    const parentFolder = files.find(f => f.path === parentPath && f.type === "folder")
+    const newFolder = {
+      id: `folder-${Date.now()}`,
+      name,
+      type: "folder" as const,
+      path: parentPath === "/" ? `/${name}` : `${parentPath}/${name}`,
+      parentId: parentFolder?.id || null,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    }
+    setFiles([...files, newFolder])
+  }
+
+  const handleRename = (fileId: string, newName: string) => {
+    setFiles(files.map(f => {
+      if (f.id === fileId) {
+        const pathParts = f.path.split("/")
+        pathParts[pathParts.length - 1] = newName
+        return { ...f, name: newName, path: pathParts.join("/"), modifiedAt: new Date() }
+      }
+      return f
+    }))
+  }
+
+  const handleDelete = (fileIds: string[]) => {
+    // Also delete children if deleting a folder
+    const toDelete = new Set(fileIds)
+    const checkChildren = (parentId: string) => {
+      files.forEach(f => {
+        if (f.parentId === parentId) {
+          toDelete.add(f.id)
+          if (f.type === "folder") checkChildren(f.id)
+        }
+      })
+    }
+    fileIds.forEach(id => {
+      const file = files.find(f => f.id === id)
+      if (file?.type === "folder") checkChildren(id)
+    })
+    setFiles(files.filter(f => !toDelete.has(f.id)))
+    setSelectedFiles([])
+  }
+
+  const handleToggleStar = (fileId: string) => {
+    setFiles(files.map(f =>
+      f.id === fileId ? { ...f, starred: !f.starred } : f
+    ))
+  }
+
+  const handleFileOpen = (file: { id: string; name: string; type: string; path: string }) => {
+    if (file.type === "folder") {
+      setCurrentPath(file.path)
+    } else {
+      console.log("Opening file:", file.name)
+    }
+  }
 
   return (
     <PreviewWrapper fullWidth>
       <div className="p-4">
         <WakaFileManager
-          files={[
-            {
-              id: "1",
-              name: "Documents",
-              type: "folder",
-              path: "/Documents",
-              createdAt: new Date(),
-              modifiedAt: new Date(),
-            },
-            {
-              id: "2",
-              name: "rapport-2024.pdf",
-              type: "document",
-              size: 2048000,
-              path: "/rapport-2024.pdf",
-              createdAt: new Date(),
-              modifiedAt: new Date(),
-              starred: true,
-            },
-            {
-              id: "3",
-              name: "photo.jpg",
-              type: "image",
-              size: 1024000,
-              path: "/photo.jpg",
-              createdAt: new Date(),
-              modifiedAt: new Date(),
-            },
-          ]}
-          currentPath="/"
-          onNavigate={() => {}}
+          files={currentFiles}
+          currentPath={currentPath}
+          breadcrumbs={buildBreadcrumbs()}
+          selectedFiles={selectedFiles}
+          onSelectionChange={setSelectedFiles}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
-          onFileOpen={() => {}}
+          onNavigate={handleNavigate}
+          onFileOpen={handleFileOpen}
+          onCreateFolder={handleCreateFolder}
+          onRename={handleRename}
+          onDelete={handleDelete}
+          onToggleStar={handleToggleStar}
+          onDownload={(ids) => console.log("Downloading:", ids)}
+          onShare={(id) => console.log("Sharing:", id)}
+          onRefresh={() => console.log("Refreshing...")}
           showSearch
+          onSearch={(query) => console.log("Searching:", query)}
         />
       </div>
     </PreviewWrapper>
