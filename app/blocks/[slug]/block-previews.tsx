@@ -850,11 +850,23 @@ export function CalendarViewPreview() {
 }
 
 // File Manager Preview
+interface FileManagerFile {
+  id: string
+  name: string
+  type: "folder" | "document" | "image" | "video" | "audio" | "archive" | "code" | "other"
+  path: string
+  parentId: string | null
+  createdAt: Date
+  modifiedAt: Date
+  size?: number
+  starred?: boolean
+}
+
 export function FileManagerPreview() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [currentPath, setCurrentPath] = useState("/")
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
-  const [files, setFiles] = useState([
+  const [files, setFiles] = useState<FileManagerFile[]>([
     {
       id: "1",
       name: "Documents",
