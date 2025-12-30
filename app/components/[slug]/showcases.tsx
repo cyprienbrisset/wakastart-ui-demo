@@ -1584,6 +1584,269 @@ export const tableShowcase: ComponentShowcaseConfig = {
 // DATATABLEADVANCED SHOWCASE
 // ============================================
 
+// Données enrichies pour les démos avancées
+type Product = {
+  id: string
+  name: string
+  category: string
+  price: number
+  stock: number
+  status: "available" | "low_stock" | "out_of_stock"
+  [key: string]: unknown
+}
+
+const sampleProducts: Product[] = [
+  { id: "1", name: "MacBook Pro 14\"", category: "Électronique", price: 2499, stock: 15, status: "available" },
+  { id: "2", name: "iPhone 15 Pro", category: "Électronique", price: 1199, stock: 3, status: "low_stock" },
+  { id: "3", name: "AirPods Pro", category: "Audio", price: 279, stock: 50, status: "available" },
+  { id: "4", name: "iPad Air", category: "Électronique", price: 799, stock: 0, status: "out_of_stock" },
+  { id: "5", name: "Apple Watch", category: "Accessoires", price: 449, stock: 25, status: "available" },
+  { id: "6", name: "Magic Keyboard", category: "Accessoires", price: 349, stock: 8, status: "low_stock" },
+  { id: "7", name: "HomePod Mini", category: "Audio", price: 99, stock: 40, status: "available" },
+  { id: "8", name: "Studio Display", category: "Électronique", price: 1799, stock: 5, status: "low_stock" },
+]
+
+// Colonnes avec édition inline
+const editableColumns: any[] = [
+  {
+    accessorKey: "name",
+    header: "Produit",
+    enableEditing: true,
+  },
+  {
+    accessorKey: "category",
+    header: "Catégorie",
+    enableEditing: true,
+    editConfig: {
+      type: "select",
+      options: [
+        { label: "Électronique", value: "Électronique" },
+        { label: "Audio", value: "Audio" },
+        { label: "Accessoires", value: "Accessoires" },
+      ],
+    },
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }: { column: any }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="-ml-4"
+      >
+        Prix
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }: { row: any }) => {
+      const price = row.getValue("price") as number
+      return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(price)
+    },
+    enableEditing: true,
+    editConfig: { type: "number" },
+  },
+  {
+    accessorKey: "stock",
+    header: ({ column }: { column: any }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="-ml-4"
+      >
+        Stock
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    enableEditing: true,
+    editConfig: { type: "number" },
+  },
+  {
+    accessorKey: "status",
+    header: "Statut",
+    cell: ({ row }: { row: any }) => {
+      const status = row.getValue("status") as string
+      return (
+        <Badge
+          variant={
+            status === "available" ? "default" :
+            status === "low_stock" ? "secondary" : "destructive"
+          }
+        >
+          {status === "available" ? "Disponible" : status === "low_stock" ? "Stock bas" : "Rupture"}
+        </Badge>
+      )
+    },
+  },
+]
+
+// Colonnes pour groupage
+const groupableColumns: any[] = [
+  {
+    accessorKey: "name",
+    header: "Produit",
+  },
+  {
+    accessorKey: "category",
+    header: "Catégorie",
+    enableGrouping: true,
+  },
+  {
+    accessorKey: "price",
+    header: "Prix",
+    cell: ({ row }: { row: any }) => {
+      const price = row.getValue("price") as number
+      return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(price)
+    },
+    aggregationFn: "sum",
+    aggregatedCell: ({ getValue }: any) => {
+      const value = getValue() as number
+      return <span className="font-semibold">{new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(value)}</span>
+    },
+  },
+  {
+    accessorKey: "stock",
+    header: "Stock",
+    aggregationFn: "sum",
+    aggregatedCell: ({ getValue }: any) => <span className="font-semibold">{getValue()} unités</span>,
+  },
+  {
+    accessorKey: "status",
+    header: "Statut",
+    cell: ({ row }: { row: any }) => {
+      const status = row.getValue("status") as string
+      return (
+        <Badge
+          variant={
+            status === "available" ? "default" :
+            status === "low_stock" ? "secondary" : "destructive"
+          }
+        >
+          {status === "available" ? "Disponible" : status === "low_stock" ? "Stock bas" : "Rupture"}
+        </Badge>
+      )
+    },
+  },
+]
+
+// Composant de démo interactive pour DataTable avec filtres
+function DataTableWithFiltersDemo() {
+  const [data] = useState(sampleProducts)
+
+  return (
+    <DataTableAdvanced
+      data={data}
+      columns={editableColumns}
+      filters={[
+        {
+          id: "category",
+          label: "Catégorie",
+          type: "select",
+          column: "category",
+          options: [
+            { label: "Électronique", value: "Électronique" },
+            { label: "Audio", value: "Audio" },
+            { label: "Accessoires", value: "Accessoires" },
+          ],
+        },
+        {
+          id: "status",
+          label: "Statut",
+          type: "select",
+          column: "status",
+          options: [
+            { label: "Disponible", value: "available" },
+            { label: "Stock bas", value: "low_stock" },
+            { label: "Rupture", value: "out_of_stock" },
+          ],
+        },
+        {
+          id: "price",
+          label: "Prix",
+          type: "range",
+          column: "price",
+        },
+      ]}
+      pagination={{ mode: "client", pageSize: 5 }}
+      toolbar={{
+        showSearch: true,
+      }}
+    />
+  )
+}
+
+// Composant de démo interactive pour édition inline
+function DataTableEditableDemo() {
+  const [data, setData] = useState(sampleProducts)
+
+  return (
+    <DataTableAdvanced
+      data={data}
+      columns={editableColumns}
+      edit={{
+        mode: "inline",
+        onSave: async (rowId, changes) => {
+          setData(prev => prev.map(item =>
+            item.id === rowId ? { ...item, ...changes } : item
+          ))
+          toast({
+            title: "Modification enregistrée",
+            description: "Les données ont été mises à jour.",
+          })
+        },
+      }}
+      pagination={{ mode: "client", pageSize: 5 }}
+    />
+  )
+}
+
+// Composant de démo pour groupage
+function DataTableGroupingDemo() {
+  return (
+    <DataTableAdvanced
+      data={sampleProducts}
+      columns={groupableColumns}
+      grouping={{
+        columns: ["category"],
+        showTotals: true,
+      }}
+      pagination={{ mode: "client", pageSize: 10 }}
+    />
+  )
+}
+
+// Composant de démo pour expansion de lignes
+function DataTableExpansionDemo() {
+  return (
+    <DataTableAdvanced
+      data={sampleProducts}
+      columns={editableColumns.slice(0, 4)}
+      rowExpansion={{
+        enabled: true,
+        renderExpanded: (row: any) => (
+          <div className="p-4 bg-muted/50 rounded-md">
+            <h4 className="font-semibold mb-2">Détails du produit</h4>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-muted-foreground">ID:</span> {row.id}
+              </div>
+              <div>
+                <span className="text-muted-foreground">Catégorie:</span> {row.category}
+              </div>
+              <div>
+                <span className="text-muted-foreground">Prix unitaire:</span> {new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(row.price)}
+              </div>
+              <div>
+                <span className="text-muted-foreground">Valeur stock:</span> {new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(row.price * row.stock)}
+              </div>
+            </div>
+          </div>
+        ),
+      }}
+      pagination={{ mode: "client", pageSize: 5 }}
+    />
+  )
+}
+
 export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
   examples: [
     {
@@ -1605,14 +1868,148 @@ export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
 />`,
     },
     {
+      title: "Avec filtres avancés",
+      description: "Filtres par catégorie, statut, et plage de prix avec recherche globale",
+      preview: (
+        <div className="w-full">
+          <DataTableWithFiltersDemo />
+        </div>
+      ),
+      code: `<DataTableAdvanced
+  data={products}
+  columns={columns}
+  filters={[
+    {
+      id: "category",
+      label: "Catégorie",
+      type: "select",
+      column: "category",
+      options: [
+        { label: "Électronique", value: "Électronique" },
+        { label: "Audio", value: "Audio" },
+      ],
+    },
+    {
+      id: "status",
+      label: "Statut",
+      type: "select",
+      column: "status",
+      options: [
+        { label: "Disponible", value: "available" },
+        { label: "Rupture", value: "out_of_stock" },
+      ],
+    },
+    {
+      id: "price",
+      label: "Prix",
+      type: "range",
+      column: "price",
+    },
+  ]}
+  toolbar={{
+    showSearch: true,
+  }}
+/>`,
+    },
+    {
+      title: "Édition inline",
+      description: "Double-cliquez sur une cellule pour la modifier directement",
+      preview: (
+        <div className="w-full">
+          <DataTableEditableDemo />
+        </div>
+      ),
+      code: `<DataTableAdvanced
+  data={products}
+  columns={editableColumns}
+  edit={{
+    enabled: true,
+    mode: "inline", // ou "row" ou "modal"
+    onSave: async (rowId, columnId, value) => {
+      await updateProduct(rowId, { [columnId]: value })
+    },
+  }}
+/>
+
+// Dans les colonnes:
+{
+  accessorKey: "price",
+  header: "Prix",
+  enableEditing: true,
+  editConfig: { type: "number" },
+}`,
+    },
+    {
+      title: "Groupage par catégorie",
+      description: "Regroupement des lignes avec agrégations (somme des prix et stocks)",
+      preview: (
+        <div className="w-full">
+          <DataTableGroupingDemo />
+        </div>
+      ),
+      code: `<DataTableAdvanced
+  data={products}
+  columns={columns}
+  grouping={{
+    columns: ["category"],
+    showTotals: true,
+  }}
+/>
+
+// Colonnes avec agrégation:
+{
+  accessorKey: "price",
+  header: "Prix",
+  aggregationFn: "sum",
+  aggregatedCell: ({ getValue }) => (
+    <span className="font-semibold">
+      {formatCurrency(getValue())}
+    </span>
+  ),
+}`,
+    },
+    {
+      title: "Expansion de lignes",
+      description: "Cliquez sur la flèche pour voir les détails d'un produit",
+      preview: (
+        <div className="w-full">
+          <DataTableExpansionDemo />
+        </div>
+      ),
+      code: `<DataTableAdvanced
+  data={products}
+  columns={columns}
+  rowExpansion={{
+    enabled: true,
+    renderExpanded: (row) => (
+      <div className="p-4 bg-muted/50">
+        <h4>Détails du produit</h4>
+        <p>ID: {row.id}</p>
+        <p>Valeur stock: {row.price * row.stock}€</p>
+      </div>
+    ),
+  }}
+/>`,
+    },
+    {
       title: "Avec sélection de lignes",
-      description: "Tableau avec sélection multiple et callbacks",
+      description: "Sélection multiple avec actions groupées",
       preview: (
         <div className="w-full">
           <DataTableAdvanced
             data={sampleUsers}
             columns={simpleColumns}
             selection="multiple"
+            actions={[
+              {
+                id: "delete",
+                label: "Supprimer",
+                icon: <Trash2 className="h-4 w-4" />,
+                onClick: (selected) => toast({ title: `${selected.length} élément(s) sélectionné(s)` }),
+                requiresSelection: true,
+                variant: "destructive",
+              },
+            ]}
             pagination={{ mode: "client", pageSize: 5 }}
           />
         </div>
@@ -1621,13 +2018,22 @@ export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
   data={users}
   columns={columns}
   selection="multiple" // ou "single"
+  actions={[
+    {
+      id: "delete",
+      label: "Supprimer",
+      icon: <Trash2 />,
+      onClick: (selected) => deleteUsers(selected),
+      requiresSelection: true,
+      variant: "destructive",
+    },
+  ]}
   onSelectionChange={(selected) => console.log(selected)}
-  pagination={{ mode: "client", pageSize: 5 }}
 />`,
     },
     {
       title: "Variantes visuelles",
-      description: "Différents styles : bordered, minimal, striped",
+      description: "Différents styles : bordered, minimal, striped, glass",
       preview: (
         <div className="w-full space-y-4">
           <DataTableAdvanced
@@ -1642,7 +2048,7 @@ export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
 <DataTableAdvanced
   data={users}
   columns={columns}
-  variant="striped" // "bordered" | "minimal" | "striped"
+  variant="striped" // "bordered" | "minimal" | "striped" | "glass"
 />`,
     },
     {
