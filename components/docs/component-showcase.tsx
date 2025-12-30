@@ -179,7 +179,7 @@ export function ComponentShowcase({
                     isDarkPreview ? "bg-zinc-950 dark" : "bg-background"
                   )}
                 >
-                  <div className={isDarkPreview ? "dark" : ""}>
+                  <div className={cn("w-full", isDarkPreview ? "dark" : "")}>
                     {example.preview}
                   </div>
                 </div>
@@ -251,7 +251,7 @@ export function ComponentShowcase({
                     isDarkPreview ? "bg-zinc-950 dark" : "bg-background"
                   )}
                 >
-                  <div className={isDarkPreview ? "dark" : ""}>
+                  <div className={cn("w-full", isDarkPreview ? "dark" : "")}>
                     {renderPlayground(selectedVariants)}
                   </div>
                 </div>
