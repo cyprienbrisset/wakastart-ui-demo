@@ -1784,6 +1784,31 @@ function DataTableEditableDemo() {
       columns={editableColumns}
       edit={{
         mode: "inline",
+        editableColumns: [
+          {
+            field: "name",
+            config: { type: "text", placeholder: "Nom du produit" },
+          },
+          {
+            field: "price",
+            config: { type: "number", min: 0, step: 0.01, placeholder: "Prix" },
+          },
+          {
+            field: "stock",
+            config: { type: "number", min: 0, step: 1, placeholder: "Stock" },
+          },
+          {
+            field: "status",
+            config: {
+              type: "select",
+              options: [
+                { value: "available", label: "Disponible" },
+                { value: "low_stock", label: "Stock faible" },
+                { value: "out_of_stock", label: "Rupture" },
+              ],
+            },
+          },
+        ],
         onSave: async (rowId, changes) => {
           setData(prev => prev.map(item =>
             item.id === rowId ? { ...item, ...changes } : item
@@ -1913,7 +1938,7 @@ export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
     },
     {
       title: "Édition inline",
-      description: "Double-cliquez sur une cellule pour la modifier directement",
+      description: "Cliquez sur le bouton 'Edit' pour modifier une ligne. Les colonnes éditables sont définies via editableColumns.",
       preview: (
         <div className="w-full">
           <DataTableEditableDemo />
@@ -1921,23 +1946,34 @@ export const dataTableAdvancedShowcase: ComponentShowcaseConfig = {
       ),
       code: `<DataTableAdvanced
   data={products}
-  columns={editableColumns}
+  columns={columns}
   edit={{
-    enabled: true,
     mode: "inline", // ou "row" ou "modal"
-    onSave: async (rowId, columnId, value) => {
-      await updateProduct(rowId, { [columnId]: value })
+    editableColumns: [
+      {
+        field: "name",
+        config: { type: "text", placeholder: "Nom" },
+      },
+      {
+        field: "price",
+        config: { type: "number", min: 0, step: 0.01 },
+      },
+      {
+        field: "status",
+        config: {
+          type: "select",
+          options: [
+            { value: "available", label: "Disponible" },
+            { value: "out_of_stock", label: "Rupture" },
+          ],
+        },
+      },
+    ],
+    onSave: async (rowId, changes) => {
+      await updateProduct(rowId, changes)
     },
   }}
-/>
-
-// Dans les colonnes:
-{
-  accessorKey: "price",
-  header: "Prix",
-  enableEditing: true,
-  editConfig: { type: "number" },
-}`,
+/>`,
     },
     {
       title: "Groupage par catégorie",
