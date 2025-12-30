@@ -114,8 +114,37 @@ import {
   WakaStat,
   WakaStatGroup,
   WakaThemeCreator,
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+  WakaAutocomplete,
+  WakaColorPicker,
+  WakaFileUpload,
+  WakaRichTextEditor,
+  WakaBarChart,
+  WakaLineChart,
+  WakaAreaChart,
+  WakaPieChart,
+  WakaSparkline,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@wakastellar/ui"
-import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, ThemeCreatorApiConfig, FileUploadResponse } from "@wakastellar/ui"
+import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, ThemeCreatorApiConfig, FileUploadResponse, AutocompleteOption } from "@wakastellar/ui"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import {
   AlertCircle,
   ChevronDown,
@@ -4064,6 +4093,698 @@ const themeCreatorShowcase: ComponentShowcaseConfig = {
 }
 
 // ============================================
+// ALERT DIALOG SHOWCASE
+// ============================================
+export const alertDialogShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Alert Dialog basique",
+      description: "Dialogue de confirmation pour les actions importantes",
+      preview: (
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive">Supprimer le compte</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Cette action est irréversible. Cela supprimera définitivement votre
+                compte et toutes vos données de nos serveurs.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Annuler</AlertDialogCancel>
+              <AlertDialogAction>Continuer</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      ),
+      code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive">Supprimer le compte</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Cette action est irréversible.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Annuler</AlertDialogCancel>
+      <AlertDialogAction>Continuer</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+    },
+  ],
+}
+
+// ============================================
+// HOVER CARD SHOWCASE
+// ============================================
+export const hoverCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Hover Card basique",
+      description: "Carte d'information affichée au survol",
+      preview: (
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Button variant="link">@wakastellar</Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80">
+            <div className="flex justify-between space-x-4">
+              <Avatar>
+                <AvatarImage src="https://github.com/vercel.png" />
+                <AvatarFallback>WS</AvatarFallback>
+              </Avatar>
+              <div className="space-y-1">
+                <h4 className="text-sm font-semibold">@wakastellar</h4>
+                <p className="text-sm text-muted-foreground">
+                  Bibliothèque de composants React professionnels et accessibles.
+                </p>
+                <div className="flex items-center pt-2">
+                  <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />
+                  <span className="text-xs text-muted-foreground">
+                    Créé en décembre 2024
+                  </span>
+                </div>
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+      ),
+      code: `<HoverCard>
+  <HoverCardTrigger asChild>
+    <Button variant="link">@wakastellar</Button>
+  </HoverCardTrigger>
+  <HoverCardContent className="w-80">
+    <div className="flex justify-between space-x-4">
+      <Avatar>
+        <AvatarImage src="https://github.com/vercel.png" />
+        <AvatarFallback>WS</AvatarFallback>
+      </Avatar>
+      <div className="space-y-1">
+        <h4 className="text-sm font-semibold">@wakastellar</h4>
+        <p className="text-sm text-muted-foreground">
+          Bibliothèque de composants React.
+        </p>
+      </div>
+    </div>
+  </HoverCardContent>
+</HoverCard>`,
+    },
+  ],
+}
+
+// ============================================
+// NAVIGATION MENU SHOWCASE
+// ============================================
+export const navigationMenuShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Menu de navigation",
+      description: "Menu de navigation avec sous-menus et descriptions",
+      preview: (
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Composants</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href="#"
+                      >
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          WakaStart UI
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          85+ composants React accessibles et personnalisables.
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a href="#" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Button</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Boutons interactifs avec variantes.
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a href="#" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Card</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Conteneur pour afficher du contenu.
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
+                Documentation
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      ),
+      code: `<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Composants</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <ul className="grid gap-3 p-4 md:w-[400px]">
+          <li>
+            <NavigationMenuLink asChild>
+              <a href="#">Button</a>
+            </NavigationMenuLink>
+          </li>
+        </ul>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+        Documentation
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>`,
+    },
+  ],
+}
+
+// ============================================
+// AUTOCOMPLETE SHOWCASE
+// ============================================
+const autocompleteOptions: AutocompleteOption[] = [
+  { value: "react", label: "React" },
+  { value: "vue", label: "Vue.js" },
+  { value: "angular", label: "Angular" },
+  { value: "svelte", label: "Svelte" },
+  { value: "nextjs", label: "Next.js" },
+  { value: "nuxt", label: "Nuxt" },
+  { value: "remix", label: "Remix" },
+  { value: "astro", label: "Astro" },
+]
+
+function AutocompleteDemo() {
+  const [value, setValue] = useState<string>("")
+  return (
+    <WakaAutocomplete
+      options={autocompleteOptions}
+      value={value}
+      onChange={(v) => setValue(v as string)}
+      placeholder="Choisir un framework..."
+      label="Framework"
+      description="Sélectionnez votre framework préféré"
+    />
+  )
+}
+
+function AutocompleteMultipleDemo() {
+  const [values, setValues] = useState<string[]>([])
+  return (
+    <WakaAutocomplete
+      options={autocompleteOptions}
+      value={values}
+      onChange={(v) => setValues(v as string[])}
+      placeholder="Choisir des frameworks..."
+      label="Frameworks"
+      multiple
+      maxSelections={3}
+    />
+  )
+}
+
+export const autocompleteShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Autocomplete simple",
+      description: "Sélection unique avec recherche",
+      preview: <AutocompleteDemo />,
+      code: `const [value, setValue] = useState("")
+
+<WakaAutocomplete
+  options={[
+    { value: "react", label: "React" },
+    { value: "vue", label: "Vue.js" },
+    { value: "angular", label: "Angular" },
+  ]}
+  value={value}
+  onChange={setValue}
+  placeholder="Choisir un framework..."
+  label="Framework"
+/>`,
+    },
+    {
+      title: "Sélection multiple",
+      description: "Permet de sélectionner plusieurs options",
+      preview: <AutocompleteMultipleDemo />,
+      code: `<WakaAutocomplete
+  options={options}
+  value={values}
+  onChange={setValues}
+  multiple
+  maxSelections={3}
+  placeholder="Choisir des frameworks..."
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// COLOR PICKER SHOWCASE
+// ============================================
+function ColorPickerDemo() {
+  const [color, setColor] = useState("#3b82f6")
+  return (
+    <div className="space-y-4">
+      <WakaColorPicker
+        value={color}
+        onChange={setColor}
+        showPresets
+        showEyeDropper
+      />
+      <div
+        className="w-full h-20 rounded-md border"
+        style={{ backgroundColor: color }}
+      />
+    </div>
+  )
+}
+
+export const colorPickerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Color Picker",
+      description: "Sélecteur de couleur avec presets et EyeDropper",
+      preview: <ColorPickerDemo />,
+      code: `const [color, setColor] = useState("#3b82f6")
+
+<WakaColorPicker
+  value={color}
+  onChange={setColor}
+  showPresets
+  showEyeDropper
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// FILE UPLOAD SHOWCASE
+// ============================================
+function FileUploadDemo() {
+  return (
+    <WakaFileUpload
+      accept="image/*,.pdf"
+      maxSize={5 * 1024 * 1024}
+      maxFiles={3}
+      multiple
+      label="Documents"
+      description="Images ou PDF, max 5MB"
+      placeholder="Glissez vos fichiers ici ou cliquez pour sélectionner"
+      onComplete={(files) => console.log("Uploaded:", files)}
+      onError={(error) => toast({ title: "Erreur", description: error, variant: "destructive" })}
+    />
+  )
+}
+
+export const fileUploadShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Zone de dépôt",
+      description: "Upload avec drag & drop et prévisualisation",
+      preview: <FileUploadDemo />,
+      code: `<WakaFileUpload
+  accept="image/*,.pdf"
+  maxSize={5 * 1024 * 1024}
+  maxFiles={3}
+  multiple
+  label="Documents"
+  description="Images ou PDF, max 5MB"
+  onComplete={(files) => console.log("Uploaded:", files)}
+  onError={(error) => console.error(error)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// RICH TEXT EDITOR SHOWCASE
+// ============================================
+function RichTextEditorDemo() {
+  const [content, setContent] = useState("<p>Bienvenue dans l'éditeur !</p>")
+  return (
+    <WakaRichTextEditor
+      value={content}
+      onChange={setContent}
+      placeholder="Commencez à écrire..."
+      label="Contenu"
+      minHeight={200}
+    />
+  )
+}
+
+export const richTextEditorShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Éditeur de texte riche",
+      description: "Éditeur avec barre d'outils complète",
+      preview: <RichTextEditorDemo />,
+      code: `const [content, setContent] = useState("<p>Hello</p>")
+
+<WakaRichTextEditor
+  value={content}
+  onChange={setContent}
+  placeholder="Commencez à écrire..."
+  label="Contenu"
+  minHeight={200}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// CHARTS SHOWCASES
+// ============================================
+const chartData = [
+  { name: "Jan", ventes: 4000, visites: 2400 },
+  { name: "Fév", ventes: 3000, visites: 1398 },
+  { name: "Mar", ventes: 2000, visites: 9800 },
+  { name: "Avr", ventes: 2780, visites: 3908 },
+  { name: "Mai", ventes: 1890, visites: 4800 },
+  { name: "Juin", ventes: 2390, visites: 3800 },
+]
+
+const pieData = [
+  { name: "Desktop", value: 45 },
+  { name: "Mobile", value: 35 },
+  { name: "Tablet", value: 20 },
+]
+
+export const barChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique en barres",
+      description: "Affiche des données comparatives",
+      preview: (
+        <WakaBarChart
+          data={chartData}
+          dataKeys={["ventes", "visites"]}
+          height={300}
+          title="Ventes et Visites"
+          description="Comparaison mensuelle"
+          tooltip
+          legend
+        />
+      ),
+      code: `<WakaBarChart
+  data={[
+    { name: "Jan", ventes: 4000, visites: 2400 },
+    { name: "Fév", ventes: 3000, visites: 1398 },
+    { name: "Mar", ventes: 2000, visites: 9800 },
+  ]}
+  dataKeys={["ventes", "visites"]}
+  height={300}
+  title="Ventes et Visites"
+  tooltip
+  legend
+/>`,
+    },
+    {
+      title: "Barres empilées",
+      description: "Affichage empilé des données",
+      preview: (
+        <WakaBarChart
+          data={chartData}
+          dataKeys={["ventes", "visites"]}
+          height={300}
+          stacked
+          tooltip
+        />
+      ),
+      code: `<WakaBarChart
+  data={data}
+  dataKeys={["ventes", "visites"]}
+  stacked
+  height={300}
+/>`,
+    },
+  ],
+}
+
+export const lineChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique en lignes",
+      description: "Affiche l'évolution des données",
+      preview: (
+        <WakaLineChart
+          data={chartData}
+          dataKeys={["ventes", "visites"]}
+          height={300}
+          title="Évolution"
+          dots
+          tooltip
+          legend
+        />
+      ),
+      code: `<WakaLineChart
+  data={data}
+  dataKeys={["ventes", "visites"]}
+  height={300}
+  title="Évolution"
+  dots
+  tooltip
+  legend
+/>`,
+    },
+  ],
+}
+
+export const areaChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique en aires",
+      description: "Affiche des données avec remplissage",
+      preview: (
+        <WakaAreaChart
+          data={chartData}
+          dataKeys={["ventes", "visites"]}
+          height={300}
+          title="Performance"
+          tooltip
+          legend
+        />
+      ),
+      code: `<WakaAreaChart
+  data={data}
+  dataKeys={["ventes", "visites"]}
+  height={300}
+  title="Performance"
+  tooltip
+  legend
+/>`,
+    },
+  ],
+}
+
+export const pieChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique circulaire",
+      description: "Distribution en camembert",
+      preview: (
+        <WakaPieChart
+          data={pieData}
+          dataKey="value"
+          nameKey="name"
+          height={300}
+          title="Répartition des appareils"
+          tooltip
+          legend
+        />
+      ),
+      code: `<WakaPieChart
+  data={[
+    { name: "Desktop", value: 45 },
+    { name: "Mobile", value: 35 },
+    { name: "Tablet", value: 20 },
+  ]}
+  dataKey="value"
+  nameKey="name"
+  height={300}
+  tooltip
+  legend
+/>`,
+    },
+    {
+      title: "Donut",
+      description: "Camembert avec trou central",
+      preview: (
+        <WakaPieChart
+          data={pieData}
+          dataKey="value"
+          nameKey="name"
+          height={300}
+          innerRadius="60%"
+          tooltip
+          legend
+        />
+      ),
+      code: `<WakaPieChart
+  data={data}
+  innerRadius="60%"
+  tooltip
+  legend
+/>`,
+    },
+  ],
+}
+
+export const sparklineShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Sparkline",
+      description: "Mini-graphique inline",
+      preview: (
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-muted-foreground">Tendance:</span>
+          <WakaSparkline
+            data={[10, 15, 8, 22, 18, 25, 30]}
+            width={100}
+            height={30}
+          />
+          <span className="text-sm font-medium text-green-500">+15%</span>
+        </div>
+      ),
+      code: `<WakaSparkline
+  data={[10, 15, 8, 22, 18, 25, 30]}
+  width={100}
+  height={30}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// FORM SHOWCASE
+// ============================================
+const formSchema = z.object({
+  username: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  email: z.string().email("Email invalide"),
+})
+
+function FormDemo() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    toast({
+      title: "Formulaire soumis",
+      description: `Nom: ${values.username}, Email: ${values.email}`,
+    })
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom d'utilisateur</FormLabel>
+              <FormControl>
+                <Input placeholder="john_doe" {...field} />
+              </FormControl>
+              <FormDescription>
+                Votre nom d'affichage public.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="email@exemple.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Soumettre</Button>
+      </form>
+    </Form>
+  )
+}
+
+export const formShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Formulaire avec validation",
+      description: "Formulaire intégré avec react-hook-form et Zod",
+      preview: <FormDemo />,
+      code: `const formSchema = z.object({
+  username: z.string().min(2, "Min 2 caractères"),
+  email: z.string().email("Email invalide"),
+})
+
+function MyForm() {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+  })
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormDescription>Votre nom.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Soumettre</Button>
+      </form>
+    </Form>
+  )
+}`,
+    },
+  ],
+}
+
+// ============================================
 // Map des showcases par slug
 // ============================================
 export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
@@ -4105,4 +4826,19 @@ export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
   timeline: timelineShowcase,
   stat: statShowcase,
   "theme-creator": themeCreatorShowcase,
+  // Additional components
+  "alert-dialog": alertDialogShowcase,
+  "hover-card": hoverCardShowcase,
+  "navigation-menu": navigationMenuShowcase,
+  autocomplete: autocompleteShowcase,
+  "color-picker": colorPickerShowcase,
+  "file-upload": fileUploadShowcase,
+  "rich-text-editor": richTextEditorShowcase,
+  form: formShowcase,
+  // Charts
+  "bar-chart": barChartShowcase,
+  "line-chart": lineChartShowcase,
+  "area-chart": areaChartShowcase,
+  "pie-chart": pieChartShowcase,
+  sparkline: sparklineShowcase,
 }
