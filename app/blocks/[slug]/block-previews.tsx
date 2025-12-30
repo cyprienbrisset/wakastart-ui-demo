@@ -758,52 +758,253 @@ export function KanbanBoardPreview() {
   )
 }
 
-// Chat Preview
+// Chat Preview - Interactive
+// Using types from @wakastellar/ui
+type ChatUserType = {
+  id: string
+  name: string
+  avatar?: string
+  status?: "online" | "offline" | "away" | "busy"
+  lastSeen?: Date | string
+}
+
+type ChatMessageType = {
+  id: string
+  content: string
+  sender: ChatUserType
+  timestamp: Date | string
+  status?: "sending" | "sent" | "delivered" | "read" | "error"
+  replyTo?: ChatMessageType
+  attachments?: {
+    type: "image" | "file" | "audio"
+    url: string
+    name: string
+    size?: number
+  }[]
+  reactions?: {
+    emoji: string
+    users: string[]
+  }[]
+  isEdited?: boolean
+}
+
+type ChatConversationType = {
+  id: string
+  name?: string
+  participants: ChatUserType[]
+  lastMessage?: ChatMessageType
+  unreadCount?: number
+  isGroup?: boolean
+  avatar?: string
+}
+
 export function ChatPreview() {
-  const currentUser = { id: "1", name: "John Doe", status: "online" as const }
+  const currentUser: ChatUserType = { id: "1", name: "John Doe", status: "online" }
+
+  const otherUsers: ChatUserType[] = [
+    { id: "2", name: "Jane Smith", status: "online" },
+    { id: "3", name: "Bob Wilson", status: "away" },
+    { id: "4", name: "Alice Brown", status: "offline" },
+  ]
+
+  const [activeConversationId, setActiveConversationId] = useState("conv-1")
+
+  const initialMessages: Record<string, ChatMessageType[]> = {
+    "conv-1": [
+      {
+        id: "msg-1",
+        content: "Salut John ! Comment ça va ?",
+        sender: otherUsers[0],
+        timestamp: new Date(Date.now() - 3600000),
+        status: "read",
+      },
+      {
+        id: "msg-2",
+        content: "Tu as vu le nouveau design ?",
+        sender: otherUsers[0],
+        timestamp: new Date(Date.now() - 3000000),
+        status: "read",
+      },
+      {
+        id: "msg-3",
+        content: "Oui, il est super ! J'adore les couleurs.",
+        sender: currentUser,
+        timestamp: new Date(Date.now() - 2400000),
+        status: "delivered",
+      },
+    ],
+    "conv-2": [
+      {
+        id: "msg-4",
+        content: "Hey, tu es dispo pour une réunion demain ?",
+        sender: otherUsers[1],
+        timestamp: new Date(Date.now() - 86400000),
+        status: "read",
+      },
+      {
+        id: "msg-5",
+        content: "Oui, ça me va ! 14h ?",
+        sender: currentUser,
+        timestamp: new Date(Date.now() - 82800000),
+        status: "delivered",
+      },
+      {
+        id: "msg-6",
+        content: "Parfait, je t'envoie l'invite.",
+        sender: otherUsers[1],
+        timestamp: new Date(Date.now() - 79200000),
+        status: "read",
+      },
+    ],
+    "conv-3": [
+      {
+        id: "msg-7",
+        content: "N'oublie pas d'envoyer le rapport !",
+        sender: otherUsers[2],
+        timestamp: new Date(Date.now() - 172800000),
+        status: "read",
+      },
+    ],
+  }
+
+  const [messagesByConversation, setMessagesByConversation] = useState<Record<string, ChatMessageType[]>>(initialMessages)
+
+  const [conversations, setConversations] = useState<ChatConversationType[]>([
+    {
+      id: "conv-1",
+      participants: [currentUser, otherUsers[0]],
+      lastMessage: initialMessages["conv-1"][initialMessages["conv-1"].length - 1],
+      unreadCount: 0,
+    },
+    {
+      id: "conv-2",
+      participants: [currentUser, otherUsers[1]],
+      lastMessage: initialMessages["conv-2"][initialMessages["conv-2"].length - 1],
+      unreadCount: 1,
+    },
+    {
+      id: "conv-3",
+      participants: [currentUser, otherUsers[2]],
+      lastMessage: initialMessages["conv-3"][initialMessages["conv-3"].length - 1],
+      unreadCount: 0,
+    },
+  ])
+
+  const activeConversation = conversations.find(c => c.id === activeConversationId)
+  const currentMessages = messagesByConversation[activeConversationId] || []
+
+  const handleSendMessage = (content: string) => {
+    const newMessage: ChatMessageType = {
+      id: `msg-${Date.now()}`,
+      content,
+      sender: currentUser,
+      timestamp: new Date(),
+      status: "sending",
+    }
+
+    // Add message to conversation
+    setMessagesByConversation(prev => ({
+      ...prev,
+      [activeConversationId]: [...(prev[activeConversationId] || []), newMessage],
+    }))
+
+    // Update last message in conversations
+    setConversations(prev =>
+      prev.map(c =>
+        c.id === activeConversationId
+          ? { ...c, lastMessage: newMessage }
+          : c
+      )
+    )
+
+    // Simulate message status updates
+    setTimeout(() => {
+      setMessagesByConversation(prev => ({
+        ...prev,
+        [activeConversationId]: prev[activeConversationId].map(m =>
+          m.id === newMessage.id ? { ...m, status: "sent" as const } : m
+        ),
+      }))
+    }, 500)
+
+    setTimeout(() => {
+      setMessagesByConversation(prev => ({
+        ...prev,
+        [activeConversationId]: prev[activeConversationId].map(m =>
+          m.id === newMessage.id ? { ...m, status: "delivered" as const } : m
+        ),
+      }))
+    }, 1000)
+
+    // Simulate auto-reply from other user
+    const otherParticipant = activeConversation?.participants.find(p => p.id !== currentUser.id)
+    if (otherParticipant && otherParticipant.status !== "offline") {
+      setTimeout(() => {
+        const replies = [
+          "D'accord, je note !",
+          "Super, merci !",
+          "Je vais regarder ça.",
+          "Parfait 👍",
+          "Ok, bien reçu.",
+          "Je te tiens au courant.",
+        ]
+        const replyContent = replies[Math.floor(Math.random() * replies.length)]
+
+        const replyMessage: ChatMessageType = {
+          id: `msg-${Date.now()}-reply`,
+          content: replyContent,
+          sender: otherParticipant,
+          timestamp: new Date(),
+          status: "delivered",
+        }
+
+        setMessagesByConversation(prev => ({
+          ...prev,
+          [activeConversationId]: [...prev[activeConversationId], replyMessage],
+        }))
+
+        setConversations(prev =>
+          prev.map(c =>
+            c.id === activeConversationId
+              ? { ...c, lastMessage: replyMessage }
+              : c
+          )
+        )
+      }, 2000 + Math.random() * 2000)
+    }
+  }
+
+  const handleConversationSelect = (conversation: ChatConversationType) => {
+    setActiveConversationId(conversation.id)
+    // Clear unread count
+    setConversations(prev =>
+      prev.map(c =>
+        c.id === conversation.id ? { ...c, unreadCount: 0 } : c
+      )
+    )
+  }
+
+  const handleDeleteMessage = (messageId: string) => {
+    setMessagesByConversation(prev => ({
+      ...prev,
+      [activeConversationId]: prev[activeConversationId].filter(m => m.id !== messageId),
+    }))
+  }
 
   return (
     <PreviewWrapper fullWidth>
       <WakaChat
         currentUser={currentUser}
-        conversations={[
-          {
-            id: "1",
-            participants: [currentUser, { id: "2", name: "Jane Smith", status: "online" as const }],
-            lastMessage: {
-              id: "1",
-              content: "Salut !",
-              sender: { id: "2", name: "Jane Smith", status: "online" as const },
-              timestamp: new Date(),
-              status: "read" as const,
-            },
-            unreadCount: 2,
-          },
-        ]}
-        messages={[
-          {
-            id: "1",
-            content: "Salut ! Comment ça va ?",
-            sender: { id: "2", name: "Jane Smith", status: "online" as const },
-            timestamp: new Date(Date.now() - 3600000),
-            status: "read" as const,
-          },
-          {
-            id: "2",
-            content: "Ça va bien, merci !",
-            sender: currentUser,
-            timestamp: new Date(),
-            status: "delivered" as const,
-          },
-        ]}
-        activeConversation={{
-          id: "1",
-          participants: [currentUser, { id: "2", name: "Jane Smith", status: "online" as const }],
-          unreadCount: 0,
-        }}
-        onSendMessage={() => {}}
-        onConversationSelect={() => {}}
+        conversations={conversations}
+        messages={currentMessages}
+        activeConversation={activeConversation}
+        onSendMessage={handleSendMessage}
+        onConversationSelect={handleConversationSelect}
+        onMessageDelete={handleDeleteMessage}
         showConversationList
+        showMessageStatus
+        showTimestamps
+        showHeader
       />
     </PreviewWrapper>
   )
