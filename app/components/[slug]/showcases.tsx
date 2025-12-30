@@ -140,8 +140,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+  WakaAdmincrumb,
+  WakaCarousel,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  WakaThemeManager,
 } from "@wakastellar/ui"
-import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, ThemeCreatorApiConfig, FileUploadResponse, AutocompleteOption } from "@wakastellar/ui"
+import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, ThemeCreatorApiConfig, FileUploadResponse, AutocompleteOption, AdmincrumbLevel, AdmincrumbItem, CarouselImage } from "@wakastellar/ui"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -182,6 +214,14 @@ import {
   Grid,
   List,
   Layers,
+  Copy,
+  Scissors,
+  Clipboard,
+  RotateCcw,
+  Building2,
+  Network,
+  ChevronsUpDown,
+  Image as ImageIcon,
 } from "lucide-react"
 import { useState } from "react"
 import {
@@ -4699,6 +4739,637 @@ export const sparklineShowcase: ComponentShowcaseConfig = {
 }
 
 // ============================================
+// CONTEXT MENU SHOWCASE
+// ============================================
+export const contextMenuShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Menu contextuel basique",
+      description: "Faites un clic droit sur la zone pour ouvrir le menu",
+      preview: (
+        <ContextMenu>
+          <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed text-sm">
+            Clic droit ici
+          </ContextMenuTrigger>
+          <ContextMenuContent className="w-64">
+            <ContextMenuItem inset>
+              Retour
+              <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset disabled>
+              Suivant
+              <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset>
+              Recharger
+              <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem inset>
+              <Copy className="mr-2 h-4 w-4" />
+              Copier
+              <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset>
+              <Scissors className="mr-2 h-4 w-4" />
+              Couper
+              <ContextMenuShortcut>⌘X</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset>
+              <Clipboard className="mr-2 h-4 w-4" />
+              Coller
+              <ContextMenuShortcut>⌘V</ContextMenuShortcut>
+            </ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
+      ),
+      code: `<ContextMenu>
+  <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed">
+    Clic droit ici
+  </ContextMenuTrigger>
+  <ContextMenuContent className="w-64">
+    <ContextMenuItem inset>
+      Retour
+      <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+    </ContextMenuItem>
+    <ContextMenuItem inset>
+      <Copy className="mr-2 h-4 w-4" />
+      Copier
+      <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+    </ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>`,
+    },
+    {
+      title: "Avec sous-menus et cases à cocher",
+      description: "Menu contextuel avancé avec sous-menus",
+      preview: (
+        <ContextMenu>
+          <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed text-sm">
+            Clic droit pour plus d'options
+          </ContextMenuTrigger>
+          <ContextMenuContent className="w-64">
+            <ContextMenuSub>
+              <ContextMenuSubTrigger inset>Plus d'outils</ContextMenuSubTrigger>
+              <ContextMenuSubContent className="w-48">
+                <ContextMenuItem>
+                  Enregistrer la page sous...
+                  <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuItem>Créer un raccourci...</ContextMenuItem>
+                <ContextMenuItem>Nommer la fenêtre...</ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem>Outils de développement</ContextMenuItem>
+              </ContextMenuSubContent>
+            </ContextMenuSub>
+            <ContextMenuSeparator />
+            <ContextMenuCheckboxItem checked>
+              Afficher la barre de favoris
+              <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
+            </ContextMenuCheckboxItem>
+            <ContextMenuCheckboxItem>Afficher l'URL complète</ContextMenuCheckboxItem>
+            <ContextMenuSeparator />
+            <ContextMenuRadioGroup value="claude">
+              <ContextMenuLabel inset>Personnes</ContextMenuLabel>
+              <ContextMenuRadioItem value="claude">Claude</ContextMenuRadioItem>
+              <ContextMenuRadioItem value="assistant">Assistant</ContextMenuRadioItem>
+            </ContextMenuRadioGroup>
+          </ContextMenuContent>
+        </ContextMenu>
+      ),
+      code: `<ContextMenu>
+  <ContextMenuTrigger>Clic droit</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuSub>
+      <ContextMenuSubTrigger>Plus d'outils</ContextMenuSubTrigger>
+      <ContextMenuSubContent>
+        <ContextMenuItem>Option 1</ContextMenuItem>
+        <ContextMenuItem>Option 2</ContextMenuItem>
+      </ContextMenuSubContent>
+    </ContextMenuSub>
+    <ContextMenuCheckboxItem checked>
+      Option activée
+    </ContextMenuCheckboxItem>
+    <ContextMenuRadioGroup value="option1">
+      <ContextMenuRadioItem value="option1">Option 1</ContextMenuRadioItem>
+      <ContextMenuRadioItem value="option2">Option 2</ContextMenuRadioItem>
+    </ContextMenuRadioGroup>
+  </ContextMenuContent>
+</ContextMenu>`,
+    },
+  ],
+}
+
+// ============================================
+// MENUBAR SHOWCASE
+// ============================================
+export const menubarShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Barre de menu application",
+      description: "Barre de menu style desktop application",
+      preview: (
+        <Menubar>
+          <MenubarMenu>
+            <MenubarTrigger>Fichier</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                Nouveau fichier <MenubarShortcut>⌘N</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Ouvrir <MenubarShortcut>⌘O</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Enregistrer <MenubarShortcut>⌘S</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Enregistrer sous... <MenubarShortcut>⇧⌘S</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Quitter <MenubarShortcut>⌘Q</MenubarShortcut>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Édition</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                Annuler <MenubarShortcut>⌘Z</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Rétablir <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Couper <MenubarShortcut>⌘X</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Copier <MenubarShortcut>⌘C</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Coller <MenubarShortcut>⌘V</MenubarShortcut>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Affichage</MenubarTrigger>
+            <MenubarContent>
+              <MenubarCheckboxItem>Barre d'état</MenubarCheckboxItem>
+              <MenubarCheckboxItem checked>Barre d'outils</MenubarCheckboxItem>
+              <MenubarSeparator />
+              <MenubarSub>
+                <MenubarSubTrigger>Zoom</MenubarSubTrigger>
+                <MenubarSubContent>
+                  <MenubarItem>Zoom avant <MenubarShortcut>⌘+</MenubarShortcut></MenubarItem>
+                  <MenubarItem>Zoom arrière <MenubarShortcut>⌘-</MenubarShortcut></MenubarItem>
+                  <MenubarItem>Taille réelle <MenubarShortcut>⌘0</MenubarShortcut></MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Aide</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>Documentation</MenubarItem>
+              <MenubarItem>À propos</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+      ),
+      code: `<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>Fichier</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>
+        Nouveau <MenubarShortcut>⌘N</MenubarShortcut>
+      </MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Quitter</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+  <MenubarMenu>
+    <MenubarTrigger>Édition</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>Copier</MenubarItem>
+      <MenubarItem>Coller</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>`,
+    },
+  ],
+}
+
+// ============================================
+// ADMINCRUMB SHOWCASE
+// ============================================
+function AdmincrumbDemo() {
+  const [partner, setPartner] = useState<AdmincrumbItem | undefined>()
+  const [network, setNetwork] = useState<AdmincrumbItem | undefined>()
+  const [customer, setCustomer] = useState<AdmincrumbItem | undefined>()
+
+  const levels: AdmincrumbLevel[] = [
+    {
+      type: "partner",
+      items: [
+        { id: "1", name: "Partenaire Alpha", type: "partner", metadata: { count: 12 } },
+        { id: "2", name: "Partenaire Beta", type: "partner", metadata: { count: 8 } },
+        { id: "3", name: "Partenaire Gamma", type: "partner", metadata: { count: 5 } },
+      ],
+      selected: partner,
+      onSelect: (item) => {
+        setPartner(item.id ? item : undefined)
+        setNetwork(undefined)
+        setCustomer(undefined)
+      },
+      placeholder: "Sélectionner un partenaire",
+    },
+    {
+      type: "network",
+      items: partner ? [
+        { id: "n1", name: "Réseau Paris", type: "network", metadata: { count: 25 } },
+        { id: "n2", name: "Réseau Lyon", type: "network", metadata: { count: 18 } },
+      ] : [],
+      selected: network,
+      onSelect: (item) => {
+        setNetwork(item.id ? item : undefined)
+        setCustomer(undefined)
+      },
+      placeholder: "Sélectionner un réseau",
+    },
+    {
+      type: "customer",
+      items: network ? [
+        { id: "c1", name: "Client Entreprise A", type: "customer" },
+        { id: "c2", name: "Client Entreprise B", type: "customer" },
+        { id: "c3", name: "Client PME C", type: "customer" },
+      ] : [],
+      selected: customer,
+      onSelect: (item) => setCustomer(item.id ? item : undefined),
+      placeholder: "Sélectionner un client",
+    },
+  ]
+
+  const handleReset = () => {
+    setPartner(undefined)
+    setNetwork(undefined)
+    setCustomer(undefined)
+  }
+
+  return (
+    <WakaAdmincrumb
+      levels={levels}
+      showIcons
+      showHome
+      resetable
+      onReset={handleReset}
+    />
+  )
+}
+
+export const admincrumbShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Fil d'Ariane administrateur",
+      description: "Navigation hiérarchique avec sélection en cascade (Partenaire > Réseau > Client)",
+      preview: <AdmincrumbDemo />,
+      code: `const levels: AdmincrumbLevel[] = [
+  {
+    type: "partner",
+    items: [
+      { id: "1", name: "Partenaire Alpha", type: "partner" },
+      { id: "2", name: "Partenaire Beta", type: "partner" },
+    ],
+    selected: partner,
+    onSelect: (item) => setPartner(item),
+  },
+  {
+    type: "network",
+    items: partner ? [...] : [],
+    selected: network,
+    onSelect: (item) => setNetwork(item),
+  },
+  {
+    type: "customer",
+    items: network ? [...] : [],
+    selected: customer,
+    onSelect: (item) => setCustomer(item),
+  },
+]
+
+<WakaAdmincrumb
+  levels={levels}
+  showIcons
+  showHome
+  resetable
+  onReset={handleReset}
+/>`,
+    },
+    {
+      title: "Variantes visuelles",
+      description: "Différents styles : default, minimal, pills, inline, compact",
+      preview: (
+        <div className="space-y-4">
+          <WakaAdmincrumb
+            variant="pills"
+            levels={[
+              {
+                type: "partner",
+                items: [{ id: "1", name: "Partenaire A", type: "partner" }],
+                selected: { id: "1", name: "Partenaire A", type: "partner" },
+                onSelect: () => {},
+              },
+            ]}
+            showIcons
+          />
+          <WakaAdmincrumb
+            variant="compact"
+            levels={[
+              {
+                type: "partner",
+                items: [{ id: "1", name: "Partenaire A", type: "partner" }],
+                selected: { id: "1", name: "Partenaire A", type: "partner" },
+                onSelect: () => {},
+              },
+            ]}
+            showIcons
+          />
+        </div>
+      ),
+      code: `<WakaAdmincrumb
+  variant="pills" // "default" | "minimal" | "pills" | "inline" | "compact"
+  levels={levels}
+  showIcons
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// CAROUSEL SHOWCASE
+// ============================================
+const carouselImages: CarouselImage[] = [
+  {
+    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=450&fit=crop",
+    alt: "Montagnes",
+    title: "Paysage alpin",
+    description: "Vue panoramique sur les Alpes",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=450&fit=crop",
+    alt: "Océan",
+    title: "Bord de mer",
+    description: "Coucher de soleil sur l'océan",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=450&fit=crop",
+    alt: "Forêt",
+    title: "Forêt mystique",
+    description: "Lumière filtrant à travers les arbres",
+  },
+]
+
+export const carouselShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Carrousel basique",
+      description: "Carrousel d'images avec navigation",
+      preview: (
+        <div className="w-full max-w-2xl">
+          <WakaCarousel
+            images={carouselImages}
+            showIndicators
+            showNavigation
+            aspectRatio="16/9"
+          />
+        </div>
+      ),
+      code: `<WakaCarousel
+  images={[
+    { src: "image1.jpg", alt: "Image 1", title: "Titre" },
+    { src: "image2.jpg", alt: "Image 2" },
+  ]}
+  showIndicators
+  showNavigation
+  aspectRatio="16/9"
+/>`,
+    },
+    {
+      title: "Avec autoplay et miniatures",
+      description: "Carrousel automatique avec vignettes",
+      preview: (
+        <div className="w-full max-w-2xl">
+          <WakaCarousel
+            images={carouselImages}
+            autoplay
+            autoplayInterval={4000}
+            showIndicators
+            showNavigation
+            showThumbnails
+            showCounter
+            showProgress
+            aspectRatio="16/9"
+          />
+        </div>
+      ),
+      code: `<WakaCarousel
+  images={images}
+  autoplay
+  autoplayInterval={4000}
+  showThumbnails
+  showCounter
+  showProgress
+/>`,
+    },
+    {
+      title: "Mode plein écran",
+      description: "Avec bouton plein écran",
+      preview: (
+        <div className="w-full max-w-2xl">
+          <WakaCarousel
+            images={carouselImages}
+            showNavigation
+            showIndicators
+            showFullscreen
+            transition="slide"
+            aspectRatio="16/9"
+          />
+        </div>
+      ),
+      code: `<WakaCarousel
+  images={images}
+  showFullscreen
+  transition="slide" // "fade" | "slide" | "zoom" | "flip"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// COLLAPSIBLE SHOWCASE
+// ============================================
+function CollapsibleDemo() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="w-full max-w-md space-y-2"
+    >
+      <div className="flex items-center justify-between space-x-4 px-4">
+        <h4 className="text-sm font-semibold">
+          @peduarte a créé 3 repositories
+        </h4>
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="sm" className="w-9 p-0">
+            <ChevronsUpDown className="h-4 w-4" />
+            <span className="sr-only">Toggle</span>
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      <div className="rounded-md border px-4 py-3 font-mono text-sm">
+        @radix-ui/primitives
+      </div>
+      <CollapsibleContent className="space-y-2">
+        <div className="rounded-md border px-4 py-3 font-mono text-sm">
+          @radix-ui/colors
+        </div>
+        <div className="rounded-md border px-4 py-3 font-mono text-sm">
+          @stitches/react
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+export const collapsibleShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Section repliable",
+      description: "Contenu qui peut être affiché/masqué",
+      preview: <CollapsibleDemo />,
+      code: `function CollapsibleDemo() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <div className="flex items-center justify-between">
+        <h4>@peduarte a créé 3 repositories</h4>
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="sm">
+            <ChevronsUpDown className="h-4 w-4" />
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      <div className="rounded-md border px-4 py-3">
+        @radix-ui/primitives
+      </div>
+      <CollapsibleContent className="space-y-2">
+        <div className="rounded-md border px-4 py-3">
+          @radix-ui/colors
+        </div>
+        <div className="rounded-md border px-4 py-3">
+          @stitches/react
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}`,
+    },
+    {
+      title: "Collapsible contrôlé",
+      description: "Ouvert par défaut et contrôlé",
+      preview: (
+        <Collapsible defaultOpen className="w-full max-w-md space-y-2">
+          <CollapsibleTrigger asChild>
+            <Button variant="outline" className="w-full justify-between">
+              Afficher les détails
+              <ChevronsUpDown className="h-4 w-4" />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="rounded-md border p-4 space-y-2">
+              <p className="text-sm">Voici le contenu détaillé qui était masqué.</p>
+              <p className="text-sm text-muted-foreground">
+                Ce contenu peut contenir n'importe quels éléments React.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      ),
+      code: `<Collapsible defaultOpen>
+  <CollapsibleTrigger asChild>
+    <Button variant="outline" className="w-full justify-between">
+      Afficher les détails
+      <ChevronsUpDown className="h-4 w-4" />
+    </Button>
+  </CollapsibleTrigger>
+  <CollapsibleContent>
+    <div className="rounded-md border p-4">
+      <p>Contenu détaillé ici...</p>
+    </div>
+  </CollapsibleContent>
+</Collapsible>`,
+    },
+  ],
+}
+
+// ============================================
+// THEME MANAGER SHOWCASE
+// ============================================
+export const themeManagerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Gestionnaire de thèmes",
+      description: "Interface complète pour créer, importer et prévisualiser des thèmes",
+      preview: (
+        <div className="w-full">
+          <WakaThemeManager
+            size="full"
+            showPreview
+            showExport
+            showImport
+            allowCustomColors
+            onThemeChange={(theme) => console.log("Theme changed:", theme)}
+          />
+        </div>
+      ),
+      code: `<WakaThemeManager
+  size="full" // "sm" | "base" | "lg" | "full"
+  showPreview
+  showExport
+  showImport
+  allowCustomColors
+  onThemeChange={(theme) => console.log(theme)}
+  onThemeSave={(theme) => saveTheme(theme)}
+/>`,
+    },
+    {
+      title: "Version compacte",
+      description: "Gestionnaire de thèmes simplifié sans prévisualisation",
+      preview: (
+        <div className="w-full max-w-2xl">
+          <WakaThemeManager
+            size="sm"
+            showPreview={false}
+            showExport
+            showImport
+            allowCustomColors={false}
+          />
+        </div>
+      ),
+      code: `<WakaThemeManager
+  size="sm"
+  showPreview={false}
+  allowCustomColors={false}
+/>`,
+    },
+  ],
+}
+
+// ============================================
 // FORM SHOWCASE
 // ============================================
 const formSchema = z.object({
@@ -4859,4 +5530,14 @@ export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
   "area-chart": areaChartShowcase,
   "pie-chart": pieChartShowcase,
   sparkline: sparklineShowcase,
+  // Menu components
+  "context-menu": contextMenuShowcase,
+  menubar: menubarShowcase,
+  // Admin components
+  admincrumb: admincrumbShowcase,
+  // Media components
+  carousel: carouselShowcase,
+  // Utility components
+  collapsible: collapsibleShowcase,
+  "theme-manager": themeManagerShowcase,
 }

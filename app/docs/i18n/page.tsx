@@ -15,21 +15,24 @@ export default function I18nPage() {
 
       <Section id="overview" title="Vue d'ensemble">
         <p className="text-muted-foreground mb-4">
-          @wakastellar/ui intègre un système d'internationalisation basé sur i18next.
-          Il supporte le chargement dynamique des traductions depuis des fichiers JSON externes.
+          @wakastellar/ui intègre un système d'internationalisation basé sur <strong>i18next</strong>.
+          Il supporte les traductions inline, le chargement depuis des fichiers JSON externes,
+          ou depuis un bucket S3 pour les applications à grande échelle.
         </p>
       </Section>
 
-      <Section id="configuration" title="Configuration de base">
+      <Section id="inline-translations" title="Traductions inline">
         <p className="text-muted-foreground mb-4">
-          Configurez les langues supportées dans le WakaProvider :
+          La méthode la plus simple : définir les traductions directement dans la configuration :
         </p>
         <CodeBlock
-          code={`<WakaProvider
+          code={`import { WakaProvider } from "@wakastellar/ui"
+
+<WakaProvider
   config={{
     language: {
       defaultLanguage: "fr",
-      supportedLanguages: ["fr", "en", "de"],
+      supportedLanguages: ["fr", "en"],
       languages: [
         {
           code: "fr",
@@ -40,6 +43,10 @@ export default function I18nPage() {
               search: "Rechercher...",
               save: "Enregistrer",
               cancel: "Annuler",
+            },
+            auth: {
+              login: "Connexion",
+              logout: "Déconnexion",
             },
           },
         },
@@ -53,9 +60,17 @@ export default function I18nPage() {
               save: "Save",
               cancel: "Cancel",
             },
+            auth: {
+              login: "Login",
+              logout: "Logout",
+            },
           },
         },
       ],
+    },
+    theme: {
+      defaultTheme: "light",
+      themes: [{ id: "light", label: "Clair" }],
     },
   }}
 >
@@ -72,44 +87,60 @@ export default function I18nPage() {
         <CodeBlock
           code={`import { LanguageSelector } from "@wakastellar/ui"
 
-// Version complète
+// Version complète avec dropdown
 <LanguageSelector />
 
-// Version compacte
-<LanguageSelector variant="compact" />`}
+// Version compacte (icône seule)
+<LanguageSelector variant="compact" />
+
+// Avec affichage du drapeau
+<LanguageSelector showFlag />`}
           language="tsx"
         />
       </Section>
 
-      <Section id="load-from-json" title="Chargement depuis JSON">
+      <Section id="s3-loading" title="Chargement depuis S3">
         <p className="text-muted-foreground mb-4">
-          Chargez les traductions dynamiquement depuis des fichiers JSON externes :
+          Pour les applications à grande échelle, chargez les traductions depuis un bucket S3 :
         </p>
         <CodeBlock
-          code={`const languages = [
-  {
-    code: "fr",
-    label: "Français",
-    flagEmoji: "🇫🇷",
-    // URL vers le fichier JSON des traductions
-    jsonUrl: "https://cdn.example.com/i18n/fr.json",
-  },
-  {
-    code: "en",
-    label: "English",
-    flagEmoji: "🇬🇧",
-    jsonUrl: "https://cdn.example.com/i18n/en.json",
-  },
-]
-
-<WakaProvider config={{ language: { languages } }}>
+          code={`<WakaProvider
+  config={{
+    language: {
+      defaultLanguage: "fr",
+      supportedLanguages: ["fr", "en", "de", "es"],
+      languages: [
+        { code: "fr", label: "Français", flagEmoji: "🇫🇷" },
+        { code: "en", label: "English", flagEmoji: "🇬🇧" },
+        { code: "de", label: "Deutsch", flagEmoji: "🇩🇪" },
+        { code: "es", label: "Español", flagEmoji: "🇪🇸" },
+      ],
+      s3Config: {
+        bucketUrl: "https://cdn.example.com",
+        translationsPath: "i18n", // Chemin dans le bucket
+      },
+    },
+  }}
+>
   {children}
 </WakaProvider>`}
           language="tsx"
         />
-
         <p className="text-muted-foreground mt-4 mb-4">
-          Structure du fichier JSON de traductions :
+          Structure attendue dans le bucket S3 :
+        </p>
+        <CodeBlock
+          code={`https://cdn.example.com/i18n/fr.json
+https://cdn.example.com/i18n/en.json
+https://cdn.example.com/i18n/de.json
+https://cdn.example.com/i18n/es.json`}
+          language="text"
+        />
+      </Section>
+
+      <Section id="json-structure" title="Structure des fichiers JSON">
+        <p className="text-muted-foreground mb-4">
+          Structure des fichiers de traduction :
         </p>
         <CodeBlock
           filename="fr.json"
@@ -119,43 +150,55 @@ export default function I18nPage() {
     "save": "Enregistrer",
     "cancel": "Annuler",
     "confirm": "Confirmer",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "loading": "Chargement..."
   },
   "auth": {
     "login": "Connexion",
     "logout": "Déconnexion",
-    "email": "Email",
-    "password": "Mot de passe"
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?"
   },
   "errors": {
     "required": "Ce champ est requis",
-    "invalid_email": "Email invalide"
-  }
+    "invalidEmail": "Email invalide",
+    "minLength": "Minimum {{min}} caractères"
+  },
+  "greeting": "Bienvenue, {{name}} !"
 }`}
           language="json"
         />
       </Section>
 
-      <Section id="use-language-hook" title="Hook useLanguage">
+      <Section id="use-waka-hook" title="Hook useWaka">
         <p className="text-muted-foreground mb-4">
-          Accédez à la langue actuelle et aux fonctions de traduction :
+          Le hook <code>useWaka</code> fournit un accès complet aux fonctions de traduction et de langue :
         </p>
         <CodeBlock
-          code={`import { useLanguage } from "@wakastellar/ui"
+          code={`import { useWaka } from "@wakastellar/ui"
 
 function MyComponent() {
   const {
-    language,        // Code de la langue actuelle ("fr", "en", etc.)
-    setLanguage,     // Changer de langue
-    languages,       // Liste des langues disponibles
-    t,               // Fonction de traduction
-  } = useLanguage()
+    // Langue
+    currentLanguage,   // Code de la langue actuelle ("fr", "en", etc.)
+    changeLanguage,    // Changer de langue (async)
+    languages,         // Liste des langues disponibles
+    isLanguageLoading, // État de chargement
+
+    // Traductions
+    t,                 // Fonction de traduction i18next
+
+    // Thème (bonus)
+    currentTheme,
+    changeTheme,
+  } = useWaka()
 
   return (
     <div>
-      <p>Langue actuelle : {language}</p>
+      <p>Langue actuelle : {currentLanguage}</p>
       <p>{t("common.search")}</p>
-      <button onClick={() => setLanguage("en")}>
+      <button onClick={() => changeLanguage("en")}>
         Switch to English
       </button>
     </div>
@@ -165,44 +208,91 @@ function MyComponent() {
         />
       </Section>
 
-      <Section id="translation-function" title="Fonction de traduction">
+      <Section id="use-language-hook" title="Hook useLanguage">
         <p className="text-muted-foreground mb-4">
-          La fonction t() supporte l'interpolation et les pluriels :
+          Pour accéder uniquement aux fonctionnalités de langue :
         </p>
         <CodeBlock
-          code={`// Traduction simple
-t("common.save") // "Enregistrer"
+          code={`import { useLanguage } from "@wakastellar/ui"
 
-// Avec interpolation
-t("greeting", { name: "Jean" }) // "Bonjour Jean !"
-// JSON: { "greeting": "Bonjour {{name}} !" }
+function LanguageSwitcher() {
+  const {
+    currentLanguage,  // Code de la langue
+    changeLanguage,   // Changer de langue
+    languages,        // Liste des langues
+    isLoading,        // État de chargement
+  } = useLanguage()
 
-// Avec namespace
-t("auth:login") // "Connexion"
-
-// Valeur par défaut
-t("missing.key", "Valeur par défaut")`}
+  return (
+    <select
+      value={currentLanguage}
+      onChange={(e) => changeLanguage(e.target.value)}
+    >
+      {languages.map((lang) => (
+        <option key={lang.code} value={lang.code}>
+          {lang.flagEmoji} {lang.label}
+        </option>
+      ))}
+    </select>
+  )
+}`}
           language="tsx"
         />
       </Section>
 
-      <Section id="namespaces" title="Namespaces">
+      <Section id="translation-function" title="Fonction de traduction">
         <p className="text-muted-foreground mb-4">
-          Organisez vos traductions par namespace :
+          La fonction <code>t()</code> supporte l'interpolation et les namespaces :
         </p>
         <CodeBlock
-          code={`// Structure des traductions
-{
-  "common": { ... },
-  "auth": { ... },
-  "dashboard": { ... },
-  "errors": { ... }
-}
+          code={`import { useWaka } from "@wakastellar/ui"
 
-// Utilisation
-t("common:search")      // Namespace explicite
-t("auth:login")
-t("dashboard:welcome")`}
+function Examples() {
+  const { t } = useWaka()
+
+  return (
+    <>
+      {/* Traduction simple */}
+      <p>{t("common.save")}</p>
+      {/* "Enregistrer" */}
+
+      {/* Avec interpolation */}
+      <p>{t("greeting", { name: "Jean" })}</p>
+      {/* "Bienvenue, Jean !" */}
+
+      {/* Avec valeur par défaut */}
+      <p>{t("missing.key", "Valeur par défaut")}</p>
+
+      {/* Accès imbriqué */}
+      <p>{t("errors.minLength", { min: 8 })}</p>
+      {/* "Minimum 8 caractères" */}
+    </>
+  )
+}`}
+          language="tsx"
+        />
+      </Section>
+
+      <Section id="use-translation-hook" title="Hook useTranslation">
+        <p className="text-muted-foreground mb-4">
+          Pour un accès direct à i18next (pour les cas avancés) :
+        </p>
+        <CodeBlock
+          code={`import { useTranslation } from "react-i18next"
+
+function AdvancedComponent() {
+  const { t, i18n } = useTranslation()
+
+  // Changer de langue directement via i18n
+  const switchLanguage = (lang: string) => {
+    i18n.changeLanguage(lang)
+  }
+
+  // Vérifier si une clé existe
+  const hasKey = i18n.exists("my.key")
+
+  return <p>{t("common.save")}</p>
+}`}
           language="tsx"
         />
       </Section>
@@ -210,22 +300,99 @@ t("dashboard:welcome")`}
       <Section id="persist-language" title="Persistance">
         <p className="text-muted-foreground mb-4">
           La langue sélectionnée est automatiquement sauvegardée dans le localStorage
-          et restaurée au rechargement de la page.
+          et restaurée au rechargement de la page :
         </p>
         <CodeBlock
-          code={`// La clé localStorage utilisée est "waka-language"
-// Vous pouvez la personnaliser si nécessaire
-
-<WakaProvider
+          code={`<WakaProvider
   config={{
     language: {
-      storageKey: "my-app-language", // Clé personnalisée
       defaultLanguage: "fr",
+      supportedLanguages: ["fr", "en"],
+      // Clé personnalisée pour le localStorage (optionnel)
+      storageKey: "my-app-language", // Par défaut: "waka-ui-language"
+      languages: [...],
     },
   }}
->`}
+>
+  {children}
+</WakaProvider>`}
           language="tsx"
         />
+      </Section>
+
+      <Section id="i18n-editor" title="Éditeur de traductions">
+        <p className="text-muted-foreground mb-4">
+          Pour gérer vos traductions visuellement, utilisez le bloc <code>WakaI18nEditor</code> :
+        </p>
+        <CodeBlock
+          code={`import { WakaI18nEditor } from "@wakastellar/ui"
+
+<WakaI18nEditor
+  config={{
+    languages: [
+      { code: "fr", label: "Français", flag: "🇫🇷", isSource: true },
+      { code: "en", label: "English", flag: "🇬🇧" },
+      { code: "es", label: "Español", flag: "🇪🇸" },
+    ],
+    sourceLanguage: "fr",
+    keyPathSeparator: ".",
+    autoSave: true,
+    saveDebounceMs: 500,
+  }}
+  translations={[
+    {
+      key: "common.save",
+      translations: {
+        fr: { value: "Enregistrer" },
+        en: { value: "Save" },
+        es: { value: "Guardar" },
+      },
+    },
+    // ...
+  ]}
+  onChange={(key, lang, value) => console.log(key, lang, value)}
+  onSave={async (translations) => saveTranslations(translations)}
+  onAddKey={async (key) => addKey(key)}
+  onDeleteKey={async (key) => deleteKey(key)}
+  onAddLanguage={async (lang) => addLanguage(lang)}
+  onExport={async (language) => exportTranslations(language)}
+  onImport={async (file, lang, strategy) => importTranslations(file, lang, strategy)}
+/>`}
+          language="tsx"
+        />
+        <p className="text-muted-foreground mt-4">
+          Fonctionnalités de l'éditeur :
+        </p>
+        <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
+          <li>Vue tableau avec clés et traductions par langue</li>
+          <li>Édition inline de toutes les langues (y compris la langue source)</li>
+          <li>Recherche et filtres par état (manquant, identique, valide)</li>
+          <li>Groupement automatique par préfixe de clé</li>
+          <li>Auto-save avec debounce configurable</li>
+          <li>Import/Export JSON</li>
+          <li>Ajout dynamique de clés et de langues</li>
+          <li>Validation des placeholders</li>
+        </ul>
+      </Section>
+
+      <Section id="best-practices" title="Bonnes pratiques">
+        <ul className="list-disc list-inside text-muted-foreground space-y-2">
+          <li>
+            <strong>Organisez par namespace :</strong> Utilisez des préfixes comme <code>common.</code>, <code>auth.</code>, <code>errors.</code>
+          </li>
+          <li>
+            <strong>Utilisez l'interpolation :</strong> Préférez <code>{"Hello, {{name}}!"}</code> plutôt que la concaténation
+          </li>
+          <li>
+            <strong>Traductions inline pour les petits projets :</strong> Plus simple à maintenir
+          </li>
+          <li>
+            <strong>S3 pour les gros projets :</strong> Permet le chargement à la demande et la mise à jour sans redéploiement
+          </li>
+          <li>
+            <strong>Testez toutes les langues :</strong> Certains textes peuvent être plus longs dans d'autres langues
+          </li>
+        </ul>
       </Section>
     </article>
   )

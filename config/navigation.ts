@@ -117,6 +117,7 @@ export const navigation: NavSection[] = [
     items: [
       { title: "WakaStepper", href: "/components/stepper" },
       { title: "WakaBreadcrumb", href: "/components/breadcrumb" },
+      { title: "WakaAdmincrumb", href: "/components/admincrumb", isNew: true },
       { title: "WakaModal", href: "/components/modal" },
       { title: "WakaDrawer", href: "/components/drawer" },
       { title: "WakaTree", href: "/components/tree" },
@@ -135,6 +136,8 @@ export const navigation: NavSection[] = [
       { title: "WakaTimeline", href: "/components/timeline" },
       { title: "WakaStat", href: "/components/stat" },
       { title: "WakaThemeCreator", href: "/components/theme-creator" },
+      { title: "WakaCarousel", href: "/components/carousel" },
+      { title: "WakaThemeManager", href: "/components/theme-manager" },
     ],
   },
   {
@@ -173,6 +176,7 @@ export const navigation: NavSection[] = [
       { title: "FAQ", href: "/blocks/faq" },
       { title: "EmptyStates", href: "/blocks/empty-states" },
       { title: "ThemeCreator", href: "/blocks/theme-creator-block", isNew: true },
+      { title: "I18nEditor", href: "/blocks/i18n-editor", isNew: true },
     ],
   },
 ]

@@ -1266,8 +1266,26 @@ export function ThemeCreatorBlockPreview() {
 }
 
 // I18n Editor Preview
+interface TranslationEntry {
+  key: string
+  translations: Record<string, { value: string }>
+}
+
+interface I18nLanguageConfig {
+  code: string
+  label: string
+  flag?: string
+  isSource?: boolean
+}
+
 export function I18nEditorPreview() {
-  const [translations, setTranslations] = useState([
+  const [languages, setLanguages] = useState<I18nLanguageConfig[]>([
+    { code: "fr", label: "Français", flag: "🇫🇷", isSource: true },
+    { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "es", label: "Español", flag: "🇪🇸" },
+  ])
+
+  const [translations, setTranslations] = useState<TranslationEntry[]>([
     {
       key: "common.buttons.submit",
       translations: {
@@ -1338,11 +1356,7 @@ export function I18nEditorPreview() {
     <PreviewWrapper fullWidth>
       <WakaI18nEditor
         config={{
-          languages: [
-            { code: "fr", label: "Français", flag: "🇫🇷", isSource: true },
-            { code: "en", label: "English", flag: "🇬🇧" },
-            { code: "es", label: "Español", flag: "🇪🇸" },
-          ],
+          languages,
           sourceLanguage: "fr",
           keyPathSeparator: ".",
           autoSave: false,
@@ -1365,20 +1379,35 @@ export function I18nEditorPreview() {
         }}
         onSave={async () => console.log("Saving...")}
         onAddKey={async (key) => {
+          // Créer les traductions vides pour toutes les langues
+          const emptyTranslations: Record<string, { value: string }> = {}
+          languages.forEach(lang => {
+            emptyTranslations[lang.code] = { value: "" }
+          })
           setTranslations(prev => [
             ...prev,
             {
               key,
-              translations: {
-                fr: { value: "" },
-                en: { value: "" },
-                es: { value: "" },
-              },
+              translations: emptyTranslations,
             },
           ])
         }}
         onDeleteKey={async (key) => {
           setTranslations(prev => prev.filter(e => e.key !== key))
+        }}
+        onAddLanguage={async (newLang) => {
+          // Ajouter la nouvelle langue à la config
+          setLanguages(prev => [...prev, newLang])
+          // Ajouter une entrée vide pour cette langue dans toutes les traductions
+          setTranslations(prev =>
+            prev.map(entry => ({
+              ...entry,
+              translations: {
+                ...entry.translations,
+                [newLang.code]: { value: "" },
+              },
+            }))
+          )
         }}
         onExport={async () => console.log("Exporting...")}
         title="Translation Editor"
