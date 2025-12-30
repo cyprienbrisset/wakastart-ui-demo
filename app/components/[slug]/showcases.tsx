@@ -4501,15 +4501,18 @@ export const barChartShowcase: ComponentShowcaseConfig = {
       title: "Graphique en barres",
       description: "Affiche des données comparatives",
       preview: (
-        <WakaBarChart
-          data={chartData}
-          dataKeys={["ventes", "visites"]}
-          height={300}
-          title="Ventes et Visites"
-          description="Comparaison mensuelle"
-          tooltip
-          legend
-        />
+        <div className="w-full">
+          <WakaBarChart
+            data={chartData}
+            dataKeys={["ventes", "visites"]}
+            height={300}
+            title="Ventes et Visites"
+            description="Comparaison mensuelle"
+            tooltip
+            legend
+            responsive
+          />
+        </div>
       ),
       code: `<WakaBarChart
   data={[
@@ -4528,13 +4531,16 @@ export const barChartShowcase: ComponentShowcaseConfig = {
       title: "Barres empilées",
       description: "Affichage empilé des données",
       preview: (
-        <WakaBarChart
-          data={chartData}
-          dataKeys={["ventes", "visites"]}
-          height={300}
-          stacked
-          tooltip
-        />
+        <div className="w-full">
+          <WakaBarChart
+            data={chartData}
+            dataKeys={["ventes", "visites"]}
+            height={300}
+            stacked
+            tooltip
+            responsive
+          />
+        </div>
       ),
       code: `<WakaBarChart
   data={data}
@@ -4552,15 +4558,18 @@ export const lineChartShowcase: ComponentShowcaseConfig = {
       title: "Graphique en lignes",
       description: "Affiche l'évolution des données",
       preview: (
-        <WakaLineChart
-          data={chartData}
-          dataKeys={["ventes", "visites"]}
-          height={300}
-          title="Évolution"
-          dots
-          tooltip
-          legend
-        />
+        <div className="w-full">
+          <WakaLineChart
+            data={chartData}
+            dataKeys={["ventes", "visites"]}
+            height={300}
+            title="Évolution"
+            dots
+            tooltip
+            legend
+            responsive
+          />
+        </div>
       ),
       code: `<WakaLineChart
   data={data}
@@ -4581,14 +4590,17 @@ export const areaChartShowcase: ComponentShowcaseConfig = {
       title: "Graphique en aires",
       description: "Affiche des données avec remplissage",
       preview: (
-        <WakaAreaChart
-          data={chartData}
-          dataKeys={["ventes", "visites"]}
-          height={300}
-          title="Performance"
-          tooltip
-          legend
-        />
+        <div className="w-full">
+          <WakaAreaChart
+            data={chartData}
+            dataKeys={["ventes", "visites"]}
+            height={300}
+            title="Performance"
+            tooltip
+            legend
+            responsive
+          />
+        </div>
       ),
       code: `<WakaAreaChart
   data={data}
@@ -4608,15 +4620,18 @@ export const pieChartShowcase: ComponentShowcaseConfig = {
       title: "Graphique circulaire",
       description: "Distribution en camembert",
       preview: (
-        <WakaPieChart
-          data={pieData}
-          dataKey="value"
-          nameKey="name"
-          height={300}
-          title="Répartition des appareils"
-          tooltip
-          legend
-        />
+        <div className="w-full">
+          <WakaPieChart
+            data={pieData}
+            dataKey="value"
+            nameKey="name"
+            height={300}
+            title="Répartition des appareils"
+            tooltip
+            legend
+            responsive
+          />
+        </div>
       ),
       code: `<WakaPieChart
   data={[
@@ -4635,15 +4650,18 @@ export const pieChartShowcase: ComponentShowcaseConfig = {
       title: "Donut",
       description: "Camembert avec trou central",
       preview: (
-        <WakaPieChart
-          data={pieData}
-          dataKey="value"
-          nameKey="name"
-          height={300}
-          innerRadius="60%"
-          tooltip
-          legend
-        />
+        <div className="w-full">
+          <WakaPieChart
+            data={pieData}
+            dataKey="value"
+            nameKey="name"
+            height={300}
+            innerRadius="60%"
+            tooltip
+            legend
+            responsive
+          />
+        </div>
       ),
       code: `<WakaPieChart
   data={data}
