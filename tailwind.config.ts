@@ -6,9 +6,8 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./config/**/*.{js,ts,jsx,tsx}",
-    // Pour le lien local, scanner uniquement les fichiers dist et src (pas node_modules)
-    "../wakastart-ui/dist/**/*.{js,mjs}",
-    "../wakastart-ui/src/**/*.{ts,tsx}",
+    // Pour le package npm
+    "./node_modules/@wakastellar/ui/dist/**/*.{js,mjs}",
   ],
   theme: {
     container: {

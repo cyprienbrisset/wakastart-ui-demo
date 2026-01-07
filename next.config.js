@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  transpilePackages: ['@wakastart/ui'],
+  transpilePackages: ['@wakastellar/ui'],
 }
 
 module.exports = nextConfig
