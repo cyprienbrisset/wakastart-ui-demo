@@ -48,8 +48,6 @@ import {
   defaultCalendarEvents,
   WakaFileManager,
   defaultFiles,
-  WakaThemeCreatorBlock,
-  defaultThemes,
   WakaI18nEditor,
   Button,
   Card,
@@ -1255,12 +1253,10 @@ export function FileManagerPreview() {
 export function ThemeCreatorBlockPreview() {
   return (
     <PreviewWrapper fullWidth>
-      <WakaThemeCreatorBlock
-        themes={defaultThemes}
-        onSave={async () => {}}
-        previewTabs={["login", "dashboard"]}
-        showTypography={false}
-      />
+      <div className="p-8 text-center text-muted-foreground">
+        <p className="text-lg font-medium">WakaThemeCreatorBlock</p>
+        <p className="text-sm">Ce composant est en cours de refactorisation</p>
+      </div>
     </PreviewWrapper>
   )
 }

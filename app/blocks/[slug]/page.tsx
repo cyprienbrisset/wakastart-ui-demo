@@ -178,31 +178,9 @@ export default function DashboardLayout({ children }) {
     usage: `SidebarLayout gère automatiquement l'état de la sidebar et le layout responsive.`,
   },
   "theme-creator-block": {
-    code: `import { WakaThemeCreatorBlock, defaultThemes } from "@wakastellar/ui"
-
-export default function ThemeCreator() {
-  return (
-    <WakaThemeCreatorBlock
-      themes={defaultThemes}
-      onSave={async (theme) => {
-        await fetch('/api/themes', {
-          method: 'POST',
-          body: JSON.stringify(theme),
-        })
-      }}
-      onUploadAsset={async (file, assetType) => {
-        const formData = new FormData()
-        formData.append('file', file)
-        const res = await fetch('/api/upload', { method: 'POST', body: formData })
-        const { url } = await res.json()
-        return url
-      }}
-      previewTabs={['login', 'dashboard', 'chat']}
-      showTypography={true}
-    />
-  )
-}`,
-    usage: `WakaThemeCreatorBlock est une interface complète de création de thèmes similaire à TweakCN. Il permet de configurer visuellement les couleurs light et dark mode séparément, avec preview en temps réel.`,
+    code: `// Ce composant est en cours de refactorisation
+// import { WakaThemeCreatorBlock, defaultThemes } from "@wakastellar/ui"`,
+    usage: `WakaThemeCreatorBlock est en cours de refactorisation pour correspondre à la nouvelle API du ThemeProvider.`,
   },
   header: {
     code: `import { WakaHeader } from "@wakastellar/ui"
