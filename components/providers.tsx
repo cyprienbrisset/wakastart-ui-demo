@@ -476,14 +476,14 @@ function ThemeStyleInjector() {
 
     const css = `
 /* Theme: ${theme.id} - Light mode */
-[data-theme="${theme.id}"],
-:root {
+:root[data-theme="${theme.id}"],
+[data-theme="${theme.id}"] {
 ${lightVars}
 }
 
 /* Theme: ${theme.id} - Dark mode */
-[data-theme="${theme.id}"].dark,
-.dark {
+:root[data-theme="${theme.id}"].dark,
+[data-theme="${theme.id}"].dark {
 ${darkVars}
 }
 `
