@@ -4022,26 +4022,22 @@ const statShowcase: ComponentShowcaseConfig = {
 // ============================================
 
 // Mock API pour la démo
-const mockApiConfig: ThemeCreatorApiConfig = {
-  onUploadFile: async (file: File, themeId: string, assetType: string): Promise<FileUploadResponse> => {
-    // Simuler un délai d'upload
+const mockApiConfig = {
+  onUploadFile: async (file: File, _themeId: string, _assetType: string) => {
     await new Promise(resolve => setTimeout(resolve, 1000))
-    // Créer une URL locale pour la prévisualisation
     const url = URL.createObjectURL(file)
     return { url, filename: file.name, size: file.size }
   },
-  onSaveTheme: async (theme: ThemeMetadata): Promise<void> => {
-    // Simuler un délai de sauvegarde
+  onSaveTheme: async (theme: ThemeMetadata) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     console.log("[Demo] Theme saved:", theme)
   },
-  onDeleteTheme: async (themeId: string): Promise<void> => {
+  onDeleteTheme: async (themeId: string) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     console.log("[Demo] Theme deleted:", themeId)
   },
   onLoadTheme: async (themeId: string): Promise<ThemeMetadata | null> => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    // Retourner un thème mock
     return {
       id: themeId,
       label: "Thème Chargé",
