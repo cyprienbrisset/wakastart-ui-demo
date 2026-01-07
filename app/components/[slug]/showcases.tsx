@@ -113,7 +113,6 @@ import {
   WakaTimeline,
   WakaStat,
   WakaStatGroup,
-  WakaThemeCreator,
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
@@ -4021,109 +4020,20 @@ const statShowcase: ComponentShowcaseConfig = {
 // WakaThemeCreator Showcase
 // ============================================
 
-// Mock API pour la démo
-const mockApiConfig = {
-  onUploadFile: async (file: File, _themeId: string, _assetType: string) => {
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    const url = URL.createObjectURL(file)
-    return { url, filename: file.name, size: file.size }
-  },
-  onSaveTheme: async (theme: ThemeMetadata) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    console.log("[Demo] Theme saved:", theme)
-  },
-  onDeleteTheme: async (themeId: string) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    console.log("[Demo] Theme deleted:", themeId)
-  },
-  onLoadTheme: async (themeId: string): Promise<ThemeMetadata | null> => {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    return {
-      id: themeId,
-      label: "Thème Chargé",
-      description: "Thème de démonstration",
-      previewColor: "#3b82f6",
-      author: "Demo",
-      versions: [{ version: "1.0.0", createdAt: new Date(), createdBy: "Demo", css: "", changelog: "Initial" }],
-      currentVersion: "1.0.0",
-    }
-  },
-}
-
-const mockExistingThemes: ThemeMetadata[] = [
-  {
-    id: "default",
-    label: "Default",
-    description: "Thème par défaut",
-    previewColor: "#3b82f6",
-    author: "System",
-    versions: [],
-    currentVersion: "1.0.0",
-  },
-  {
-    id: "forest",
-    label: "Forêt",
-    description: "Thème naturel vert",
-    previewColor: "#22c55e",
-    author: "Demo",
-    versions: [],
-    currentVersion: "1.0.0",
-  },
-]
-
+// Note: WakaThemeCreator est en cours de refactorisation pour correspondre à la nouvelle API theme-provider
 const themeCreatorShowcase: ComponentShowcaseConfig = {
   examples: [
     {
-      title: "Créateur de thèmes complet",
-      description: "Interface complète avec onglets pour créer des thèmes, gérer les assets (logos, backgrounds) et les ressources personnalisées.",
+      title: "Créateur de thèmes",
+      description: "Ce composant est en cours de refactorisation pour correspondre à la nouvelle API du ThemeProvider.",
       preview: (
-        <div className="w-full max-w-[1200px]">
-          <WakaThemeCreator
-            apiConfig={mockApiConfig}
-            existingThemes={mockExistingThemes}
-            onSaveSuccess={(theme) => console.log("Theme saved:", theme)}
-            onDeleteSuccess={(id) => console.log("Theme deleted:", id)}
-          />
+        <div className="w-full p-8 text-center text-muted-foreground border rounded-lg">
+          <p className="text-lg font-medium">WakaThemeCreator</p>
+          <p className="text-sm">Ce composant est en cours de refactorisation</p>
         </div>
       ),
-      code: `const apiConfig: ThemeCreatorApiConfig = {
-  onUploadFile: async (file, themeId, assetType) => {
-    const formData = new FormData()
-    formData.append("file", file)
-    formData.append("themeId", themeId)
-    formData.append("assetType", assetType)
-
-    const response = await fetch("/api/themes/upload", {
-      method: "POST",
-      body: formData,
-    })
-    return response.json() // { url, filename, size }
-  },
-
-  onSaveTheme: async (theme) => {
-    await fetch("/api/themes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(theme),
-    })
-  },
-
-  onDeleteTheme: async (themeId) => {
-    await fetch(\`/api/themes/\${themeId}\`, { method: "DELETE" })
-  },
-
-  onLoadTheme: async (themeId) => {
-    const response = await fetch(\`/api/themes/\${themeId}\`)
-    return response.json()
-  },
-}
-
-<WakaThemeCreator
-  apiConfig={apiConfig}
-  existingThemes={existingThemes}
-  onSaveSuccess={(theme) => console.log("Saved:", theme)}
-  onDeleteSuccess={(id) => console.log("Deleted:", id)}
-/>`,
+      code: `// WakaThemeCreator est en cours de refactorisation
+// La documentation sera mise à jour une fois le composant terminé`,
     },
   ],
 }
