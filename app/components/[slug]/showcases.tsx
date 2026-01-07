@@ -173,7 +173,7 @@ import {
   CollapsibleTrigger,
   WakaThemeManager,
 } from "@wakastellar/ui"
-import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, ThemeCreatorApiConfig, FileUploadResponse, AutocompleteOption, AdmincrumbLevel, AdmincrumbItem, CarouselImage } from "@wakastellar/ui"
+import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, AutocompleteOption, AdmincrumbLevel, AdmincrumbItem, CarouselImage } from "@wakastellar/ui"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
