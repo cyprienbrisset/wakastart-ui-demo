@@ -453,63 +453,49 @@ export function Providers({ children }: { children: React.ReactNode }) {
           defaultLanguage: "fr",
           supportedLanguages: ["fr", "en", "es", "de"],
           languages: [
-            {
-              code: "fr",
-              label: "Français",
-              flagEmoji: "🇫🇷",
-              translations: {
-                common: {
-                  search: "Rechercher...",
-                  docs: "Documentation",
-                  components: "Composants",
-                  blocks: "Blocks",
-                  examples: "Exemples",
-                },
-              },
-            },
-            {
-              code: "en",
-              label: "English",
-              flagEmoji: "🇬🇧",
-              translations: {
-                common: {
-                  search: "Search...",
-                  docs: "Documentation",
-                  components: "Components",
-                  blocks: "Blocks",
-                  examples: "Examples",
-                },
-              },
-            },
-            {
-              code: "es",
-              label: "Español",
-              flagEmoji: "🇪🇸",
-              translations: {
-                common: {
-                  search: "Buscar...",
-                  docs: "Documentación",
-                  components: "Componentes",
-                  blocks: "Bloques",
-                  examples: "Ejemplos",
-                },
-              },
-            },
-            {
-              code: "de",
-              label: "Deutsch",
-              flagEmoji: "🇩🇪",
-              translations: {
-                common: {
-                  search: "Suchen...",
-                  docs: "Dokumentation",
-                  components: "Komponenten",
-                  blocks: "Blöcke",
-                  examples: "Beispiele",
-                },
-              },
-            },
+            { code: "fr", label: "Français", flagEmoji: "🇫🇷" },
+            { code: "en", label: "English", flagEmoji: "🇬🇧" },
+            { code: "es", label: "Español", flagEmoji: "🇪🇸" },
+            { code: "de", label: "Deutsch", flagEmoji: "🇩🇪" },
           ],
+          resources: {
+            fr: {
+              common: {
+                search: "Rechercher...",
+                docs: "Documentation",
+                components: "Composants",
+                blocks: "Blocks",
+                examples: "Exemples",
+              },
+            },
+            en: {
+              common: {
+                search: "Search...",
+                docs: "Documentation",
+                components: "Components",
+                blocks: "Blocks",
+                examples: "Examples",
+              },
+            },
+            es: {
+              common: {
+                search: "Buscar...",
+                docs: "Documentación",
+                components: "Componentes",
+                blocks: "Bloques",
+                examples: "Ejemplos",
+              },
+            },
+            de: {
+              common: {
+                search: "Suchen...",
+                docs: "Dokumentation",
+                components: "Komponenten",
+                blocks: "Blöcke",
+                examples: "Beispiele",
+              },
+            },
+          },
         },
       }}
     >
