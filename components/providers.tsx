@@ -1,9 +1,24 @@
 "use client"
 
-import { WakaProvider, Toaster } from "@wakastellar/ui"
+import { useEffect } from "react"
+import { WakaProvider, Toaster, useWaka } from "@wakastellar/ui"
+
+// Type for theme with CSS variables
+interface ThemeWithCssVars {
+  id: string
+  label: string
+  previewColor: string
+  registryItem: {
+    name: string
+    cssVars: {
+      light: Record<string, string>
+      dark: Record<string, string>
+    }
+  }
+}
 
 // Real TweakCN themes with full CSS variables
-const themes = [
+const themes: ThemeWithCssVars[] = [
   {
     id: "default",
     label: "Default",
@@ -440,6 +455,64 @@ const themes = [
   },
 ]
 
+// Component to inject CSS variables based on current theme
+function ThemeStyleInjector() {
+  const { currentTheme } = useWaka()
+
+  useEffect(() => {
+    const theme = themes.find(t => t.id === currentTheme)
+    if (!theme?.registryItem?.cssVars) return
+
+    const { light, dark } = theme.registryItem.cssVars
+
+    // Generate CSS for this theme
+    const lightVars = Object.entries(light)
+      .map(([key, value]) => `  --${key}: ${value};`)
+      .join('\n')
+
+    const darkVars = Object.entries(dark)
+      .map(([key, value]) => `  --${key}: ${value};`)
+      .join('\n')
+
+    const css = `
+/* Theme: ${theme.id} - Light mode */
+[data-theme="${theme.id}"],
+:root {
+${lightVars}
+}
+
+/* Theme: ${theme.id} - Dark mode */
+[data-theme="${theme.id}"].dark,
+.dark {
+${darkVars}
+}
+`
+
+    // Remove existing theme style element
+    const existingStyle = document.getElementById('waka-theme-vars')
+    if (existingStyle) {
+      existingStyle.remove()
+    }
+
+    // Inject new style element
+    const styleElement = document.createElement('style')
+    styleElement.id = 'waka-theme-vars'
+    styleElement.textContent = css
+    document.head.appendChild(styleElement)
+
+    // Apply data-theme attribute
+    document.documentElement.setAttribute('data-theme', currentTheme)
+
+    return () => {
+      // Cleanup on unmount
+      const style = document.getElementById('waka-theme-vars')
+      if (style) style.remove()
+    }
+  }, [currentTheme])
+
+  return null
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WakaProvider
@@ -499,6 +572,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
       }}
     >
+      <ThemeStyleInjector />
       {children}
       <Toaster />
     </WakaProvider>
