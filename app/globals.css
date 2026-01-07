@@ -26,8 +26,8 @@
 .preview-grid {
   background-size: 20px 20px;
   background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
 }
 
 /* Scrollbar styles */
@@ -45,5 +45,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
+  @apply bg-muted-foreground/50;
 }
