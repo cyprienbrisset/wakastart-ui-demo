@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "@wakastellar/ui/dist/ui.css"
+import "@wakastellar/ui/styles"
 import "./globals.css"
 import { Providers } from "@/components/providers"
 import { SiteHeader } from "@/components/layout/site-header"
