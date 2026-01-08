@@ -1011,7 +1011,7 @@ export function ChatPreview() {
   // Mode selector: "chat" (embedded) or "widget" (floating bubble)
   const [mode, setMode] = useState<"chat" | "widget">("chat")
   const [widgetOpen, setWidgetOpen] = useState(false)
-  const [widgetPosition, setWidgetPosition] = useState({ x: 320, y: 350 })
+  const [widgetPosition, setWidgetPosition] = useState({ x: 500, y: 420 })
 
   // Widget customization
   const [bubbleColor, setBubbleColor] = useState<"primary" | "secondary" | "success">("primary")
@@ -1201,7 +1201,28 @@ export function ChatPreview() {
             </button>
 
             {/* Chat Widget */}
-            {widgetOpen && (
+            {widgetOpen && (() => {
+              // Calculate widget dimensions
+              const widgetWidth = widgetSize === "sm" ? 280 : widgetSize === "md" ? 350 : 400
+              const widgetHeight = widgetSize === "sm" ? 350 : widgetSize === "md" ? 450 : 550
+              const bubbleSize = 56 // h-14 = 56px
+              const gap = 12
+
+              // Position widget to the left and above the bubble
+              let widgetX = widgetPosition.x - widgetWidth + bubbleSize
+              let widgetY = widgetPosition.y - widgetHeight - gap
+
+              // If widget would go off-screen top, position it below the bubble
+              if (widgetY < 0) {
+                widgetY = widgetPosition.y + bubbleSize + gap
+              }
+
+              // If widget would go off-screen left, align to the right of bubble
+              if (widgetX < 0) {
+                widgetX = widgetPosition.x
+              }
+
+              return (
               <div
                 className={`
                   absolute rounded-xl shadow-2xl border bg-background overflow-hidden
@@ -1211,8 +1232,8 @@ export function ChatPreview() {
                   ${widgetSize === "lg" ? "h-[550px] w-[400px]" : ""}
                 `}
                 style={{
-                  left: Math.max(0, widgetPosition.x - (widgetSize === "sm" ? 220 : widgetSize === "md" ? 290 : 340)),
-                  top: Math.max(0, widgetPosition.y - (widgetSize === "sm" ? 360 : widgetSize === "md" ? 460 : 560)),
+                  left: widgetX,
+                  top: widgetY,
                 }}
               >
                 <WakaChat
@@ -1237,7 +1258,8 @@ export function ChatPreview() {
                   className="h-full"
                 />
               </div>
-            )}
+              )
+            })()}
           </div>
         </div>
       )}
