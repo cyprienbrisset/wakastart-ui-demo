@@ -272,9 +272,13 @@ export const blocks: BlockDefinition[] = [
   {
     name: "WakaChat",
     slug: "chat",
-    description: "Interface de messagerie complète avec modes widget et flottant.",
+    description: "Interface de messagerie complète avec widget flottant et bulle repositionnable.",
     category: "Communication",
     features: [
+      "Widget flottant avec bulle draggable",
+      "Position de la bulle persistée (localStorage)",
+      "Personnalisation de la bulle (couleur, taille, animation)",
+      "Badge de messages non lus",
       "Liste des conversations",
       "Bulles de messages avec statut",
       "Séparateurs de date (Aujourd'hui, Hier)",
@@ -282,11 +286,7 @@ export const blocks: BlockDefinition[] = [
       "Indicateurs de statut (en ligne, absent, etc.)",
       "Placeholder dynamique avec nom du destinataire",
       "Raccourcis clavier (Entrée, Shift+Entrée)",
-      "Réponses aux messages",
-      "Pièces jointes",
-      "Boutons appel audio/vidéo",
-      "Mode widget minimisable",
-      "État de chargement",
+      "Hook useChatWidget pour contrôle programmatique",
     ],
   },
   {

@@ -627,10 +627,11 @@ export default function KanbanPage() {
     usage: `WakaKanbanBoard crée un tableau Kanban complet avec drag & drop, priorités, labels, assignés, dates limites et gestion des colonnes.`,
   },
   chat: {
-    code: `import { WakaChat } from "@wakastellar/ui"
+    code: `import { WakaChat, WakaChatWidget, useChatWidget } from "@wakastellar/ui"
 import { useState } from "react"
 
-export default function ChatPage() {
+// === Mode intégré (embedded) ===
+export function EmbeddedChat() {
   const currentUser = { id: "1", name: "John Doe", status: "online" }
   const jane = { id: "2", name: "Jane", status: "online" }
 
@@ -659,20 +660,71 @@ export default function ChatPage() {
           timestamp: new Date(),
         }])
       }}
-      // Layout: "full" | "embedded" | "floating" | "widget"
       layout="embedded"
-      // Nouvelles fonctionnalités
-      showDateSeparators        // Séparateurs "Aujourd'hui", "Hier"
-      showInputHint             // Indication sous le champ
-      inputHintText="Entrée pour envoyer"
-      showHeaderStatus          // Statut en ligne/hors ligne
-      showCloseButton           // Pour modes widget/floating
-      onClose={() => {}}        // Callback fermeture
-      onMinimize={() => {}}     // Callback minimisation
+      showDateSeparators
+      showInputHint
     />
   )
+}
+
+// === Mode Widget flottant avec bulle draggable ===
+export function FloatingChatWidget() {
+  const currentUser = { id: "1", name: "John Doe", status: "online" }
+  const conversations = [/* ... */]
+
+  return (
+    <WakaChatWidget
+      currentUser={currentUser}
+      conversations={conversations}
+      // Bulle personnalisable
+      bubbleSize="md"              // "sm" | "md" | "lg"
+      bubbleColor="primary"        // "primary" | "secondary" | "success" | "warning" | "destructive"
+      bubbleAnimation="pulse"      // "none" | "pulse" | "bounce"
+      bubbleText="Chat"            // Texte optionnel à côté de l'icône
+      showUnreadBadge              // Badge avec nombre de messages non lus
+      // Position et drag
+      draggable                    // Bulle repositionnable par drag & drop
+      persistPosition              // Sauvegarde position dans localStorage
+      defaultPosition={{ x: 50, y: 50 }}  // Position par défaut
+      constrainToViewport          // Garde la bulle visible
+      // Widget
+      widgetSize="md"              // Taille du chat ouvert
+      widgetPosition="top-left"    // Position relative à la bulle
+      // Callbacks
+      onWidgetClose={() => console.log("Fermé")}
+      onWidgetMinimize={() => console.log("Minimisé")}
+    />
+  )
+}
+
+// === Hook pour contrôle programmatique ===
+export function ChatWithHook() {
+  const chat = useChatWidget({
+    defaultOpen: false,
+    persistPosition: true,
+  })
+
+  return (
+    <>
+      <button onClick={chat.open}>Ouvrir le chat</button>
+      <button onClick={chat.toggle}>Toggle</button>
+      <button onClick={chat.resetPosition}>Reset position</button>
+
+      <WakaChatWidget
+        {...chat.widgetProps}
+        currentUser={currentUser}
+        conversations={conversations}
+      />
+    </>
+  )
 }`,
-    usage: `WakaChat fournit une interface de messagerie complète. Supporte 4 modes de layout (full, embedded, floating, widget), des séparateurs de date (Aujourd'hui, Hier), des raccourcis clavier, un placeholder dynamique avec le nom du destinataire, et un état minimisé pour les modes widget/floating.`,
+    usage: `WakaChat fournit une interface de messagerie complète avec 2 composants principaux:
+
+**WakaChat** - Chat intégré avec 4 modes de layout (full, embedded, floating, widget), séparateurs de date, raccourcis clavier et placeholder dynamique.
+
+**WakaChatWidget** - Widget flottant avec bulle draggable et repositionnable. La bulle est entièrement personnalisable (couleur, taille, animation) et sa position est persistée dans localStorage. Le widget s'ouvre au clic sur la bulle.
+
+**useChatWidget** - Hook pour contrôler le widget programmatiquement (open, close, toggle, resetPosition).`,
   },
   "calendar-view": {
     code: `import { WakaCalendarView } from "@wakastellar/ui"

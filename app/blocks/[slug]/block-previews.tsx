@@ -41,6 +41,8 @@ import {
   WakaKanbanBoard,
   defaultKanbanColumns,
   WakaChat,
+  WakaChatWidget,
+  useChatWidget,
   defaultChatUser,
   defaultChatConversations,
   defaultChatMessages,
@@ -1006,49 +1008,239 @@ export function ChatPreview() {
     }))
   }
 
+  // Mode selector: "chat" (embedded) or "widget" (floating bubble)
+  const [mode, setMode] = useState<"chat" | "widget">("chat")
+  const [widgetOpen, setWidgetOpen] = useState(false)
+  const [widgetPosition, setWidgetPosition] = useState({ x: 320, y: 350 })
+
+  // Widget customization
+  const [bubbleColor, setBubbleColor] = useState<"primary" | "secondary" | "success">("primary")
+  const [bubbleAnimation, setBubbleAnimation] = useState<"none" | "pulse" | "bounce">("none")
+  const [widgetSize, setWidgetSize] = useState<"sm" | "md" | "lg">("md")
+
   return (
     <div className="space-y-4">
-      {/* Layout selector */}
-      <div className="flex items-center gap-2 p-4 bg-muted/50 rounded-lg border">
-        <span className="text-sm font-medium">Layout :</span>
-        <div className="flex gap-1">
-          {(["embedded", "full", "floating", "widget"] as const).map((l) => (
+      {/* Mode selector */}
+      <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/50 rounded-lg border">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Mode :</span>
+          <div className="flex gap-1">
             <Button
-              key={l}
-              variant={layout === l ? "default" : "outline"}
+              variant={mode === "chat" ? "default" : "outline"}
               size="sm"
-              onClick={() => setLayout(l)}
+              onClick={() => setMode("chat")}
             >
-              {l === "embedded" ? "Embedded" : l === "full" ? "Full" : l === "floating" ? "Floating" : "Widget"}
+              Chat intégré
             </Button>
-          ))}
+            <Button
+              variant={mode === "widget" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setMode("widget")}
+            >
+              Widget flottant
+            </Button>
+          </div>
         </div>
+
+        {mode === "chat" && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium">Layout :</span>
+            <div className="flex gap-1">
+              {(["embedded", "floating"] as const).map((l) => (
+                <Button
+                  key={l}
+                  variant={layout === l ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setLayout(l)}
+                >
+                  {l === "embedded" ? "Embedded" : "Floating"}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {mode === "widget" && (
+          <>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Couleur :</span>
+              <div className="flex gap-1">
+                {(["primary", "secondary", "success"] as const).map((c) => (
+                  <Button
+                    key={c}
+                    variant={bubbleColor === c ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setBubbleColor(c)}
+                  >
+                    {c === "primary" ? "Primary" : c === "secondary" ? "Secondary" : "Success"}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Animation :</span>
+              <div className="flex gap-1">
+                {(["none", "pulse", "bounce"] as const).map((a) => (
+                  <Button
+                    key={a}
+                    variant={bubbleAnimation === a ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setBubbleAnimation(a)}
+                  >
+                    {a === "none" ? "Aucune" : a === "pulse" ? "Pulse" : "Bounce"}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Taille :</span>
+              <div className="flex gap-1">
+                {(["sm", "md", "lg"] as const).map((s) => (
+                  <Button
+                    key={s}
+                    variant={widgetSize === s ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setWidgetSize(s)}
+                  >
+                    {s.toUpperCase()}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
-      <PreviewWrapper fullWidth>
-        <div className={layout === "floating" || layout === "widget" ? "flex justify-end p-4 bg-muted/30 min-h-[550px]" : ""}>
-          <WakaChat
-            currentUser={currentUser}
-            conversations={conversations}
-            messages={currentMessages}
-            activeConversation={activeConversation}
-            onSendMessage={handleSendMessage}
-            onConversationSelect={handleConversationSelect}
-            onMessageDelete={handleDeleteMessage}
-            showConversationList={layout === "embedded" || layout === "full"}
-            showMessageStatus
-            showTimestamps
-            showHeader
-            showDateSeparators
-            showInputHint
-            showHeaderStatus
-            inputHintText="Entrée pour envoyer, Shift+Entrée pour nouvelle ligne"
-            layout={layout}
-            showCloseButton={layout === "floating" || layout === "widget"}
-            onClose={() => console.log("Chat closed")}
-          />
+      {mode === "chat" ? (
+        <PreviewWrapper fullWidth>
+          <div className={layout === "floating" ? "flex justify-end p-4 bg-muted/30 min-h-[550px]" : ""}>
+            <WakaChat
+              currentUser={currentUser}
+              conversations={conversations}
+              messages={currentMessages}
+              activeConversation={activeConversation}
+              onSendMessage={handleSendMessage}
+              onConversationSelect={handleConversationSelect}
+              onMessageDelete={handleDeleteMessage}
+              showConversationList={layout === "embedded"}
+              showMessageStatus
+              showTimestamps
+              showHeader
+              showDateSeparators
+              showInputHint
+              showHeaderStatus
+              inputHintText="Entrée pour envoyer, Shift+Entrée pour nouvelle ligne"
+              layout={layout}
+              showCloseButton={layout === "floating"}
+              onClose={() => console.log("Chat closed")}
+            />
+          </div>
+        </PreviewWrapper>
+      ) : (
+        <div className="relative border rounded-lg bg-gradient-to-br from-muted/30 to-muted/50 min-h-[500px] overflow-hidden">
+          {/* Instructions */}
+          <div className="absolute top-4 left-4 max-w-xs space-y-2">
+            <h4 className="font-semibold">Widget Chat Flottant</h4>
+            <p className="text-sm text-muted-foreground">
+              Cliquez sur la bulle en bas à droite pour ouvrir le chat.
+              Vous pouvez <strong>glisser-déposer</strong> la bulle pour la repositionner.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              La position est sauvegardée automatiquement dans le localStorage.
+            </p>
+          </div>
+
+          {/* Widget in isolated container */}
+          <div className="absolute inset-0" style={{ position: "relative" }}>
+            {/* Bubble */}
+            <button
+              onClick={() => setWidgetOpen(!widgetOpen)}
+              onMouseDown={(e) => {
+                const startX = e.clientX - widgetPosition.x
+                const startY = e.clientY - widgetPosition.y
+                const rect = e.currentTarget.parentElement?.getBoundingClientRect()
+
+                const handleMove = (ev: MouseEvent) => {
+                  if (!rect) return
+                  const newX = Math.max(0, Math.min(ev.clientX - startX - rect.left, rect.width - 60))
+                  const newY = Math.max(0, Math.min(ev.clientY - startY - rect.top, rect.height - 60))
+                  setWidgetPosition({ x: newX, y: newY })
+                }
+
+                const handleUp = () => {
+                  document.removeEventListener("mousemove", handleMove)
+                  document.removeEventListener("mouseup", handleUp)
+                }
+
+                document.addEventListener("mousemove", handleMove)
+                document.addEventListener("mouseup", handleUp)
+              }}
+              className={`
+                absolute rounded-full shadow-lg transition-all duration-200 cursor-grab active:cursor-grabbing
+                flex items-center justify-center
+                ${bubbleColor === "primary" ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""}
+                ${bubbleColor === "secondary" ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""}
+                ${bubbleColor === "success" ? "bg-green-500 text-white hover:bg-green-600" : ""}
+                ${bubbleAnimation === "pulse" ? "animate-pulse" : ""}
+                ${bubbleAnimation === "bounce" ? "animate-bounce" : ""}
+                ${widgetOpen ? "opacity-0 pointer-events-none scale-75" : ""}
+                h-14 w-14
+              `}
+              style={{
+                left: widgetPosition.x,
+                top: widgetPosition.y,
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+              {/* Unread badge */}
+              {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0) > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1.5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center text-xs font-bold">
+                  {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0)}
+                </span>
+              )}
+            </button>
+
+            {/* Chat Widget */}
+            {widgetOpen && (
+              <div
+                className={`
+                  absolute rounded-xl shadow-2xl border bg-background overflow-hidden
+                  animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-200
+                  ${widgetSize === "sm" ? "h-[350px] w-[280px]" : ""}
+                  ${widgetSize === "md" ? "h-[450px] w-[350px]" : ""}
+                  ${widgetSize === "lg" ? "h-[550px] w-[400px]" : ""}
+                `}
+                style={{
+                  left: Math.max(0, widgetPosition.x - (widgetSize === "sm" ? 220 : widgetSize === "md" ? 290 : 340)),
+                  top: Math.max(0, widgetPosition.y - (widgetSize === "sm" ? 360 : widgetSize === "md" ? 460 : 560)),
+                }}
+              >
+                <WakaChat
+                  currentUser={currentUser}
+                  conversations={conversations}
+                  messages={currentMessages}
+                  activeConversation={activeConversation}
+                  onSendMessage={handleSendMessage}
+                  onConversationSelect={handleConversationSelect}
+                  onMessageDelete={handleDeleteMessage}
+                  showConversationList={false}
+                  showMessageStatus
+                  showTimestamps
+                  showHeader
+                  showDateSeparators
+                  showInputHint={false}
+                  showHeaderStatus
+                  layout="widget"
+                  showCloseButton
+                  onClose={() => setWidgetOpen(false)}
+                  onMinimize={() => setWidgetOpen(false)}
+                  className="h-full"
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </PreviewWrapper>
+      )}
     </div>
   )
 }
