@@ -1011,7 +1011,13 @@ export function ChatPreview() {
   // Mode selector: "chat" (embedded) or "widget" (floating bubble)
   const [mode, setMode] = useState<"chat" | "widget">("chat")
   const [widgetOpen, setWidgetOpen] = useState(false)
-  const [widgetPosition, setWidgetPosition] = useState({ x: 500, y: 420 })
+  // Initialize position to bottom-right of screen
+  const [widgetPosition, setWidgetPosition] = useState(() => {
+    if (typeof window !== "undefined") {
+      return { x: window.innerWidth - 80, y: window.innerHeight - 80 }
+    }
+    return { x: 500, y: 500 }
+  })
 
   // Widget customization
   const [bubbleColor, setBubbleColor] = useState<"primary" | "secondary" | "success">("primary")
@@ -1137,95 +1143,104 @@ export function ChatPreview() {
           </div>
         </PreviewWrapper>
       ) : (
-        <div className="relative border rounded-lg bg-gradient-to-br from-muted/30 to-muted/50 min-h-[500px] overflow-hidden">
+        <>
           {/* Instructions */}
-          <div className="absolute top-4 left-4 max-w-xs space-y-2">
-            <h4 className="font-semibold">Widget Chat Flottant</h4>
-            <p className="text-sm text-muted-foreground">
-              Cliquez sur la bulle en bas à droite pour ouvrir le chat.
-              Vous pouvez <strong>glisser-déposer</strong> la bulle pour la repositionner.
+          <div className="border rounded-lg bg-gradient-to-br from-muted/30 to-muted/50 p-6 space-y-4">
+            <h4 className="font-semibold text-lg">Widget Chat Flottant</h4>
+            <p className="text-muted-foreground">
+              La bulle de chat est positionnée en bas à droite de l&apos;écran.
+              Vous pouvez <strong>glisser-déposer</strong> la bulle n&apos;importe où sur l&apos;écran.
             </p>
-            <p className="text-xs text-muted-foreground">
-              La position est sauvegardée automatiquement dans le localStorage.
-            </p>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>• Cliquez sur la bulle pour ouvrir le chat</li>
+              <li>• Maintenez et glissez pour repositionner</li>
+              <li>• La position est sauvegardée dans le localStorage</li>
+              <li>• Personnalisez la couleur, l&apos;animation et la taille ci-dessus</li>
+            </ul>
           </div>
 
-          {/* Widget in isolated container */}
-          <div className="absolute inset-0" style={{ position: "relative" }}>
-            {/* Bubble */}
-            <button
-              onClick={() => setWidgetOpen(!widgetOpen)}
-              onMouseDown={(e) => {
-                const startX = e.clientX - widgetPosition.x
-                const startY = e.clientY - widgetPosition.y
-                const rect = e.currentTarget.parentElement?.getBoundingClientRect()
+          {/* Floating Bubble - Fixed position on screen */}
+          <button
+            onClick={() => setWidgetOpen(!widgetOpen)}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              const startX = e.clientX - widgetPosition.x
+              const startY = e.clientY - widgetPosition.y
 
-                const handleMove = (ev: MouseEvent) => {
-                  if (!rect) return
-                  const newX = Math.max(0, Math.min(ev.clientX - startX - rect.left, rect.width - 60))
-                  const newY = Math.max(0, Math.min(ev.clientY - startY - rect.top, rect.height - 60))
-                  setWidgetPosition({ x: newX, y: newY })
-                }
-
-                const handleUp = () => {
-                  document.removeEventListener("mousemove", handleMove)
-                  document.removeEventListener("mouseup", handleUp)
-                }
-
-                document.addEventListener("mousemove", handleMove)
-                document.addEventListener("mouseup", handleUp)
-              }}
-              className={`
-                absolute rounded-full shadow-lg transition-all duration-200 cursor-grab active:cursor-grabbing
-                flex items-center justify-center
-                ${bubbleColor === "primary" ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""}
-                ${bubbleColor === "secondary" ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""}
-                ${bubbleColor === "success" ? "bg-green-500 text-white hover:bg-green-600" : ""}
-                ${bubbleAnimation === "pulse" ? "animate-pulse" : ""}
-                ${bubbleAnimation === "bounce" ? "animate-bounce" : ""}
-                ${widgetOpen ? "opacity-0 pointer-events-none scale-75" : ""}
-                h-14 w-14
-              `}
-              style={{
-                left: widgetPosition.x,
-                top: widgetPosition.y,
-              }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
-              {/* Unread badge */}
-              {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0) > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1.5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center text-xs font-bold">
-                  {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0)}
-                </span>
-              )}
-            </button>
-
-            {/* Chat Widget */}
-            {widgetOpen && (() => {
-              // Calculate widget dimensions
-              const widgetWidth = widgetSize === "sm" ? 280 : widgetSize === "md" ? 350 : 400
-              const widgetHeight = widgetSize === "sm" ? 350 : widgetSize === "md" ? 450 : 550
-              const bubbleSize = 56 // h-14 = 56px
-              const gap = 12
-
-              // Position widget to the left and above the bubble
-              let widgetX = widgetPosition.x - widgetWidth + bubbleSize
-              let widgetY = widgetPosition.y - widgetHeight - gap
-
-              // If widget would go off-screen top, position it below the bubble
-              if (widgetY < 0) {
-                widgetY = widgetPosition.y + bubbleSize + gap
+              const handleMove = (ev: MouseEvent) => {
+                const newX = Math.max(16, Math.min(ev.clientX - startX, window.innerWidth - 72))
+                const newY = Math.max(16, Math.min(ev.clientY - startY, window.innerHeight - 72))
+                setWidgetPosition({ x: newX, y: newY })
               }
 
-              // If widget would go off-screen left, align to the right of bubble
-              if (widgetX < 0) {
-                widgetX = widgetPosition.x
+              const handleUp = () => {
+                document.removeEventListener("mousemove", handleMove)
+                document.removeEventListener("mouseup", handleUp)
               }
 
-              return (
+              document.addEventListener("mousemove", handleMove)
+              document.addEventListener("mouseup", handleUp)
+            }}
+            className={`
+              fixed rounded-full shadow-lg transition-all duration-200 cursor-grab active:cursor-grabbing
+              flex items-center justify-center z-[9999]
+              ${bubbleColor === "primary" ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""}
+              ${bubbleColor === "secondary" ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""}
+              ${bubbleColor === "success" ? "bg-green-500 text-white hover:bg-green-600" : ""}
+              ${bubbleAnimation === "pulse" ? "animate-pulse" : ""}
+              ${bubbleAnimation === "bounce" ? "animate-bounce" : ""}
+              ${widgetOpen ? "opacity-0 pointer-events-none scale-75" : ""}
+              h-14 w-14
+            `}
+            style={{
+              left: widgetPosition.x,
+              top: widgetPosition.y,
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+            {/* Unread badge */}
+            {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0) > 0 && (
+              <span className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1.5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center text-xs font-bold">
+                {conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0)}
+              </span>
+            )}
+          </button>
+
+          {/* Chat Widget - Fixed position */}
+          {widgetOpen && (() => {
+            const widgetWidth = widgetSize === "sm" ? 280 : widgetSize === "md" ? 350 : 400
+            const widgetHeight = widgetSize === "sm" ? 350 : widgetSize === "md" ? 450 : 550
+            const bubbleSizePx = 56
+            const gap = 12
+
+            // Position widget above and to the left of bubble
+            let widgetX = widgetPosition.x - widgetWidth + bubbleSizePx
+            let widgetY = widgetPosition.y - widgetHeight - gap
+
+            // If widget would go off-screen top, position below
+            if (widgetY < 16) {
+              widgetY = widgetPosition.y + bubbleSizePx + gap
+            }
+
+            // If widget would go off-screen left, align to right of bubble
+            if (widgetX < 16) {
+              widgetX = widgetPosition.x
+            }
+
+            // If widget would go off-screen right
+            if (widgetX + widgetWidth > window.innerWidth - 16) {
+              widgetX = window.innerWidth - widgetWidth - 16
+            }
+
+            // If widget would go off-screen bottom
+            if (widgetY + widgetHeight > window.innerHeight - 16) {
+              widgetY = window.innerHeight - widgetHeight - 16
+            }
+
+            return (
               <div
                 className={`
-                  absolute rounded-xl shadow-2xl border bg-background overflow-hidden
+                  fixed rounded-xl shadow-2xl border bg-background overflow-hidden z-[10000]
                   animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-200
                   ${widgetSize === "sm" ? "h-[350px] w-[280px]" : ""}
                   ${widgetSize === "md" ? "h-[450px] w-[350px]" : ""}
@@ -1258,10 +1273,17 @@ export function ChatPreview() {
                   className="h-full"
                 />
               </div>
-              )
-            })()}
-          </div>
-        </div>
+            )
+          })()}
+
+          {/* Backdrop for mobile */}
+          {widgetOpen && (
+            <div
+              className="fixed inset-0 bg-black/20 z-[9998] sm:hidden"
+              onClick={() => setWidgetOpen(false)}
+            />
+          )}
+        </>
       )}
     </div>
   )
