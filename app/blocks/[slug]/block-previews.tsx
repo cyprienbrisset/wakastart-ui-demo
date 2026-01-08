@@ -756,7 +756,7 @@ export function KanbanBoardPreview() {
   )
 }
 
-// Chat Preview - Interactive
+// Chat Preview - Interactive with new features
 // Using types from @wakastellar/ui
 type ChatUserType = {
   id: string
@@ -806,6 +806,16 @@ export function ChatPreview() {
   ]
 
   const [activeConversationId, setActiveConversationId] = useState("conv-1")
+  const [layout, setLayout] = useState<"full" | "embedded" | "floating" | "widget">("embedded")
+
+  // Messages with date separators (yesterday and today)
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  yesterday.setHours(14, 30, 0, 0)
+
+  const yesterdayLater = new Date()
+  yesterdayLater.setDate(yesterdayLater.getDate() - 1)
+  yesterdayLater.setHours(15, 45, 0, 0)
 
   const initialMessages: Record<string, ChatMessageType[]> = {
     "conv-1": [
@@ -813,41 +823,48 @@ export function ChatPreview() {
         id: "msg-1",
         content: "Salut John ! Comment ça va ?",
         sender: otherUsers[0],
-        timestamp: new Date(Date.now() - 3600000),
+        timestamp: yesterday,
         status: "read",
       },
       {
         id: "msg-2",
         content: "Tu as vu le nouveau design ?",
         sender: otherUsers[0],
-        timestamp: new Date(Date.now() - 3000000),
+        timestamp: yesterdayLater,
         status: "read",
       },
       {
         id: "msg-3",
         content: "Oui, il est super ! J'adore les couleurs.",
         sender: currentUser,
-        timestamp: new Date(Date.now() - 2400000),
+        timestamp: new Date(Date.now() - 3600000),
         status: "delivered",
+      },
+      {
+        id: "msg-4",
+        content: "On se fait une réunion demain pour en discuter ?",
+        sender: otherUsers[0],
+        timestamp: new Date(Date.now() - 1800000),
+        status: "read",
       },
     ],
     "conv-2": [
       {
-        id: "msg-4",
+        id: "msg-5",
         content: "Hey, tu es dispo pour une réunion demain ?",
         sender: otherUsers[1],
         timestamp: new Date(Date.now() - 86400000),
         status: "read",
       },
       {
-        id: "msg-5",
+        id: "msg-6",
         content: "Oui, ça me va ! 14h ?",
         sender: currentUser,
         timestamp: new Date(Date.now() - 82800000),
         status: "delivered",
       },
       {
-        id: "msg-6",
+        id: "msg-7",
         content: "Parfait, je t'envoie l'invite.",
         sender: otherUsers[1],
         timestamp: new Date(Date.now() - 79200000),
@@ -856,7 +873,7 @@ export function ChatPreview() {
     ],
     "conv-3": [
       {
-        id: "msg-7",
+        id: "msg-8",
         content: "N'oublie pas d'envoyer le rapport !",
         sender: otherUsers[2],
         timestamp: new Date(Date.now() - 172800000),
@@ -872,13 +889,13 @@ export function ChatPreview() {
       id: "conv-1",
       participants: [currentUser, otherUsers[0]],
       lastMessage: initialMessages["conv-1"][initialMessages["conv-1"].length - 1],
-      unreadCount: 0,
+      unreadCount: 2,
     },
     {
       id: "conv-2",
       participants: [currentUser, otherUsers[1]],
       lastMessage: initialMessages["conv-2"][initialMessages["conv-2"].length - 1],
-      unreadCount: 1,
+      unreadCount: 0,
     },
     {
       id: "conv-3",
@@ -990,21 +1007,49 @@ export function ChatPreview() {
   }
 
   return (
-    <PreviewWrapper fullWidth>
-      <WakaChat
-        currentUser={currentUser}
-        conversations={conversations}
-        messages={currentMessages}
-        activeConversation={activeConversation}
-        onSendMessage={handleSendMessage}
-        onConversationSelect={handleConversationSelect}
-        onMessageDelete={handleDeleteMessage}
-        showConversationList
-        showMessageStatus
-        showTimestamps
-        showHeader
-      />
-    </PreviewWrapper>
+    <div className="space-y-4">
+      {/* Layout selector */}
+      <div className="flex items-center gap-2 p-4 bg-muted/50 rounded-lg border">
+        <span className="text-sm font-medium">Layout :</span>
+        <div className="flex gap-1">
+          {(["embedded", "full", "floating", "widget"] as const).map((l) => (
+            <Button
+              key={l}
+              variant={layout === l ? "default" : "outline"}
+              size="sm"
+              onClick={() => setLayout(l)}
+            >
+              {l === "embedded" ? "Embedded" : l === "full" ? "Full" : l === "floating" ? "Floating" : "Widget"}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <PreviewWrapper fullWidth>
+        <div className={layout === "floating" || layout === "widget" ? "flex justify-end p-4 bg-muted/30 min-h-[550px]" : ""}>
+          <WakaChat
+            currentUser={currentUser}
+            conversations={conversations}
+            messages={currentMessages}
+            activeConversation={activeConversation}
+            onSendMessage={handleSendMessage}
+            onConversationSelect={handleConversationSelect}
+            onMessageDelete={handleDeleteMessage}
+            showConversationList={layout === "embedded" || layout === "full"}
+            showMessageStatus
+            showTimestamps
+            showHeader
+            showDateSeparators
+            showInputHint
+            showHeaderStatus
+            inputHintText="Entrée pour envoyer, Shift+Entrée pour nouvelle ligne"
+            layout={layout}
+            showCloseButton={layout === "floating" || layout === "widget"}
+            onClose={() => console.log("Chat closed")}
+          />
+        </div>
+      </PreviewWrapper>
+    </div>
   )
 }
 

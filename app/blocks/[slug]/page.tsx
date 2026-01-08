@@ -628,28 +628,51 @@ export default function KanbanPage() {
   },
   chat: {
     code: `import { WakaChat } from "@wakastellar/ui"
+import { useState } from "react"
 
 export default function ChatPage() {
-  const currentUser = { id: "1", name: "John Doe" }
+  const currentUser = { id: "1", name: "John Doe", status: "online" }
+  const jane = { id: "2", name: "Jane", status: "online" }
+
+  const [messages, setMessages] = useState([
+    { id: "1", content: "Salut !", sender: jane, timestamp: new Date() },
+  ])
+
+  const conversations = [{
+    id: "1",
+    participants: [currentUser, jane],
+    lastMessage: messages[messages.length - 1],
+    unreadCount: 2,
+  }]
 
   return (
     <WakaChat
       currentUser={currentUser}
-      conversations={[
-        {
-          id: "1",
-          participants: [currentUser, { id: "2", name: "Jane" }],
-          lastMessage: { content: "Salut !" },
-        },
-      ]}
-      messages={[
-        { id: "1", content: "Salut !", sender: { id: "2", name: "Jane" }, timestamp: new Date() },
-      ]}
-      onSendMessage={(content) => console.log("Send:", content)}
+      conversations={conversations}
+      messages={messages}
+      activeConversation={conversations[0]}
+      onSendMessage={(content) => {
+        setMessages([...messages, {
+          id: Date.now().toString(),
+          content,
+          sender: currentUser,
+          timestamp: new Date(),
+        }])
+      }}
+      // Layout: "full" | "embedded" | "floating" | "widget"
+      layout="embedded"
+      // Nouvelles fonctionnalités
+      showDateSeparators        // Séparateurs "Aujourd'hui", "Hier"
+      showInputHint             // Indication sous le champ
+      inputHintText="Entrée pour envoyer"
+      showHeaderStatus          // Statut en ligne/hors ligne
+      showCloseButton           // Pour modes widget/floating
+      onClose={() => {}}        // Callback fermeture
+      onMinimize={() => {}}     // Callback minimisation
     />
   )
 }`,
-    usage: `WakaChat fournit une interface de messagerie complète avec liste de conversations, bulles de messages, statuts, réponses et appels audio/vidéo.`,
+    usage: `WakaChat fournit une interface de messagerie complète. Supporte 4 modes de layout (full, embedded, floating, widget), des séparateurs de date (Aujourd'hui, Hier), des raccourcis clavier, un placeholder dynamique avec le nom du destinataire, et un état minimisé pour les modes widget/floating.`,
   },
   "calendar-view": {
     code: `import { WakaCalendarView } from "@wakastellar/ui"
