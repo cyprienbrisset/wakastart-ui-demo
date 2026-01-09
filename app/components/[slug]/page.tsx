@@ -120,8 +120,8 @@ export default function ComponentPage({ params }: ComponentPageProps) {
           </div>
 
           {/* Quick Import */}
-          <div className="mt-6 flex items-center gap-3 p-3 rounded-lg bg-muted/50 border">
-            <code className="flex-1 text-sm font-mono text-muted-foreground">
+          <div className="mt-6 flex items-center gap-3 p-3 rounded-lg bg-muted border">
+            <code className="flex-1 text-sm font-mono text-foreground">
               {importCode}
             </code>
             <Button

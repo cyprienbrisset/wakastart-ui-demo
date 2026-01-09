@@ -564,16 +564,14 @@ export function EmptyStatesPreview() {
     <PreviewWrapper>
       <div className="p-4">
         <WakaEmptyState
-          type="no-data"
+          illustration="inbox"
           title="Aucune donnée"
           description="Commencez par ajouter votre premier élément."
-          actions={[
-            {
-              label: "Ajouter",
-              icon: <Plus className="h-4 w-4" />,
-              onClick: () => {},
-            },
-          ]}
+          primaryAction={{
+            label: "Ajouter",
+            icon: <Plus className="h-4 w-4" />,
+            onClick: () => {},
+          }}
         />
       </div>
     </PreviewWrapper>

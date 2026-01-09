@@ -39,8 +39,8 @@ export function CodeBlock({
         </div>
       )}
       <div className="relative">
-        <pre className="overflow-x-auto p-4 text-sm">
-          <code className={`language-${language}`}>
+        <pre className="overflow-x-auto p-4 text-sm text-foreground">
+          <code>
             {showLineNumbers ? (
               lines.map((line, i) => (
                 <div key={i} className="flex">

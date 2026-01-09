@@ -9,16 +9,28 @@ export interface NavSection {
   items: NavItem[]
 }
 
-export const navigation: NavSection[] = [
+// Navigation pour la section Documentation uniquement
+export const docsNavigation: NavSection[] = [
   {
     title: "Getting Started",
     items: [
       { title: "Introduction", href: "/docs" },
       { title: "Installation", href: "/docs/installation" },
       { title: "Theming", href: "/docs/theming" },
+      { title: "Dark Mode", href: "/docs/dark-mode" },
       { title: "Internationalisation", href: "/docs/i18n" },
+      { title: "TypeScript", href: "/docs/typescript" },
+      { title: "CLI", href: "/docs/cli", isNew: true },
+      { title: "Accessibilité", href: "/docs/accessibility" },
+      { title: "Figma", href: "/docs/figma", isNew: true },
+      { title: "Changelog", href: "/docs/changelog" },
     ],
   },
+]
+
+// Navigation complète (inclut composants et blocks)
+export const navigation: NavSection[] = [
+  ...docsNavigation,
   {
     title: "Forms",
     items: [

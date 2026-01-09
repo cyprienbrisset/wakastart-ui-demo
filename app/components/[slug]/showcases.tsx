@@ -171,8 +171,153 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   WakaThemeManager,
+  // E-commerce components
+  WakaPricingTable,
+  WakaCartSummary,
+  WakaProductCard,
+  WakaCheckoutStepper,
+  WakaCouponInput,
+  WakaPaymentMethodPicker,
+  WakaOrderTracker,
+  WakaInvoicePreview,
+  // Security components
+  WakaPasswordStrength,
+  WakaTwoFactorSetup,
+  WakaSessionManager,
+  WakaPermissionMatrix,
+  WakaAuditLog,
+  WakaSecurityScore,
+  WakaBiometricPrompt,
+  WakaDeviceTrust,
+  // Communication components
+  WakaChatBubble,
+  WakaTypingIndicator,
+  WakaVideoCall,
+  WakaMentionInput,
+  WakaThreadView,
+  WakaPresenceIndicator,
+  WakaReactionPicker,
+  WakaVoiceMessage,
+  // Analytics components
+  WakaFunnelChart,
+  WakaCohortTable,
+  WakaKPIDashboard,
+  WakaComparePeriod,
+  WakaGoalProgress,
+  WakaHeatmap,
+  WakaSankeyDiagram,
+  WakaTreemapChart,
+  // Forms components
+  WakaSignaturePad,
+  WakaAddressAutocomplete,
+  WakaPhoneInput,
+  WakaCreditCardInput,
+  WakaTagInput,
+  WakaSliderRange,
+  WakaRatingInput,
+  WakaSchedulePicker,
+  // Onboarding components
+  WakaTourGuide,
+  WakaHotspot,
+  WakaChecklist,
+  WakaEmptyState,
+  WakaFeatureAnnouncement,
+  WakaProgressOnboarding,
+  WakaTooltipTour,
+  WakaWelcomeModal,
+  // Data Visualization components
+  Waka3DPieChart,
+  WakaRadarScore,
+  WakaResourceGauge,
+  WakaStatusMatrix,
+  WakaContributionGraph,
+  WakaCostBreakdown,
+  WakaBudgetBurn,
+  WakaMetricSparkline,
+  // Navigation components
+  WakaFloatingNav,
+  WakaBreadcrumbPath,
+  WakaTabsMorph,
+  WakaOrbitalMenu,
+  WakaDock,
+  WakaSpotlight,
+  WakaCommandBar,
+  useSpotlight,
+  useCommandBar,
+  // Mobile-first components
+  WakaBottomSheet,
+  useBottomSheet,
+  WakaPullToRefresh,
+  WakaSwipeCard,
+  // Animation components
+  WakaErrorShake,
+  WakaLoadingOrbit,
+  WakaSkeletonWave,
+  WakaSuccessExplosion,
+  WakaTypewriter,
+  // Button components
+  WakaHapticButton,
+  WakaMorphButton,
+  WakaLiquidButton,
+  WakaMagneticButton,
+  // Gamification components
+  WakaAchievementUnlock,
+  WakaComboCounter,
+  WakaLevelProgress,
+  WakaLeaderboard,
+  WakaMilestoneRoad,
+  WakaStreakCounter,
+  WakaQuestCard,
+  WakaScratchCard,
+  WakaVersusCard,
+  WakaXPBar,
+  // Gamification Part 2
+  WakaBadgeShowcase,
+  WakaDailyReward,
+  WakaLootBox,
+  WakaSkillTree,
+  WakaChallengeTimer,
+  WakaRankBadge,
+  WakaTournamentBracket,
+  WakaTeamBanner,
+  WakaActivityFeed,
+  WakaPowerUp,
+  WakaPointsPopup,
+  WakaSpinWheel,
+  WakaPlayerCard,
+  WakaStatsHexagon,
+  WakaSeasonPass,
+  // Infrastructure & Resource Management components (Part 2)
+  WakaResourcePool,
+  WakaQuotaBar,
+  WakaCapacityPlanner,
+  WakaAllocationMatrix,
+  WakaDeploymentLane,
+  WakaApprovalChain,
+  WakaConnectionMatrix,
+  WakaAlertStack,
+  WakaSLATracker,
+  // Infrastructure & DevOps components (Part 1)
+  WakaServerRack,
+  WakaNetworkTopology,
+  WakaHealthPulse,
+  WakaTerminalOutput,
+  WakaIncidentTimeline,
+  WakaFlowDiagram,
+  WakaPipelineView,
+  WakaRollbackSlider,
+  WakaRegionMap,
+  // Card Effects components
+  WakaGlowCard,
+  WakaTiltCard,
+  WakaMagicLink,
+  // Notifications component
+  WakaNotifications,
+  useNotifications,
+  // Sidebar component (from blocks)
+  WakaSidebar,
 } from "@wakastellar/ui"
-import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, AutocompleteOption, AdmincrumbLevel, AdmincrumbItem, CarouselImage } from "@wakastellar/ui"
+import type { Step, BreadcrumbItem, TreeNode, ComboboxOption, WakaDateRange, TimelineItem, KanbanColumn, ThemeMetadata, AutocompleteOption, AdmincrumbLevel, AdmincrumbItem, CarouselImage, Notification, SidebarMenuItem } from "@wakastellar/ui"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -221,6 +366,25 @@ import {
   Network,
   ChevronsUpDown,
   Image as ImageIcon,
+  Search,
+  Star,
+  Heart,
+  MessageCircle,
+  Zap,
+  Music,
+  Camera,
+  Compass,
+  Globe,
+  Send,
+  Package,
+  Flame,
+  Trophy,
+  Crown,
+  LayoutDashboard,
+  BarChart,
+  Inbox,
+  AlertTriangle,
+  Box,
 } from "lucide-react"
 import { useState } from "react"
 import {
@@ -5380,6 +5544,6812 @@ function MyForm() {
 }
 
 // ============================================
+// E-COMMERCE COMPONENTS
+// ============================================
+
+export const pricingTableShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Table de tarification",
+      description: "Affiche les plans tarifaires avec comparaison des fonctionnalites",
+      preview: (
+        <WakaPricingTable
+          tiers={[
+            {
+              id: "starter",
+              name: "Starter",
+              description: "Pour les petites equipes",
+              monthlyPrice: 900,
+              annualPrice: 9000,
+              currency: "\u20AC",
+              features: [
+                { name: "5 projets", included: true },
+                { name: "10 Go stockage", included: true },
+                { name: "Support email", included: true },
+                { name: "API access", included: false },
+              ],
+              ctaText: "Choisir Starter",
+            },
+            {
+              id: "pro",
+              name: "Pro",
+              description: "Pour les equipes en croissance",
+              monthlyPrice: 2900,
+              annualPrice: 29000,
+              currency: "\u20AC",
+              features: [
+                { name: "Projets illimites", included: true },
+                { name: "100 Go stockage", included: true },
+                { name: "Support prioritaire", included: true },
+                { name: "API access", included: true },
+              ],
+              highlighted: true,
+              highlightLabel: "Populaire",
+              ctaText: "Choisir Pro",
+            },
+            {
+              id: "enterprise",
+              name: "Enterprise",
+              description: "Pour les grandes organisations",
+              monthlyPrice: 9900,
+              annualPrice: 99000,
+              currency: "\u20AC",
+              features: [
+                { name: "Tout illimite", included: true },
+                { name: "Support dedie", included: true },
+                { name: "SLA garanti", included: true },
+                { name: "SSO", included: true },
+              ],
+              ctaText: "Contacter",
+            },
+          ]}
+          onCtaClick={(tier) => console.log("Selected:", tier)}
+        />
+      ),
+      code: `<WakaPricingTable
+  tiers={[
+    {
+      id: "starter",
+      name: "Starter",
+      monthlyPrice: 900,
+      annualPrice: 9000,
+      features: [
+        { name: "5 projets", included: true },
+        { name: "10 Go stockage", included: true },
+      ],
+    },
+    {
+      id: "pro",
+      name: "Pro",
+      monthlyPrice: 2900,
+      annualPrice: 29000,
+      features: [
+        { name: "Projets illimites", included: true },
+        { name: "Support prioritaire", included: true },
+      ],
+      highlighted: true,
+    },
+  ]}
+  onCtaClick={(tier) => console.log("Selected:", tier)}
+/>`,
+    },
+  ],
+}
+
+export const cartSummaryShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Resume du panier",
+      description: "Affiche le resume des articles dans le panier",
+      preview: (
+        <WakaCartSummary
+          items={[
+            { id: "1", name: "T-shirt Premium", price: 29.99, quantity: 2, image: "/placeholder.svg" },
+            { id: "2", name: "Jean Slim", price: 79.99, quantity: 1, image: "/placeholder.svg" },
+          ]}
+          currency="EUR"
+          taxRate={0.20}
+          shippingCost={5.99}
+          onQuantityChange={(id, qty) => console.log(id, qty)}
+          onRemoveItem={(id) => console.log("Remove:", id)}
+        />
+      ),
+      code: `<WakaCartSummary
+  items={[
+    { id: "1", name: "T-shirt Premium", price: 29.99, quantity: 2 },
+    { id: "2", name: "Jean Slim", price: 79.99, quantity: 1 },
+  ]}
+  currency="EUR"
+  taxRate={0.20}
+  shippingCost={5.99}
+  onQuantityChange={(id, qty) => console.log(id, qty)}
+  onRemoveItem={(id) => console.log("Remove:", id)}
+/>`,
+    },
+  ],
+}
+
+export const productCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Carte produit",
+      description: "Affiche un produit avec image, prix et actions",
+      preview: (
+        <div className="grid gap-4 md:grid-cols-2 max-w-lg">
+          <WakaProductCard
+            name="Sneakers Premium"
+            price={149.99}
+            originalPrice={199.99}
+            images={[
+              { src: "/placeholder.svg", alt: "Sneakers Premium" },
+              { src: "/placeholder.svg", alt: "Sneakers Premium Side" },
+            ]}
+            rating={4.5}
+            reviewCount={128}
+            discountBadge="-25%"
+            onAddToCart={() => console.log("Add to cart")}
+            onWishlistToggle={(wishlisted) => console.log("Wishlist:", wishlisted)}
+          />
+        </div>
+      ),
+      code: `<WakaProductCard
+  name="Sneakers Premium"
+  price={149.99}
+  originalPrice={199.99}
+  images={[
+    { src: "/placeholder.svg", alt: "Sneakers Premium" },
+    { src: "/placeholder.svg", alt: "Sneakers Premium Side" },
+  ]}
+  rating={4.5}
+  reviewCount={128}
+  discountBadge="-25%"
+  onAddToCart={() => console.log("Add to cart")}
+  onWishlistToggle={(wishlisted) => console.log("Wishlist:", wishlisted)}
+/>`,
+    },
+  ],
+}
+
+export const checkoutStepperShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Etapes de checkout",
+      description: "Affiche les etapes du processus de commande",
+      preview: (
+        <WakaCheckoutStepper
+          currentStep={1}
+          steps={[
+            { id: "cart", title: "Panier", description: "Vérifiez votre panier" },
+            { id: "shipping", title: "Livraison", description: "Adresse de livraison" },
+            { id: "payment", title: "Paiement", description: "Mode de paiement" },
+            { id: "confirmation", title: "Confirmation", description: "Confirmez votre commande" },
+          ]}
+          onStepChange={(index, stepId) => console.log("Step:", index, stepId)}
+        />
+      ),
+      code: `<WakaCheckoutStepper
+  currentStep={1}
+  steps={[
+    { id: "cart", title: "Panier", description: "Vérifiez votre panier" },
+    { id: "shipping", title: "Livraison", description: "Adresse de livraison" },
+    { id: "payment", title: "Paiement", description: "Mode de paiement" },
+    { id: "confirmation", title: "Confirmation", description: "Confirmez votre commande" },
+  ]}
+  onStepChange={(index, stepId) => console.log("Step:", index, stepId)}
+/>`,
+    },
+  ],
+}
+
+export const couponInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Champ code promo",
+      description: "Permet de saisir et valider un code promotionnel",
+      preview: (
+        <WakaCouponInput
+          onApply={(coupon) => console.log("Applied:", coupon)}
+          onRemove={(code) => console.log("Removed:", code)}
+          validateCoupon={async (code) => ({
+            isValid: code === "PROMO20",
+            coupon: code === "PROMO20" ? { code: "PROMO20", discountValue: 20, discountType: "percentage" as const } : undefined,
+            errorMessage: code !== "PROMO20" ? "Code invalide" : undefined,
+          })}
+          placeholder="Entrez votre code promo"
+          applyButtonText="Appliquer"
+        />
+      ),
+      code: `<WakaCouponInput
+  onApply={(coupon) => console.log("Applied:", coupon)}
+  onRemove={(code) => console.log("Removed:", code)}
+  validateCoupon={async (code) => ({
+    isValid: code === "PROMO20",
+    coupon: code === "PROMO20" ? { code: "PROMO20", discountValue: 20, discountType: "percentage" } : undefined,
+    errorMessage: code !== "PROMO20" ? "Code invalide" : undefined,
+  })}
+  placeholder="Entrez votre code promo"
+  applyButtonText="Appliquer"
+/>`,
+    },
+  ],
+}
+
+export const paymentMethodPickerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Selection de paiement",
+      description: "Permet de choisir un mode de paiement",
+      preview: (
+        <WakaPaymentMethodPicker
+          value="credit_card"
+          onChange={(value, method) => console.log("Selected:", value, method)}
+          options={[
+            { type: "credit_card", label: "Carte bancaire", description: "Visa, Mastercard, Amex", acceptedBrands: ["visa", "mastercard", "amex"] },
+            { type: "paypal", label: "PayPal", description: "Paiement securise" },
+            { type: "apple_pay", label: "Apple Pay", description: "Paiement rapide" },
+          ]}
+        />
+      ),
+      code: `<WakaPaymentMethodPicker
+  value="credit_card"
+  onChange={(value, method) => console.log("Selected:", value, method)}
+  options={[
+    { type: "credit_card", label: "Carte bancaire", description: "Visa, Mastercard, Amex", acceptedBrands: ["visa", "mastercard", "amex"] },
+    { type: "paypal", label: "PayPal", description: "Paiement securise" },
+    { type: "apple_pay", label: "Apple Pay", description: "Paiement rapide" },
+  ]}
+/>`,
+    },
+  ],
+}
+
+export const orderTrackerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Suivi de commande",
+      description: "Affiche la progression d une commande",
+      preview: (
+        <WakaOrderTracker
+          order={{
+            orderId: "ORD-2024-001",
+            status: "shipped",
+            orderDate: new Date("2024-01-15T10:30:00"),
+            estimatedDelivery: new Date("2024-01-17"),
+            deliveryAddress: {
+              name: "Jean Dupont",
+              street1: "123 Rue de la Paix",
+              city: "Paris",
+              state: "Ile-de-France",
+              postalCode: "75001",
+              country: "France",
+            },
+            carrier: { name: "Colissimo", serviceType: "Express" },
+            trackingNumber: "1Z999AA10123456784",
+            updates: [
+              { id: "1", status: "ordered", message: "Commande confirmée", timestamp: new Date("2024-01-15T10:30:00") },
+              { id: "2", status: "processing", message: "En préparation", timestamp: new Date("2024-01-15T14:00:00") },
+              { id: "3", status: "shipped", message: "Expédié", timestamp: new Date("2024-01-16T09:00:00"), location: "Paris" },
+            ],
+          }}
+        />
+      ),
+      code: `<WakaOrderTracker
+  order={{
+    orderId: "ORD-2024-001",
+    status: "shipped",
+    orderDate: new Date("2024-01-15T10:30:00"),
+    estimatedDelivery: new Date("2024-01-17"),
+    deliveryAddress: {
+      name: "Jean Dupont",
+      street1: "123 Rue de la Paix",
+      city: "Paris",
+      state: "Ile-de-France",
+      postalCode: "75001",
+      country: "France",
+    },
+    carrier: { name: "Colissimo", serviceType: "Express" },
+    trackingNumber: "1Z999AA10123456784",
+    updates: [
+      { id: "1", status: "ordered", message: "Commande confirmée", timestamp: new Date() },
+      { id: "2", status: "processing", message: "En préparation", timestamp: new Date() },
+      { id: "3", status: "shipped", message: "Expédié", timestamp: new Date(), location: "Paris" },
+    ],
+  }}
+/>`,
+    },
+  ],
+}
+
+export const invoicePreviewShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Apercu facture",
+      description: "Affiche un apercu de facture telechargeable",
+      preview: (
+        <WakaInvoicePreview
+          invoice={{
+            invoiceNumber: "INV-2024-001",
+            invoiceDate: new Date("2024-01-15"),
+            dueDate: new Date("2024-02-15"),
+            status: "pending",
+            currency: "EUR",
+            company: {
+              name: "Ma Societe",
+              address: { name: "Ma Societe", street1: "123 Rue Commerce", city: "Paris", postalCode: "75001", country: "France" },
+              email: "contact@masociete.fr",
+              taxId: "FR12345678",
+            },
+            billTo: { name: "Client SARL", street1: "456 Avenue Client", city: "Lyon", postalCode: "69001", country: "France" },
+            items: [
+              { id: "1", description: "Service Premium", quantity: 1, unitPrice: 499 },
+              { id: "2", description: "Support annuel", quantity: 12, unitPrice: 49 },
+            ],
+            taxRate: 0.20,
+          }}
+          onDownload={() => console.log("Download PDF")}
+        />
+      ),
+      code: `<WakaInvoicePreview
+  invoice={{
+    invoiceNumber: "INV-2024-001",
+    invoiceDate: new Date("2024-01-15"),
+    dueDate: new Date("2024-02-15"),
+    status: "pending",
+    currency: "EUR",
+    company: {
+      name: "Ma Societe",
+      address: { name: "Ma Societe", street1: "123 Rue Commerce", city: "Paris", postalCode: "75001", country: "France" },
+      email: "contact@masociete.fr",
+      taxId: "FR12345678",
+    },
+    billTo: { name: "Client SARL", street1: "456 Avenue Client", city: "Lyon", postalCode: "69001", country: "France" },
+    items: [
+      { id: "1", description: "Service Premium", quantity: 1, unitPrice: 499 },
+      { id: "2", description: "Support annuel", quantity: 12, unitPrice: 49 },
+    ],
+    taxRate: 0.20,
+  }}
+  onDownload={() => console.log("Download PDF")}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SECURITY COMPONENTS
+// ============================================
+
+export const passwordStrengthShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Indicateur de force",
+      description: "Affiche la force du mot de passe en temps reel",
+      preview: (
+        <div className="w-full max-w-sm space-y-4">
+          <WakaPasswordStrength
+            password="MyP@ssw0rd!"
+            showInput={false}
+            showStrengthBar
+            showChecklist
+            minLength={8}
+            requireUppercase
+            requireLowercase
+            requireNumber
+            requireSpecialChar
+          />
+        </div>
+      ),
+      code: `<WakaPasswordStrength
+  password={password}
+  showInput={false}
+  showStrengthBar
+  showChecklist
+  minLength={8}
+  requireUppercase
+  requireLowercase
+  requireNumber
+  requireSpecialChar
+/>`,
+    },
+  ],
+}
+
+export const twoFactorSetupShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Configuration 2FA",
+      description: "Guide de configuration de l authentification a deux facteurs",
+      preview: (
+        <WakaTwoFactorSetup
+          config={{
+            qrCodeUrl: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=otpauth://totp/App:user@example.com",
+            secretKey: "JBSWY3DPEHPK3PXP",
+            issuer: "MonApp",
+            accountName: "user@example.com",
+            backupCodes: [
+              { code: "ABCD-1234", used: false },
+              { code: "EFGH-5678", used: false },
+              { code: "IJKL-9012", used: false },
+              { code: "MNOP-3456", used: false },
+            ],
+          }}
+          onVerify={async (code) => {
+            console.log("Verifying:", code)
+            return code === "123456"
+          }}
+          onCancel={() => console.log("Cancelled")}
+        />
+      ),
+      code: `<WakaTwoFactorSetup
+  config={{
+    qrCodeUrl: "https://api.qrserver.com/...",
+    secretKey: "JBSWY3DPEHPK3PXP",
+    issuer: "MonApp",
+    accountName: "user@example.com",
+    backupCodes: [
+      { code: "ABCD-1234", used: false },
+      { code: "EFGH-5678", used: false },
+    ],
+  }}
+  onVerify={async (code) => code === "123456"}
+  onCancel={() => console.log("Cancelled")}
+/>`,
+    },
+  ],
+}
+
+export const sessionManagerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Gestionnaire de sessions",
+      description: "Liste et gere les sessions actives",
+      preview: (
+        <WakaSessionManager
+          sessions={[
+            {
+              id: "1",
+              device: { type: "desktop", browser: "Chrome", browserVersion: "120", os: "macOS", name: "MacBook Pro" },
+              location: { city: "Paris", country: "FR" },
+              ipAddress: "192.168.1.1",
+              lastActive: new Date(),
+              isCurrent: true,
+              status: "active",
+            },
+            {
+              id: "2",
+              device: { type: "mobile", browser: "Safari", os: "iOS", name: "iPhone 15" },
+              location: { city: "Lyon", country: "FR" },
+              ipAddress: "192.168.1.2",
+              lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
+              isCurrent: false,
+              status: "active",
+            },
+            {
+              id: "3",
+              device: { type: "desktop", browser: "Firefox", os: "Windows", name: "Windows PC" },
+              location: { city: "Marseille", country: "FR" },
+              ipAddress: "192.168.1.3",
+              lastActive: new Date(Date.now() - 24 * 60 * 60 * 1000),
+              isCurrent: false,
+              status: "idle",
+            },
+          ]}
+          onRevokeSession={(id) => console.log("Revoke:", id)}
+          onRevokeAllOtherSessions={() => console.log("Revoke all others")}
+        />
+      ),
+      code: `<WakaSessionManager
+  sessions={[
+    {
+      id: "1",
+      device: { type: "desktop", browser: "Chrome", os: "macOS", name: "MacBook Pro" },
+      location: { city: "Paris", country: "FR" },
+      lastActive: new Date(),
+      isCurrent: true,
+      status: "active",
+    },
+    {
+      id: "2",
+      device: { type: "mobile", browser: "Safari", os: "iOS", name: "iPhone 15" },
+      location: { city: "Lyon", country: "FR" },
+      lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      isCurrent: false,
+    },
+  ]}
+  onRevokeSession={(id) => console.log("Revoke:", id)}
+  onRevokeAllOtherSessions={() => console.log("Revoke all")}
+/>`,
+    },
+  ],
+}
+
+export const permissionMatrixShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Matrice de permissions",
+      description: "Affiche et gere les permissions par role",
+      preview: (
+        <WakaPermissionMatrix
+          roles={[
+            { id: "admin", name: "Admin", color: "#ef4444" },
+            { id: "manager", name: "Manager", color: "#f59e0b" },
+            { id: "user", name: "User", color: "#3b82f6" },
+            { id: "guest", name: "Guest", color: "#6b7280" },
+          ]}
+          permissions={[
+            { id: "read", name: "Lecture", categoryId: "data" },
+            { id: "write", name: "Ecriture", categoryId: "data" },
+            { id: "delete", name: "Suppression", categoryId: "data" },
+            { id: "admin", name: "Administration", categoryId: "settings" },
+          ]}
+          categories={[
+            { id: "data", name: "Donnees" },
+            { id: "settings", name: "Parametres" },
+          ]}
+          initialValues={[
+            { roleId: "admin", permissionId: "read", granted: true },
+            { roleId: "admin", permissionId: "write", granted: true },
+            { roleId: "admin", permissionId: "delete", granted: true },
+            { roleId: "admin", permissionId: "admin", granted: true },
+            { roleId: "manager", permissionId: "read", granted: true },
+            { roleId: "manager", permissionId: "write", granted: true },
+            { roleId: "user", permissionId: "read", granted: true },
+            { roleId: "guest", permissionId: "read", granted: true },
+          ]}
+          onPermissionChange={(roleId, permissionId, granted) => console.log("Changed:", roleId, permissionId, granted)}
+        />
+      ),
+      code: `<WakaPermissionMatrix
+  roles={[
+    { id: "admin", name: "Admin", color: "#ef4444" },
+    { id: "user", name: "User", color: "#3b82f6" },
+  ]}
+  permissions={[
+    { id: "read", name: "Lecture", categoryId: "data" },
+    { id: "write", name: "Ecriture", categoryId: "data" },
+  ]}
+  categories={[{ id: "data", name: "Donnees" }]}
+  initialValues={[
+    { roleId: "admin", permissionId: "read", granted: true },
+    { roleId: "admin", permissionId: "write", granted: true },
+    { roleId: "user", permissionId: "read", granted: true },
+  ]}
+  onChange={(values) => console.log(values)}
+/>`,
+    },
+  ],
+}
+
+export const auditLogShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Journal d audit",
+      description: "Affiche l historique des actions securisees",
+      preview: (
+        <WakaAuditLog
+          events={[
+            {
+              id: "1",
+              type: "login",
+              severity: "info",
+              user: { id: "u1", name: "John Doe", email: "john@example.com" },
+              description: "Connexion reussie",
+              ipAddress: "192.168.1.1",
+              timestamp: new Date("2024-01-15T10:30:00"),
+            },
+            {
+              id: "2",
+              type: "password_change",
+              severity: "info",
+              user: { id: "u1", name: "John Doe", email: "john@example.com" },
+              description: "Mot de passe modifie",
+              ipAddress: "192.168.1.1",
+              timestamp: new Date("2024-01-15T10:35:00"),
+            },
+            {
+              id: "3",
+              type: "login",
+              severity: "warning",
+              user: { id: "u2", name: "Unknown", email: "unknown@example.com" },
+              description: "Echec de connexion",
+              ipAddress: "10.0.0.1",
+              timestamp: new Date("2024-01-15T11:00:00"),
+            },
+          ]}
+          onFilterChange={(filters) => console.log("Filters:", filters)}
+          onExport={(format) => console.log("Export:", format)}
+        />
+      ),
+      code: `<WakaAuditLog
+  events={[
+    {
+      id: "1",
+      type: "login",
+      severity: "info",
+      user: { id: "u1", name: "John Doe", email: "john@example.com" },
+      description: "Connexion reussie",
+      timestamp: new Date(),
+    },
+  ]}
+  onFilterChange={(filters) => console.log(filters)}
+  onExport={(format) => console.log(format)}
+/>`,
+    },
+  ],
+}
+
+export const securityScoreShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Score de securite",
+      description: "Affiche un score de securite global avec recommandations",
+      preview: (
+        <WakaSecurityScore
+          score={75}
+          categories={[
+            { id: "authentication", name: "Authentification", score: 85 },
+            { id: "encryption", name: "Chiffrement", score: 70 },
+            { id: "access", name: "Controle d'acces", score: 60 },
+          ]}
+          recommendations={[
+            { id: "1", title: "Activer 2FA", description: "Activez l'authentification a deux facteurs", priority: "high", status: "pending", impact: 10 },
+            { id: "2", title: "Mot de passe fort", description: "Utilisez un mot de passe plus complexe", priority: "medium", status: "completed", impact: 5 },
+          ]}
+          showCategories
+          showRecommendations
+          onRecommendationAction={(rec) => console.log("Action:", rec)}
+        />
+      ),
+      code: `<WakaSecurityScore
+  score={75}
+  categories={[
+    { id: "authentication", name: "Authentification", score: 85 },
+    { id: "encryption", name: "Chiffrement", score: 70 },
+  ]}
+  recommendations={[
+    { id: "1", title: "Activer 2FA", description: "Activez l'authentification a deux facteurs", priority: "high", status: "pending", impact: 10 },
+  ]}
+  showCategories
+  showRecommendations
+  onRecommendationAction={(rec) => console.log("Action:", rec)}
+/>`,
+    },
+  ],
+}
+
+export const biometricPromptShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Authentification biometrique",
+      description: "Invite l utilisateur a s authentifier par biometrie",
+      preview: (
+        <WakaBiometricPrompt
+          biometricTypes={[
+            { type: "fingerprint", label: "Empreinte digitale" },
+            { type: "face", label: "Face ID" },
+          ]}
+          selectedType="fingerprint"
+          title="Verification requise"
+          description="Utilisez votre empreinte digitale pour continuer"
+          onAuthenticate={() => console.log("Authenticate")}
+          onCancel={() => console.log("Cancelled")}
+          onFallbackToPassword={() => console.log("Use password")}
+          showPasswordFallback
+        />
+      ),
+      code: `<WakaBiometricPrompt
+  biometricTypes={[
+    { type: "fingerprint", label: "Empreinte digitale" },
+    { type: "face", label: "Face ID" },
+  ]}
+  selectedType="fingerprint"
+  title="Verification requise"
+  description="Utilisez votre empreinte digitale"
+  onAuthenticate={() => console.log("Authenticate")}
+  onCancel={() => console.log("Cancelled")}
+  onFallbackToPassword={() => console.log("Use password")}
+/>`,
+    },
+  ],
+}
+
+export const deviceTrustShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Appareils de confiance",
+      description: "Gere les appareils autorises",
+      preview: (
+        <WakaDeviceTrust
+          devices={[
+            { id: "1", name: "MacBook Pro", type: "laptop", status: "trusted", trustedAt: new Date("2024-01-01"), os: "macOS", isCurrentDevice: true },
+            { id: "2", name: "iPhone 15", type: "mobile", status: "trusted", trustedAt: new Date("2024-01-05"), os: "iOS" },
+            { id: "3", name: "iPad Air", type: "tablet", status: "pending", trustedAt: new Date("2024-01-10"), os: "iPadOS" },
+          ]}
+          onRemoveDevice={async (id) => { console.log("Remove:", id); return true; }}
+          onAddDevice={() => console.log("Add device")}
+        />
+      ),
+      code: `<WakaDeviceTrust
+  devices={[
+    { id: "1", name: "MacBook Pro", type: "laptop", status: "trusted", trustedAt: new Date(), isCurrentDevice: true },
+    { id: "2", name: "iPhone 15", type: "mobile", status: "trusted", trustedAt: new Date() },
+  ]}
+  onRemoveDevice={async (id) => { console.log("Remove:", id); return true; }}
+  onAddDevice={() => console.log("Add device")}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// COMMUNICATION COMPONENTS
+// ============================================
+
+export const chatBubbleShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Bulles de chat",
+      description: "Affiche des messages de conversation",
+      preview: (
+        <div className="space-y-4 max-w-md">
+          <WakaChatBubble
+            message="Bonjour, comment puis-je vous aider ?"
+            sender={{ id: "1", name: "Support", avatar: "/placeholder.svg" }}
+            timestamp={new Date()}
+            isSent={false}
+          />
+          <WakaChatBubble
+            message="J ai une question concernant ma commande"
+            sender={{ id: "2", name: "Moi" }}
+            timestamp={new Date()}
+            isSent={true}
+            status="read"
+          />
+        </div>
+      ),
+      code: `<WakaChatBubble
+  message="Bonjour, comment puis-je vous aider ?"
+  sender={{ id: "1", name: "Support", avatar: "/avatar.png" }}
+  timestamp={new Date()}
+  isSent={false}
+/>
+<WakaChatBubble
+  message="J ai une question"
+  sender={{ id: "2", name: "Moi" }}
+  timestamp={new Date()}
+  isSent={true}
+  status="read"
+/>`,
+    },
+  ],
+}
+
+export const typingIndicatorShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Indicateur de saisie",
+      description: "Montre qu un utilisateur est en train d ecrire",
+      preview: (
+        <div className="flex items-center gap-4">
+          <WakaTypingIndicator users={[{ id: "1", name: "Marie", avatar: "/placeholder.svg" }]} />
+          <WakaTypingIndicator users={[{ id: "1", name: "Marie" }, { id: "2", name: "Jean" }]} showAvatars />
+        </div>
+      ),
+      code: `<WakaTypingIndicator
+  users={[{ id: "1", name: "Marie", avatar: "/avatar.png" }]}
+/>
+<WakaTypingIndicator
+  users={[{ id: "1", name: "Marie" }, { id: "2", name: "Jean" }]}
+  showAvatars
+/>`,
+    },
+  ],
+}
+
+export const videoCallShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Interface appel video",
+      description: "Controles pour un appel video",
+      preview: (
+        <WakaVideoCall
+          participants={[
+            { id: "1", name: "Alice", avatar: "/placeholder.svg", isMuted: false, isVideoOff: false, isScreenSharing: false, hasRaisedHand: false, isSpeaking: false, isPinned: false, isLocal: true },
+            { id: "2", name: "Bob", avatar: "/placeholder.svg", isMuted: true, isVideoOff: false, isScreenSharing: false, hasRaisedHand: false, isSpeaking: false, isPinned: false },
+          ]}
+          localParticipantId="1"
+          onToggleMute={() => console.log("Mute")}
+          onToggleVideo={() => console.log("Video toggle")}
+          onToggleScreenShare={() => console.log("Screen share")}
+          onEndCall={() => console.log("Hang up")}
+        />
+      ),
+      code: `<WakaVideoCall
+  participants={[
+    { id: "1", name: "Alice", isMuted: false, isVideoOff: false, isScreenSharing: false, hasRaisedHand: false, isSpeaking: false, isPinned: false, isLocal: true },
+    { id: "2", name: "Bob", isMuted: true, isVideoOff: false, isScreenSharing: false, hasRaisedHand: false, isSpeaking: false, isPinned: false },
+  ]}
+  localParticipantId="1"
+  onToggleMute={() => console.log("Mute")}
+  onToggleVideo={() => console.log("Video")}
+  onEndCall={() => console.log("Hang up")}
+/>`,
+    },
+  ],
+}
+
+export const mentionInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Champ avec mentions",
+      description: "Permet de mentionner des utilisateurs avec @",
+      preview: (
+        <WakaMentionInput
+          placeholder="Tapez @ pour mentionner quelqu un..."
+          triggers={[
+            {
+              trigger: "@",
+              type: "user",
+              data: [
+                { id: "1", type: "user", display: "Alice Martin", value: "alice", avatar: "/placeholder.svg" },
+                { id: "2", type: "user", display: "Bob Dupont", value: "bob", avatar: "/placeholder.svg" },
+                { id: "3", type: "user", display: "Charlie Durand", value: "charlie", avatar: "/placeholder.svg" },
+              ],
+            },
+          ]}
+          onChange={(value, plainText, mentions) => console.log("Value:", value, mentions)}
+        />
+      ),
+      code: `<WakaMentionInput
+  placeholder="Tapez @ pour mentionner..."
+  triggers={[
+    {
+      trigger: "@",
+      type: "user",
+      data: [
+        { id: "1", type: "user", display: "Alice Martin", value: "alice" },
+        { id: "2", type: "user", display: "Bob Dupont", value: "bob" },
+      ],
+    },
+  ]}
+  onChange={(value, plainText, mentions) => console.log("Value:", value, mentions)}
+/>`,
+    },
+  ],
+}
+
+export const threadViewShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Vue en fil",
+      description: "Affiche une conversation en fil de discussion",
+      preview: (
+        <WakaThreadView
+          thread={{
+            id: "thread-1",
+            title: "Discussion",
+            parentMessage: {
+              id: "1",
+              content: "Quelqu un peut m aider ?",
+              author: { id: "1", name: "Alice" },
+              timestamp: new Date(),
+              replies: [
+                { id: "2", content: "Bien sur, quel est le probleme ?", author: { id: "2", name: "Bob" }, timestamp: new Date() },
+                { id: "3", content: "J ai une erreur 404", author: { id: "1", name: "Alice" }, timestamp: new Date() },
+              ],
+            },
+            replyCount: 2,
+            participants: [
+              { id: "1", name: "Alice" },
+              { id: "2", name: "Bob" },
+            ],
+          }}
+          onReply={(content) => console.log("Reply:", content)}
+        />
+      ),
+      code: `<WakaThreadView
+  thread={{
+    id: "thread-1",
+    parentMessage: {
+      id: "1",
+      content: "Question?",
+      author: { id: "1", name: "Alice" },
+      timestamp: new Date(),
+      replies: [{ id: "2", content: "Reponse!", author: { id: "2", name: "Bob" }, timestamp: new Date() }],
+    },
+    replyCount: 1,
+    participants: [{ id: "1", name: "Alice" }, { id: "2", name: "Bob" }],
+  }}
+  onReply={(content) => console.log("Reply:", content)}
+/>`,
+    },
+  ],
+}
+
+export const presenceIndicatorShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Indicateur de presence",
+      description: "Montre le statut en ligne des utilisateurs",
+      preview: (
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2"><WakaPresenceIndicator status="online" /> <span>En ligne</span></div>
+          <div className="flex items-center gap-2"><WakaPresenceIndicator status="away" /> <span>Absent</span></div>
+          <div className="flex items-center gap-2"><WakaPresenceIndicator status="busy" /> <span>Occupe</span></div>
+          <div className="flex items-center gap-2"><WakaPresenceIndicator status="offline" /> <span>Hors ligne</span></div>
+        </div>
+      ),
+      code: `<WakaPresenceIndicator status="online" />
+<WakaPresenceIndicator status="away" />
+<WakaPresenceIndicator status="busy" />
+<WakaPresenceIndicator status="offline" />`,
+    },
+  ],
+}
+
+export const reactionPickerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Selecteur de reactions",
+      description: "Permet de choisir une reaction emoji",
+      preview: (
+        <WakaReactionPicker
+          quickReactions={["\u{1F44D}", "\u2764\uFE0F", "\u{1F602}", "\u{1F62E}", "\u{1F622}", "\u{1F621}"]}
+          onSelect={(emoji, data) => console.log("Selected:", emoji, data)}
+          showSearch
+          showRecent
+          mode="inline"
+        />
+      ),
+      code: `<WakaReactionPicker
+  quickReactions={["\u{1F44D}", "\u2764\uFE0F", "\u{1F602}", "\u{1F62E}"]}
+  onSelect={(emoji, data) => console.log("Selected:", emoji, data)}
+  showSearch
+  showRecent
+/>`,
+    },
+  ],
+}
+
+export const voiceMessageShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Message vocal",
+      description: "Lecteur de message vocal avec forme d onde",
+      preview: (
+        <WakaVoiceMessage
+          mode="player"
+          src="/audio-sample.mp3"
+          waveform={[0.2, 0.5, 0.8, 0.3, 0.9, 0.4, 0.7, 0.2, 0.6, 0.5]}
+          variant="bubble-received"
+          showSpeedControl
+        />
+      ),
+      code: `<WakaVoiceMessage
+  mode="player"
+  src="/audio-sample.mp3"
+  waveform={[0.2, 0.5, 0.8, 0.3, 0.9, 0.4]}
+  variant="bubble-received"
+  showSpeedControl
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ANALYTICS COMPONENTS
+// ============================================
+
+export const funnelChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Entonnoir de conversion",
+      description: "Visualise les etapes d un tunnel de conversion",
+      preview: (
+        <WakaFunnelChart
+          data={[
+            { id: "visitors", label: "Visiteurs", value: 10000, color: "#3b82f6" },
+            { id: "signups", label: "Inscrits", value: 5000, color: "#8b5cf6" },
+            { id: "active", label: "Actifs", value: 2500, color: "#ec4899" },
+            { id: "paying", label: "Payants", value: 1000, color: "#10b981" },
+          ]}
+          height={300}
+          showPercentages
+          showValues
+        />
+      ),
+      code: `<WakaFunnelChart
+  data={[
+    { id: "visitors", label: "Visiteurs", value: 10000 },
+    { id: "signups", label: "Inscrits", value: 5000 },
+    { id: "active", label: "Actifs", value: 2500 },
+    { id: "paying", label: "Payants", value: 1000 },
+  ]}
+  height={300}
+  showPercentages
+  showValues
+/>`,
+    },
+  ],
+}
+
+export const cohortTableShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Analyse de cohorte",
+      description: "Affiche la retention par cohorte temporelle",
+      preview: (
+        <WakaCohortTable
+          data={[
+            { id: "jan", label: "Jan 2024", date: new Date("2024-01-01"), size: 1000, data: [{ value: 100 }, { value: 80 }, { value: 65 }, { value: 55 }] },
+            { id: "feb", label: "Fev 2024", date: new Date("2024-02-01"), size: 1200, data: [{ value: 100 }, { value: 75 }, { value: 60 }] },
+            { id: "mar", label: "Mar 2024", date: new Date("2024-03-01"), size: 900, data: [{ value: 100 }, { value: 82 }] },
+          ]}
+          period="month"
+          showAsPercentage
+          colorScale={{ min: "#fee2e2", max: "#ef4444" }}
+        />
+      ),
+      code: `<WakaCohortTable
+  data={[
+    { id: "jan", label: "Jan 2024", date: new Date("2024-01-01"), size: 1000, data: [{ value: 100 }, { value: 80 }, { value: 65 }] },
+    { id: "feb", label: "Fev 2024", date: new Date("2024-02-01"), size: 1200, data: [{ value: 100 }, { value: 75 }] },
+  ]}
+  period="month"
+  showAsPercentage
+/>`,
+    },
+  ],
+}
+
+export const kpiDashboardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Dashboard KPI",
+      description: "Affiche les indicateurs cles de performance",
+      preview: (
+        <WakaKPIDashboard
+          kpis={[
+            { id: "revenue", title: "Chiffre d affaires", value: 125000, previousValue: 110000, trend: "up", trendValue: "+13.6%", unit: "EUR" },
+            { id: "users", title: "Utilisateurs actifs", value: 8500, previousValue: 7200, trend: "up", trendValue: "+18%" },
+            { id: "conversion", title: "Taux de conversion", value: "3.2%", previousValue: "2.8%", trend: "up", trendValue: "+0.4%" },
+            { id: "nps", title: "NPS", value: 72, previousValue: 68, trend: "up", trendValue: "+4" },
+          ]}
+        />
+      ),
+      code: `<WakaKPIDashboard
+  kpis={[
+    { id: "revenue", title: "CA", value: 125000, previousValue: 110000, trend: "up", trendValue: "+13.6%" },
+    { id: "users", title: "Utilisateurs", value: 8500, previousValue: 7200, trend: "up", trendValue: "+18%" },
+  ]}
+/>`,
+    },
+  ],
+}
+
+export const comparePeriodShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Comparaison de periodes",
+      description: "Compare les metriques entre deux periodes",
+      preview: (
+        <WakaComparePeriod
+          currentPeriod={{ label: "Cette semaine", start: new Date("2024-01-08"), end: new Date("2024-01-14") }}
+          previousPeriod={{ label: "Semaine derniere", start: new Date("2024-01-01"), end: new Date("2024-01-07") }}
+          metrics={[
+            { id: "sales", name: "Ventes", value: { current: 15000, previous: 12000 }, unit: "EUR" },
+            { id: "orders", name: "Commandes", value: { current: 450, previous: 380 } },
+            { id: "avg", name: "Panier moyen", value: { current: 33.33, previous: 31.58 }, unit: "EUR" },
+          ]}
+          onPeriodChange={(current, previous) => console.log(current, previous)}
+        />
+      ),
+      code: `<WakaComparePeriod
+  currentPeriod={{ label: "Cette semaine", start: new Date(), end: new Date() }}
+  previousPeriod={{ label: "Semaine derniere", start: new Date(), end: new Date() }}
+  metrics={[
+    { id: "sales", name: "Ventes", value: { current: 15000, previous: 12000 } },
+    { id: "orders", name: "Commandes", value: { current: 450, previous: 380 } },
+  ]}
+/>`,
+    },
+  ],
+}
+
+export const goalProgressShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Progression objectif",
+      description: "Affiche la progression vers un objectif",
+      preview: (
+        <div className="space-y-4 max-w-md">
+          <WakaGoalProgress
+            title="Chiffre d affaires Q1"
+            currentValue={75000}
+            targetValue={100000}
+            unit="EUR"
+            unitPosition="suffix"
+          />
+          <WakaGoalProgress
+            title="Nouveaux clients"
+            currentValue={420}
+            targetValue={500}
+            unit="clients"
+            unitPosition="suffix"
+          />
+        </div>
+      ),
+      code: `<WakaGoalProgress
+  title="CA Q1"
+  currentValue={75000}
+  targetValue={100000}
+  unit="EUR"
+/>`,
+    },
+  ],
+}
+
+export const heatmapShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Carte de chaleur",
+      description: "Visualise des donnees en grille avec intensite",
+      preview: (
+        <WakaHeatmap
+          data={{
+            values: [
+              [10, 25, 15],
+              [45, 60, 55],
+              [30, 40, 35],
+            ],
+            rowLabels: ["9h", "12h", "15h"],
+            columnLabels: ["Lun", "Mar", "Mer"],
+          }}
+          colorSchemeName="greens"
+          showLegend
+        />
+      ),
+      code: `<WakaHeatmap
+  data={{
+    values: [[10, 25, 15], [45, 60, 55], [30, 40, 35]],
+    rowLabels: ["9h", "12h", "15h"],
+    columnLabels: ["Lun", "Mar", "Mer"],
+  }}
+  colorSchemeName="greens"
+  showLegend
+/>`,
+    },
+  ],
+}
+
+export const sankeyDiagramShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Diagramme de Sankey",
+      description: "Visualise les flux entre categories",
+      preview: (
+        <WakaSankeyDiagram
+          nodes={[
+            { id: "source1", label: "Organic" },
+            { id: "source2", label: "Paid" },
+            { id: "source3", label: "Social" },
+            { id: "page1", label: "Homepage" },
+            { id: "page2", label: "Product" },
+            { id: "conv", label: "Conversion" },
+          ]}
+          links={[
+            { source: "source1", target: "page1", value: 1000 },
+            { source: "source2", target: "page1", value: 500 },
+            { source: "source3", target: "page1", value: 300 },
+            { source: "page1", target: "page2", value: 1200 },
+            { source: "page2", target: "conv", value: 400 },
+          ]}
+          height={300}
+        />
+      ),
+      code: `<WakaSankeyDiagram
+  nodes={[
+    { id: "organic", label: "Organic" },
+    { id: "homepage", label: "Homepage" },
+    { id: "conversion", label: "Conversion" },
+  ]}
+  links={[
+    { source: "organic", target: "homepage", value: 1000 },
+    { source: "homepage", target: "conversion", value: 400 },
+  ]}
+  height={300}
+/>`,
+    },
+  ],
+}
+
+export const treemapChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Treemap",
+      description: "Visualise des donnees hierarchiques en rectangles",
+      preview: (
+        <WakaTreemapChart
+          data={[
+            { id: "electronics", label: "Electronique", value: 45000, category: "tech", children: [
+              { id: "phones", label: "Smartphones", value: 25000, category: "tech" },
+              { id: "laptops", label: "Laptops", value: 15000, category: "tech" },
+              { id: "accessories", label: "Accessoires", value: 5000, category: "tech" },
+            ]},
+            { id: "clothing", label: "Vetements", value: 30000, category: "fashion" },
+            { id: "home", label: "Maison", value: 20000, category: "home" },
+            { id: "sports", label: "Sports", value: 15000, category: "sports" },
+          ]}
+          height={300}
+          colorScheme="default"
+        />
+      ),
+      code: `<WakaTreemapChart
+  data={[
+    { id: "electronics", label: "Electronique", value: 45000, children: [
+      { id: "phones", label: "Smartphones", value: 25000 },
+      { id: "laptops", label: "Laptops", value: 15000 },
+    ]},
+    { id: "clothing", label: "Vetements", value: 30000 },
+  ]}
+  height={300}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// FORMS COMPONENTS
+// ============================================
+
+export const signaturePadShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Pad de signature",
+      description: "Permet de capturer une signature manuscrite",
+      preview: (
+        <WakaSignaturePad
+          width={400}
+          height={200}
+          penColor="#1e293b"
+          backgroundColor="#f8fafc"
+          onSave={(dataUrl, format) => console.log("Signature saved:", format)}
+          showToolbar
+        />
+      ),
+      code: `<WakaSignaturePad
+  width={400}
+  height={200}
+  penColor="#1e293b"
+  backgroundColor="#f8fafc"
+  onSave={(dataUrl, format) => console.log("Saved:", format)}
+  showToolbar
+/>`,
+    },
+  ],
+}
+
+export const addressAutocompleteShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Autocompletion d adresse",
+      description: "Champ avec suggestions d adresses",
+      preview: (
+        <WakaAddressAutocomplete
+          placeholder="Entrez une adresse..."
+          onChange={(address) => console.log("Selected:", address)}
+          showRecentAddresses
+          allowManualEntry
+        />
+      ),
+      code: `<WakaAddressAutocomplete
+  placeholder="Entrez une adresse..."
+  onChange={(address) => console.log("Selected:", address)}
+  showRecentAddresses
+  allowManualEntry
+/>`,
+    },
+  ],
+}
+
+export const phoneInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Champ telephone",
+      description: "Saisie de numero avec indicatif pays",
+      preview: (
+        <WakaPhoneInput
+          defaultCountry="FR"
+          value="+33612345678"
+          onChange={(value) => console.log("Phone:", value)}
+          placeholder="Numero de telephone"
+        />
+      ),
+      code: `<WakaPhoneInput
+  defaultCountry="FR"
+  value={phone}
+  onChange={(value) => setPhone(value)}
+  placeholder="Numero de telephone"
+/>`,
+    },
+  ],
+}
+
+export const creditCardInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Champ carte bancaire",
+      description: "Saisie formatee de carte de credit",
+      preview: (
+        <WakaCreditCardInput
+          onChange={(data) => console.log("Card data:", data)}
+          showCardPreview
+          showCardTypeIcon
+        />
+      ),
+      code: `<WakaCreditCardInput
+  onChange={(data) => console.log("Card:", data)}
+  showCardPreview
+  showCardTypeIcon
+/>`,
+    },
+  ],
+}
+
+export const tagInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Champ de tags",
+      description: "Permet d ajouter plusieurs tags",
+      preview: (
+        <WakaTagInput
+          tags={[
+            { id: "1", value: "React" },
+            { id: "2", value: "TypeScript" },
+            { id: "3", value: "Tailwind" },
+          ]}
+          onChange={(tags) => console.log("Tags:", tags)}
+          placeholder="Ajouter un tag..."
+          maxTags={10}
+          suggestions={[
+            { value: "Vue" },
+            { value: "Angular" },
+            { value: "Svelte" },
+          ]}
+        />
+      ),
+      code: `<WakaTagInput
+  tags={[{ id: "1", value: "React" }, { id: "2", value: "TypeScript" }]}
+  onChange={(newTags) => setTags(newTags)}
+  placeholder="Ajouter un tag..."
+  maxTags={10}
+/>`,
+    },
+  ],
+}
+
+export const sliderRangeShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Slider de plage",
+      description: "Selection d une plage de valeurs",
+      preview: (
+        <div className="w-full max-w-sm space-y-6">
+          <WakaSliderRange
+            min={0}
+            max={1000}
+            step={10}
+            value={[200, 800]}
+            onChange={(value) => console.log("Range:", value)}
+            formatValue={(v) => `${v} EUR`}
+            showLabels
+          />
+        </div>
+      ),
+      code: `<WakaSliderRange
+  min={0}
+  max={1000}
+  step={10}
+  value={[200, 800]}
+  onChange={(value) => console.log("Range:", value)}
+  formatLabel={(v) => \`\${v} EUR\`}
+/>`,
+    },
+  ],
+}
+
+export const ratingInputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Notation par etoiles",
+      description: "Permet de donner une note",
+      preview: (
+        <div className="space-y-4">
+          <WakaRatingInput
+            value={4}
+            max={5}
+            onChange={(value) => console.log("Rating:", value)}
+            size="md"
+          />
+          <WakaRatingInput
+            value={3.5}
+            max={5}
+            onChange={(value) => console.log("Rating:", value)}
+            allowHalf
+            size="lg"
+          />
+        </div>
+      ),
+      code: `<WakaRatingInput
+  value={rating}
+  max={5}
+  onChange={(value) => setRating(value)}
+  size="md"
+/>
+<WakaRatingInput
+  value={rating}
+  max={5}
+  onChange={(value) => setRating(value)}
+  allowHalf
+/>`,
+    },
+  ],
+}
+
+export const schedulePickerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Selecteur d horaires",
+      description: "Permet de definir des creneaux horaires",
+      preview: (
+        <WakaSchedulePicker
+          slots={[
+            { id: "1", date: new Date("2024-01-15"), startTime: "09:00", endTime: "10:00", status: "available" },
+            { id: "2", date: new Date("2024-01-15"), startTime: "10:00", endTime: "11:00", status: "available" },
+            { id: "3", date: new Date("2024-01-15"), startTime: "14:00", endTime: "15:00", status: "booked" },
+            { id: "4", date: new Date("2024-01-16"), startTime: "09:00", endTime: "10:00", status: "available" },
+          ]}
+          selectedSlots={["1"]}
+          onSlotsChange={(slotIds) => console.log("Selected:", slotIds)}
+          durations={[30, 60, 90]}
+          selectedDuration={60}
+        />
+      ),
+      code: `<WakaSchedulePicker
+  slots={[
+    { id: "1", date: new Date(), startTime: "09:00", endTime: "10:00", status: "available" },
+    { id: "2", date: new Date(), startTime: "10:00", endTime: "11:00", status: "booked" },
+  ]}
+  selectedSlots={["1"]}
+  onSlotsChange={(slotIds) => console.log("Selected:", slotIds)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ONBOARDING COMPONENTS
+// ============================================
+
+function TourGuidePreview() {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [currentStep, setCurrentStep] = React.useState(0)
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-4 items-center">
+        <Button id="tour-step1" variant="outline">Accueil</Button>
+        <Button id="tour-step2" variant="outline">Projets</Button>
+        <Button id="tour-step3" variant="default">Nouveau</Button>
+      </div>
+      <Button onClick={() => { setIsOpen(true); setCurrentStep(0) }}>
+        Lancer la visite guidee
+      </Button>
+      <WakaTourGuide
+        steps={[
+          { id: "1", target: "#tour-step1", title: "Bienvenue", content: "Ceci est la page d accueil", placement: "bottom" },
+          { id: "2", target: "#tour-step2", title: "Projets", content: "Gerez vos projets ici", placement: "bottom" },
+          { id: "3", target: "#tour-step3", title: "Creer", content: "Cliquez pour creer un nouveau projet", placement: "bottom" },
+        ]}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        currentStep={currentStep}
+        onStepChange={setCurrentStep}
+        onSkip={() => setIsOpen(false)}
+        onComplete={() => setIsOpen(false)}
+        showProgress
+        showSkip
+        showStepCounter
+      />
+    </div>
+  )
+}
+
+export const tourGuideShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Guide de visite",
+      description: "Visite guidee interactive de l interface",
+      preview: <TourGuidePreview />,
+      code: `const [isOpen, setIsOpen] = useState(false)
+const [currentStep, setCurrentStep] = useState(0)
+
+<Button onClick={() => { setIsOpen(true); setCurrentStep(0) }}>
+  Lancer la visite guidee
+</Button>
+
+<WakaTourGuide
+  steps={[
+    { id: "1", target: "#step1", title: "Bienvenue", content: "Page d accueil" },
+    { id: "2", target: "#step2", title: "Projets", content: "Vos projets" },
+    { id: "3", target: "#step3", title: "Creer", content: "Nouveau projet" },
+  ]}
+  isOpen={isOpen}
+  onOpenChange={setIsOpen}
+  currentStep={currentStep}
+  onStepChange={setCurrentStep}
+  onComplete={() => setIsOpen(false)}
+  showProgress
+  showSkip
+/>`,
+    },
+  ],
+}
+
+export const hotspotShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Point d interet",
+      description: "Met en evidence un element avec animation",
+      preview: (
+        <div className="relative p-8">
+          <Button>
+            Nouveau
+            <WakaHotspot
+              id="new-feature"
+              content="Nouvelle fonctionnalite !"
+              position="top-right"
+              variant="dot"
+              size="default"
+            />
+          </Button>
+        </div>
+      ),
+      code: `<Button>
+  Nouveau
+  <WakaHotspot
+    id="new-feature"
+    content="Nouvelle fonctionnalite !"
+    position="top-right"
+    variant="dot"
+  />
+</Button>`,
+    },
+  ],
+}
+
+export const checklistShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Liste de taches",
+      description: "Checklist de configuration initiale",
+      preview: (
+        <WakaChecklist
+          checklistId="setup-checklist"
+          title="Configuration du compte"
+          tasks={[
+            { id: "1", title: "Verifier l email" },
+            { id: "2", title: "Completer le profil" },
+            { id: "3", title: "Activer la 2FA" },
+            { id: "4", title: "Inviter l equipe" },
+          ]}
+          onTaskChange={(id, status) => console.log("Task:", id, status)}
+          showProgress
+        />
+      ),
+      code: `<WakaChecklist
+  checklistId="setup-checklist"
+  title="Configuration du compte"
+  tasks={[
+    { id: "1", title: "Verifier l email" },
+    { id: "2", title: "Completer le profil" },
+    { id: "3", title: "Activer la 2FA" },
+  ]}
+  onTaskChange={(id, status) => console.log(id, status)}
+  showProgress
+/>`,
+    },
+  ],
+}
+
+export const emptyStateShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Etat vide",
+      description: "Affiche un message quand il n y a pas de contenu",
+      preview: (
+        <WakaEmptyState
+          illustration="inbox"
+          title="Aucun message"
+          description="Votre boite de reception est vide. Les nouveaux messages apparaitront ici."
+          primaryAction={{
+            label: "Composer un message",
+            onClick: () => console.log("Compose"),
+          }}
+        />
+      ),
+      code: `<WakaEmptyState
+  illustration="inbox"
+  title="Aucun message"
+  description="Votre boite de reception est vide."
+  primaryAction={{
+    label: "Composer un message",
+    onClick: () => console.log("Compose"),
+  }}
+/>`,
+    },
+  ],
+}
+
+export const featureAnnouncementShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Annonce de fonctionnalite",
+      description: "Met en avant une nouvelle fonctionnalite",
+      preview: (
+        <WakaFeatureAnnouncement
+          features={[
+            {
+              id: "dark-mode",
+              title: "Nouveau : Mode sombre",
+              description: "Profitez d une experience plus confortable pour vos yeux avec le nouveau mode sombre.",
+              version: "2.0.0",
+              badgeText: "Nouveau",
+              badgeVariant: "primary",
+            },
+          ]}
+          mode="banner"
+          open={true}
+          onDismiss={() => console.log("Dismissed")}
+        />
+      ),
+      code: `<WakaFeatureAnnouncement
+  features={[
+    {
+      id: "dark-mode",
+      title: "Nouveau : Mode sombre",
+      description: "Profitez d une experience plus confortable.",
+      version: "2.0.0",
+      badgeText: "Nouveau",
+      badgeVariant: "primary",
+    },
+  ]}
+  mode="banner"
+  open={true}
+  onDismiss={() => console.log("Dismissed")}
+/>`,
+    },
+  ],
+}
+
+export const progressOnboardingShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Progression onboarding",
+      description: "Affiche la progression de la configuration",
+      preview: (
+        <WakaProgressOnboarding
+          steps={[
+            { id: "1", label: "Creer un compte", completed: true },
+            { id: "2", label: "Configurer le profil", completed: true },
+            { id: "3", label: "Connecter les services", completed: false },
+            { id: "4", label: "Inviter l equipe", completed: false },
+          ]}
+          currentStep={2}
+          variant="full"
+          showPercentage
+          onStepClick={(index) => console.log("Step:", index)}
+          clickable
+        />
+      ),
+      code: `<WakaProgressOnboarding
+  steps={[
+    { id: "1", label: "Creer un compte", completed: true },
+    { id: "2", label: "Configurer le profil", completed: true },
+    { id: "3", label: "Connecter les services" },
+    { id: "4", label: "Inviter l equipe" },
+  ]}
+  currentStep={2}
+  variant="full"
+  showPercentage
+  onStepClick={(index) => console.log("Step:", index)}
+  clickable
+/>`,
+    },
+  ],
+}
+
+function TooltipTourPreview() {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [currentStep, setCurrentStep] = React.useState(0)
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-4 items-center">
+        <Button id="tooltip-btn1" variant="outline">Accueil</Button>
+        <Button id="tooltip-btn2" variant="outline">Parametres</Button>
+        <Button id="tooltip-btn3" variant="default">Action</Button>
+      </div>
+      <Button onClick={() => { setIsOpen(true); setCurrentStep(0) }}>
+        Lancer la visite par tooltips
+      </Button>
+      <WakaTourGuide
+        variant="tooltip"
+        steps={[
+          { id: "1", target: "#tooltip-btn1", title: "Etape 1", content: "Cliquez ici pour commencer", placement: "bottom" },
+          { id: "2", target: "#tooltip-btn2", title: "Etape 2", content: "Configurez vos preferences", placement: "bottom" },
+          { id: "3", target: "#tooltip-btn3", title: "Etape 3", content: "Lancez votre premier projet", placement: "bottom" },
+        ]}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        currentStep={currentStep}
+        onStepChange={setCurrentStep}
+        onComplete={() => setIsOpen(false)}
+        onSkip={() => setIsOpen(false)}
+        showProgress
+        showSkip
+      />
+    </div>
+  )
+}
+
+export const tooltipTourShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Visite par tooltips (leger)",
+      description: "Tooltips sans overlay bloquant - utilise WakaTourGuide avec variant='tooltip'",
+      preview: <TooltipTourPreview />,
+      code: `const [isOpen, setIsOpen] = useState(false)
+const [currentStep, setCurrentStep] = useState(0)
+
+<Button onClick={() => { setIsOpen(true); setCurrentStep(0) }}>Lancer</Button>
+
+<WakaTourGuide
+  variant="tooltip"  // Mode leger sans overlay
+  steps={[
+    { id: "1", target: "#btn1", title: "Etape 1", content: "Commencez ici" },
+    { id: "2", target: "#btn2", title: "Etape 2", content: "Puis ici" },
+  ]}
+  isOpen={isOpen}
+  onOpenChange={setIsOpen}
+  currentStep={currentStep}
+  onStepChange={setCurrentStep}
+  onComplete={() => setIsOpen(false)}
+  showProgress
+/>`,
+    },
+  ],
+}
+
+function WelcomeModalPreview() {
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <div className="space-y-4">
+      <Button onClick={() => setOpen(true)}>
+        Ouvrir la modal de bienvenue
+      </Button>
+      <WakaWelcomeModal
+        open={open}
+        onOpenChange={setOpen}
+        steps={[
+          {
+            id: "welcome",
+            title: "Bienvenue sur WakaStellar !",
+            description: "Nous sommes ravis de vous compter parmi nous. Decouvrez notre plateforme en quelques etapes.",
+          },
+          {
+            id: "features",
+            title: "Vos preferences",
+            description: "Choisissez ce qui vous interesse le plus.",
+            options: [
+              { id: "speed", label: "Rapidite", description: "Interface optimisee" },
+              { id: "security", label: "Securite", description: "Donnees protegees" },
+              { id: "collab", label: "Collaboration", description: "Travaillez en equipe" },
+            ],
+            multiSelect: true,
+          },
+          {
+            id: "ready",
+            title: "Vous etes pret !",
+            description: "Commencez a utiliser WakaStellar des maintenant.",
+          },
+        ]}
+        userName="Utilisateur"
+        onComplete={(selections) => {
+          console.log("Complete:", selections)
+          setOpen(false)
+        }}
+        onSkip={() => setOpen(false)}
+        allowSkip
+      />
+    </div>
+  )
+}
+
+export const welcomeModalShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Modal de bienvenue",
+      description: "Accueille les nouveaux utilisateurs",
+      preview: <WelcomeModalPreview />,
+      code: `const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Ouvrir</Button>
+
+<WakaWelcomeModal
+  open={open}
+  onOpenChange={setOpen}
+  steps={[
+    {
+      id: "welcome",
+      title: "Bienvenue !",
+      description: "Decouvrez notre plateforme.",
+    },
+    {
+      id: "features",
+      title: "Vos preferences",
+      description: "Choisissez ce qui vous interesse.",
+      options: [
+        { id: "speed", label: "Rapidite" },
+        { id: "security", label: "Securite" },
+      ],
+      multiSelect: true,
+    },
+  ]}
+  onComplete={(selections) => console.log(selections)}
+  allowSkip
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// BOTTOM SHEET SHOWCASE
+// ============================================
+function BottomSheetPreview() {
+  const { open, onOpenChange, openSheet } = useBottomSheet()
+  return (
+    <div>
+      <Button onClick={() => openSheet()}>Open Bottom Sheet</Button>
+      <WakaBottomSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        snapPoints={[25, 50, 90]}
+        header={<h3 className="font-semibold">Bottom Sheet</h3>}
+      >
+        <div className="space-y-4">
+          <p>Drag the handle to snap to different heights.</p>
+          <p>This component is mobile-first with touch gestures.</p>
+        </div>
+      </WakaBottomSheet>
+    </div>
+  )
+}
+
+export const bottomSheetShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Basic Bottom Sheet",
+      description: "A mobile-first bottom sheet with snap points and drag gestures",
+      preview: <BottomSheetPreview />,
+      code: `const { open, onOpenChange, openSheet } = useBottomSheet()
+
+<Button onClick={() => openSheet()}>Open</Button>
+<WakaBottomSheet
+  open={open}
+  onOpenChange={onOpenChange}
+  snapPoints={[25, 50, 90]}
+  header={<h3>Bottom Sheet</h3>}
+>
+  <p>Content here</p>
+</WakaBottomSheet>`,
+    },
+    {
+      title: "Variants",
+      description: "Different visual styles for the bottom sheet",
+      preview: (
+        <div className="flex gap-4">
+          <Button variant="outline" onClick={() => {}}>Default</Button>
+          <Button variant="outline" onClick={() => {}}>Glass</Button>
+          <Button variant="outline" onClick={() => {}}>Flat</Button>
+        </div>
+      ),
+      code: `<WakaBottomSheet variant="default" ... />
+<WakaBottomSheet variant="glass" ... />
+<WakaBottomSheet variant="flat" ... />`,
+    },
+  ],
+}
+
+// ============================================
+// HAPTIC BUTTON SHOWCASE
+// ============================================
+export const hapticButtonShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Variants",
+      description: "Different button styles with haptic feedback and ripple effects",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaHapticButton>Default</WakaHapticButton>
+          <WakaHapticButton variant="secondary">Secondary</WakaHapticButton>
+          <WakaHapticButton variant="destructive">Destructive</WakaHapticButton>
+          <WakaHapticButton variant="outline">Outline</WakaHapticButton>
+          <WakaHapticButton variant="ghost">Ghost</WakaHapticButton>
+          <WakaHapticButton variant="glass">Glass</WakaHapticButton>
+        </div>
+      ),
+      code: `<WakaHapticButton>Default</WakaHapticButton>
+<WakaHapticButton variant="secondary">Secondary</WakaHapticButton>
+<WakaHapticButton variant="destructive">Destructive</WakaHapticButton>
+<WakaHapticButton variant="outline">Outline</WakaHapticButton>
+<WakaHapticButton variant="ghost">Ghost</WakaHapticButton>
+<WakaHapticButton variant="glass">Glass</WakaHapticButton>`,
+    },
+    {
+      title: "Haptic Patterns",
+      description: "Different haptic feedback patterns for various interactions",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaHapticButton hapticPattern="light">Light</WakaHapticButton>
+          <WakaHapticButton hapticPattern="medium">Medium</WakaHapticButton>
+          <WakaHapticButton hapticPattern="heavy">Heavy</WakaHapticButton>
+          <WakaHapticButton hapticPattern="success">Success</WakaHapticButton>
+          <WakaHapticButton hapticPattern="error">Error</WakaHapticButton>
+        </div>
+      ),
+      code: `<WakaHapticButton hapticPattern="light">Light</WakaHapticButton>
+<WakaHapticButton hapticPattern="medium">Medium</WakaHapticButton>
+<WakaHapticButton hapticPattern="heavy">Heavy</WakaHapticButton>
+<WakaHapticButton hapticPattern="success">Success</WakaHapticButton>
+<WakaHapticButton hapticPattern="error">Error</WakaHapticButton>`,
+    },
+    {
+      title: "With Icons and Loading",
+      description: "Buttons with icons, loading states, and glow effects",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaHapticButton leftIcon={<Mail className="h-4 w-4" />}>Email</WakaHapticButton>
+          <WakaHapticButton loading>Loading...</WakaHapticButton>
+          <WakaHapticButton glowOnPress glowColor="rgba(59, 130, 246, 0.5)">Glow</WakaHapticButton>
+        </div>
+      ),
+      code: `<WakaHapticButton leftIcon={<Mail />}>Email</WakaHapticButton>
+<WakaHapticButton loading>Loading...</WakaHapticButton>
+<WakaHapticButton glowOnPress>Glow</WakaHapticButton>`,
+    },
+  ],
+}
+
+// ============================================
+// MORPH BUTTON SHOWCASE
+// ============================================
+function MorphButtonPreview() {
+  const [state, setState] = React.useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleClick = () => {
+    setState("loading")
+    setTimeout(() => {
+      setState(Math.random() > 0.5 ? "success" : "error")
+    }, 2000)
+  }
+
+  return (
+    <WakaMorphButton
+      state={state}
+      idleText="Submit"
+      loadingText="Processing..."
+      successText="Done!"
+      errorText="Failed"
+      onClick={handleClick}
+      onReset={() => setState("idle")}
+    />
+  )
+}
+
+export const morphButtonShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "State Morphing",
+      description: "Button that morphs between idle, loading, success, and error states",
+      preview: <MorphButtonPreview />,
+      code: `const [state, setState] = useState<MorphState>("idle")
+
+<WakaMorphButton
+  state={state}
+  idleText="Submit"
+  loadingText="Processing..."
+  successText="Done!"
+  errorText="Failed"
+  onClick={handleSubmit}
+  onReset={() => setState("idle")}
+/>`,
+    },
+    {
+      title: "Variants",
+      description: "Different visual variants of the morph button",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaMorphButton state="idle" idleText="Default" />
+          <WakaMorphButton state="idle" idleText="Outline" variant="outline" />
+          <WakaMorphButton state="idle" idleText="Ghost" variant="ghost" />
+        </div>
+      ),
+      code: `<WakaMorphButton state="idle" idleText="Default" />
+<WakaMorphButton variant="outline" state="idle" idleText="Outline" />
+<WakaMorphButton variant="ghost" state="idle" idleText="Ghost" />`,
+    },
+  ],
+}
+
+// ============================================
+// PULL TO REFRESH SHOWCASE
+// ============================================
+function PullToRefreshPreview() {
+  const [items, setItems] = React.useState(["Item 1", "Item 2", "Item 3"])
+
+  const handleRefresh = async () => {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    setItems(prev => [`New Item ${Date.now()}`, ...prev])
+  }
+
+  return (
+    <div className="h-64 border rounded-lg overflow-hidden">
+      <WakaPullToRefresh onRefresh={handleRefresh}>
+        <div className="p-4 space-y-2">
+          {items.map((item, i) => (
+            <div key={i} className="p-3 bg-muted rounded">{item}</div>
+          ))}
+        </div>
+      </WakaPullToRefresh>
+    </div>
+  )
+}
+
+export const pullToRefreshShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Basic Pull to Refresh",
+      description: "Pull down to trigger a refresh action (works on touch devices)",
+      preview: <PullToRefreshPreview />,
+      code: `<WakaPullToRefresh onRefresh={handleRefresh}>
+  <div className="p-4 space-y-2">
+    {items.map((item, i) => (
+      <div key={i} className="p-3 bg-muted rounded">{item}</div>
+    ))}
+  </div>
+</WakaPullToRefresh>`,
+    },
+    {
+      title: "Variants",
+      description: "Different visual styles: default, iOS, and Material Design",
+      preview: (
+        <div className="flex gap-4">
+          <Badge>Default</Badge>
+          <Badge variant="outline">iOS</Badge>
+          <Badge variant="secondary">Material</Badge>
+        </div>
+      ),
+      code: `<WakaPullToRefresh variant="default" ... />
+<WakaPullToRefresh variant="ios" ... />
+<WakaPullToRefresh variant="material" ... />`,
+    },
+  ],
+}
+
+// ============================================
+// SWIPE CARD SHOWCASE
+// ============================================
+function SwipeCardPreview() {
+  const cards = [
+    { id: 1, name: "Card 1", image: "https://picsum.photos/300/400?1" },
+    { id: 2, name: "Card 2", image: "https://picsum.photos/300/400?2" },
+    { id: 3, name: "Card 3", image: "https://picsum.photos/300/400?3" },
+  ]
+
+  return (
+    <div className="h-96 flex items-center justify-center">
+      <WakaSwipeCard
+        cards={cards}
+        renderCard={(card) => (
+          <div className="h-full bg-gradient-to-br from-primary/20 to-secondary/20 p-6 flex flex-col items-center justify-center">
+            <h3 className="text-2xl font-bold">{card.name}</h3>
+            <p className="text-muted-foreground">Swipe left or right</p>
+          </div>
+        )}
+        onSwipe={(card, direction) => console.log(`Swiped ${direction}:`, card)}
+      />
+    </div>
+  )
+}
+
+export const swipeCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Tinder-style Cards",
+      description: "Swipeable card stack with gesture support",
+      preview: <SwipeCardPreview />,
+      code: `const cards = [
+  { id: 1, name: "Card 1" },
+  { id: 2, name: "Card 2" },
+]
+
+<WakaSwipeCard
+  cards={cards}
+  renderCard={(card) => (
+    <div className="p-6">
+      <h3>{card.name}</h3>
+    </div>
+  )}
+  onSwipe={(card, direction) => console.log(direction, card)}
+/>`,
+    },
+    {
+      title: "Configuration",
+      description: "Customize swipe directions, thresholds, and overlays",
+      preview: (
+        <div className="text-sm text-muted-foreground">
+          <p>allowedDirections: left, right, up, down</p>
+          <p>swipeThreshold: 0.3 (30% of card width)</p>
+          <p>showOverlay: true (shows like/nope indicators)</p>
+        </div>
+      ),
+      code: `<WakaSwipeCard
+  allowedDirections={["left", "right", "up"]}
+  swipeThreshold={0.3}
+  showOverlay={true}
+  overlayContent={{ left: "NOPE", right: "LIKE" }}
+  ...
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// LIQUID BUTTON SHOWCASE
+// ============================================
+export const liquidButtonShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Liquid Effect",
+      description: "Buttons with animated liquid/blob morphing effect",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaLiquidButton>Default</WakaLiquidButton>
+          <WakaLiquidButton variant="secondary">Secondary</WakaLiquidButton>
+          <WakaLiquidButton variant="destructive">Destructive</WakaLiquidButton>
+          <WakaLiquidButton variant="success">Success</WakaLiquidButton>
+        </div>
+      ),
+      code: `<WakaLiquidButton>Default</WakaLiquidButton>
+<WakaLiquidButton variant="secondary">Secondary</WakaLiquidButton>
+<WakaLiquidButton variant="destructive">Destructive</WakaLiquidButton>
+<WakaLiquidButton variant="success">Success</WakaLiquidButton>`,
+    },
+    {
+      title: "Gradient & Neon",
+      description: "Special effect variants",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaLiquidButton variant="gradient">Gradient</WakaLiquidButton>
+          <WakaLiquidButton variant="neon">Neon</WakaLiquidButton>
+        </div>
+      ),
+      code: `<WakaLiquidButton variant="gradient">Gradient</WakaLiquidButton>
+<WakaLiquidButton variant="neon">Neon</WakaLiquidButton>`,
+    },
+    {
+      title: "Customization",
+      description: "Control liquid intensity, speed, and blob points",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaLiquidButton liquidIntensity={0.3} liquidSpeed={2000}>Subtle</WakaLiquidButton>
+          <WakaLiquidButton liquidIntensity={0.8} liquidSpeed={500} blobPoints={12}>Intense</WakaLiquidButton>
+        </div>
+      ),
+      code: `<WakaLiquidButton liquidIntensity={0.3} liquidSpeed={2000}>
+  Subtle
+</WakaLiquidButton>
+<WakaLiquidButton liquidIntensity={0.8} liquidSpeed={500} blobPoints={12}>
+  Intense
+</WakaLiquidButton>`,
+    },
+  ],
+}
+
+// ============================================
+// MAGNETIC BUTTON SHOWCASE
+// ============================================
+export const magneticButtonShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Magnetic Effect",
+      description: "Button attracted to cursor within a radius",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaMagneticButton>Hover Near Me</WakaMagneticButton>
+          <WakaMagneticButton variant="secondary">Secondary</WakaMagneticButton>
+          <WakaMagneticButton variant="outline">Outline</WakaMagneticButton>
+        </div>
+      ),
+      code: `<WakaMagneticButton>Hover Near Me</WakaMagneticButton>
+<WakaMagneticButton variant="secondary">Secondary</WakaMagneticButton>
+<WakaMagneticButton variant="outline">Outline</WakaMagneticButton>`,
+    },
+    {
+      title: "Attraction Settings",
+      description: "Customize the magnetic attraction radius and strength",
+      preview: (
+        <div className="flex flex-wrap gap-8">
+          <WakaMagneticButton attractionRadius={100} attractionStrength={0.2}>Weak</WakaMagneticButton>
+          <WakaMagneticButton attractionRadius={200} attractionStrength={0.6}>Strong</WakaMagneticButton>
+        </div>
+      ),
+      code: `<WakaMagneticButton attractionRadius={100} attractionStrength={0.2}>
+  Weak
+</WakaMagneticButton>
+<WakaMagneticButton attractionRadius={200} attractionStrength={0.6}>
+  Strong
+</WakaMagneticButton>`,
+    },
+    {
+      title: "With Ripple",
+      description: "Magnetic button with ripple effect on click",
+      preview: (
+        <WakaMagneticButton rippleEnabled rippleColor="rgba(255,255,255,0.5)">
+          Click Me
+        </WakaMagneticButton>
+      ),
+      code: `<WakaMagneticButton rippleEnabled rippleColor="rgba(255,255,255,0.5)">
+  Click Me
+</WakaMagneticButton>`,
+    },
+  ],
+}
+
+// ============================================
+// ERROR SHAKE SHOWCASE
+// ============================================
+function ErrorShakePreview() {
+  const [trigger, setTrigger] = React.useState(false)
+
+  return (
+    <div className="space-y-4">
+      <Button onClick={() => setTrigger(true)}>Trigger Shake</Button>
+      <WakaErrorShake
+        trigger={trigger}
+        onComplete={() => setTrigger(false)}
+        flashEffect
+      >
+        <div className="p-4 border rounded-lg bg-card">
+          <Input placeholder="Invalid input..." className="border-destructive" />
+        </div>
+      </WakaErrorShake>
+    </div>
+  )
+}
+
+export const errorShakeShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Basic Error Shake",
+      description: "Shake animation to indicate errors with optional flash effect",
+      preview: <ErrorShakePreview />,
+      code: `const [trigger, setTrigger] = useState(false)
+
+<WakaErrorShake
+  trigger={trigger}
+  onComplete={() => setTrigger(false)}
+  flashEffect
+>
+  <Input className="border-destructive" />
+</WakaErrorShake>`,
+    },
+    {
+      title: "Intensity Levels",
+      description: "Different shake intensities for various error severities",
+      preview: (
+        <div className="flex gap-4 text-sm text-muted-foreground">
+          <span>Light</span>
+          <span>Medium</span>
+          <span>Strong</span>
+        </div>
+      ),
+      code: `<WakaErrorShake intensity="light" ... />
+<WakaErrorShake intensity="medium" ... />
+<WakaErrorShake intensity="strong" ... />`,
+    },
+    {
+      title: "With Glitch Effect",
+      description: "Optional chromatic aberration glitch effect",
+      preview: (
+        <div className="text-sm text-muted-foreground">
+          Enable glitchEffect for a more dramatic error indication
+        </div>
+      ),
+      code: `<WakaErrorShake glitchEffect flashEffect intensity="strong">
+  <FormField />
+</WakaErrorShake>`,
+    },
+  ],
+}
+
+// ============================================
+// LOADING ORBIT SHOWCASE
+// ============================================
+export const loadingOrbitShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Sizes",
+      description: "Different sizes of the orbital loading animation",
+      preview: (
+        <div className="flex items-end gap-8">
+          <WakaLoadingOrbit size="sm" />
+          <WakaLoadingOrbit size="md" />
+          <WakaLoadingOrbit size="lg" />
+          <WakaLoadingOrbit size="xl" />
+        </div>
+      ),
+      code: `<WakaLoadingOrbit size="sm" />
+<WakaLoadingOrbit size="md" />
+<WakaLoadingOrbit size="lg" />
+<WakaLoadingOrbit size="xl" />`,
+    },
+    {
+      title: "Custom Orbits",
+      description: "Configure number of orbits and their colors",
+      preview: (
+        <div className="flex gap-8">
+          <WakaLoadingOrbit orbitCount={2} primaryColor="#3b82f6" secondaryColor="#f59e0b" />
+          <WakaLoadingOrbit orbitCount={4} showPaths={false} />
+        </div>
+      ),
+      code: `<WakaLoadingOrbit
+  orbitCount={2}
+  primaryColor="#3b82f6"
+  secondaryColor="#f59e0b"
+/>
+<WakaLoadingOrbit orbitCount={4} showPaths={false} />`,
+    },
+    {
+      title: "With Center Content",
+      description: "Add custom content to the center of the orbit",
+      preview: (
+        <WakaLoadingOrbit
+          size="lg"
+          centerIcon={<span className="text-xl">%</span>}
+        />
+      ),
+      code: `<WakaLoadingOrbit
+  size="lg"
+  centerIcon={<span className="text-xl">%</span>}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SKELETON WAVE SHOWCASE
+// ============================================
+export const skeletonWaveShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Presets",
+      description: "Pre-configured skeleton shapes for common use cases",
+      preview: (
+        <div className="space-y-4">
+          <WakaSkeletonWave preset="text" width={200} />
+          <WakaSkeletonWave preset="avatar" />
+          <WakaSkeletonWave preset="button" />
+          <WakaSkeletonWave preset="thumbnail" />
+        </div>
+      ),
+      code: `<WakaSkeletonWave preset="text" width={200} />
+<WakaSkeletonWave preset="avatar" />
+<WakaSkeletonWave preset="button" />
+<WakaSkeletonWave preset="thumbnail" />`,
+    },
+    {
+      title: "Multi-line Text",
+      description: "Text skeleton with multiple lines and random widths",
+      preview: (
+        <WakaSkeletonWave preset="text" lines={4} randomWidths />
+      ),
+      code: `<WakaSkeletonWave preset="text" lines={4} randomWidths />`,
+    },
+    {
+      title: "Custom Styling",
+      description: "Customize colors and animation speed",
+      preview: (
+        <div className="space-y-4">
+          <WakaSkeletonWave width={200} height={20} speed={1} />
+          <WakaSkeletonWave width={150} height={20} speed={2} baseColor="hsl(var(--primary) / 0.2)" />
+        </div>
+      ),
+      code: `<WakaSkeletonWave width={200} height={20} speed={1} />
+<WakaSkeletonWave
+  width={150}
+  height={20}
+  speed={2}
+  baseColor="hsl(var(--primary) / 0.2)"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SUCCESS EXPLOSION SHOWCASE
+// ============================================
+function SuccessExplosionPreview() {
+  const [trigger, setTrigger] = React.useState(false)
+
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <Button onClick={() => setTrigger(true)}>Celebrate!</Button>
+      <WakaSuccessExplosion
+        trigger={trigger}
+        onComplete={() => setTrigger(false)}
+        showCheckmark
+        size="lg"
+      />
+    </div>
+  )
+}
+
+export const successExplosionShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Success Animation",
+      description: "Confetti explosion with checkmark for success states",
+      preview: <SuccessExplosionPreview />,
+      code: `const [trigger, setTrigger] = useState(false)
+
+<Button onClick={() => setTrigger(true)}>Celebrate!</Button>
+<WakaSuccessExplosion
+  trigger={trigger}
+  onComplete={() => setTrigger(false)}
+  showCheckmark
+  size="lg"
+/>`,
+    },
+    {
+      title: "Sizes",
+      description: "Different explosion sizes",
+      preview: (
+        <div className="flex gap-4 text-sm text-muted-foreground">
+          <span>sm (80px)</span>
+          <span>md (120px)</span>
+          <span>lg (180px)</span>
+          <span>xl (240px)</span>
+        </div>
+      ),
+      code: `<WakaSuccessExplosion size="sm" ... />
+<WakaSuccessExplosion size="md" ... />
+<WakaSuccessExplosion size="lg" ... />
+<WakaSuccessExplosion size="xl" ... />`,
+    },
+    {
+      title: "Custom Colors",
+      description: "Customize particle colors for branding",
+      preview: (
+        <div className="text-sm text-muted-foreground">
+          primaryColor, secondaryColor, accentColor, checkmarkColor
+        </div>
+      ),
+      code: `<WakaSuccessExplosion
+  primaryColor="#22c55e"
+  secondaryColor="#3b82f6"
+  accentColor="#f59e0b"
+  checkmarkColor="#22c55e"
+  particleCount={32}
+  ...
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// TYPEWRITER SHOWCASE
+// ============================================
+export const typewriterShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Basic Typewriter",
+      description: "Animated text typing effect with cursor",
+      preview: (
+        <WakaTypewriter
+          strings={["Hello, World!", "Welcome to WakaStellar", "Build amazing UIs"]}
+          typeSpeed="normal"
+          deleteSpeed="fast"
+          loop
+        />
+      ),
+      code: `<WakaTypewriter
+  strings={["Hello, World!", "Welcome to WakaStellar", "Build amazing UIs"]}
+  typeSpeed="normal"
+  deleteSpeed="fast"
+  loop
+/>`,
+    },
+    {
+      title: "Speed Variants",
+      description: "Different typing speeds",
+      preview: (
+        <div className="space-y-4">
+          <div><span className="text-muted-foreground mr-2">Slow:</span><WakaTypewriter strings={["Typing slowly..."]} typeSpeed="slow" loop={false} /></div>
+          <div><span className="text-muted-foreground mr-2">Normal:</span><WakaTypewriter strings={["Typing normally..."]} typeSpeed="normal" loop={false} /></div>
+          <div><span className="text-muted-foreground mr-2">Fast:</span><WakaTypewriter strings={["Typing fast..."]} typeSpeed="fast" loop={false} /></div>
+        </div>
+      ),
+      code: `<WakaTypewriter strings={["..."]} typeSpeed="slow" />
+<WakaTypewriter strings={["..."]} typeSpeed="normal" />
+<WakaTypewriter strings={["..."]} typeSpeed="fast" />`,
+    },
+    {
+      title: "Custom Cursor",
+      description: "Customize cursor character and blink speed",
+      preview: (
+        <div className="space-y-4">
+          <WakaTypewriter strings={["Custom cursor"]} cursorChar="_" cursorBlinkSpeed={300} loop={false} />
+          <WakaTypewriter strings={["Block cursor"]} cursorChar="\u2588" loop={false} />
+        </div>
+      ),
+      code: `<WakaTypewriter strings={["..."]} cursorChar="_" cursorBlinkSpeed={300} />
+<WakaTypewriter strings={["..."]} cursorChar="\u2588" />`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA FLOATING NAV SHOWCASE
+// ============================================
+function FloatingNavDemo() {
+  const [activeItem, setActiveItem] = useState("home")
+
+  const items = [
+    { id: "home", label: "Home", icon: <Home className="h-4 w-4" />, active: activeItem === "home" },
+    { id: "products", label: "Products", icon: <Package className="h-4 w-4" />, active: activeItem === "products" },
+    { id: "about", label: "About", icon: <Users className="h-4 w-4" />, active: activeItem === "about" },
+    { id: "contact", label: "Contact", icon: <Mail className="h-4 w-4" />, active: activeItem === "contact" },
+  ]
+
+  return (
+    <div className="relative h-32 bg-muted/30 rounded-lg overflow-hidden">
+      <WakaFloatingNav
+        items={items.map(item => ({
+          ...item,
+          onClick: () => setActiveItem(item.id),
+        }))}
+        logo={<span className="font-bold text-lg">Logo</span>}
+        alwaysVisible
+        className="!relative !translate-y-0"
+        actions={<Button size="sm">Sign Up</Button>}
+      />
+    </div>
+  )
+}
+
+export const floatingNavShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Navigation flottante",
+      description: "Barre de navigation responsive avec effet de compactage au scroll",
+      preview: <FloatingNavDemo />,
+      code: `const [activeItem, setActiveItem] = useState("home")
+
+const items = [
+  { id: "home", label: "Home", icon: <Home />, active: activeItem === "home" },
+  { id: "products", label: "Products", icon: <Package />, active: activeItem === "products" },
+  { id: "about", label: "About", icon: <Users />, active: activeItem === "about" },
+  { id: "contact", label: "Contact", icon: <Mail />, active: activeItem === "contact" },
+]
+
+<WakaFloatingNav
+  items={items.map(item => ({
+    ...item,
+    onClick: () => setActiveItem(item.id),
+  }))}
+  logo={<span className="font-bold">Logo</span>}
+  actions={<Button size="sm">Sign Up</Button>}
+  scrollThreshold={100}
+  alwaysVisible
+/>`,
+    },
+    {
+      title: "Position en bas",
+      description: "Navigation positionnee en bas de l'ecran",
+      preview: (
+        <div className="relative h-32 bg-muted/30 rounded-lg overflow-hidden flex items-end">
+          <WakaFloatingNav
+            items={[
+              { id: "home", label: "Home", icon: <Home className="h-4 w-4" />, active: true },
+              { id: "search", label: "Search", icon: <Search className="h-4 w-4" /> },
+              { id: "profile", label: "Profile", icon: <User className="h-4 w-4" /> },
+            ]}
+            position="bottom"
+            alwaysVisible
+            className="!relative !translate-y-0"
+          />
+        </div>
+      ),
+      code: `<WakaFloatingNav
+  items={items}
+  position="bottom"
+  alwaysVisible
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA BREADCRUMB PATH SHOWCASE
+// ============================================
+function BreadcrumbPathDemo() {
+  const [items, setItems] = useState([
+    { id: "home", label: "Home", icon: <Home className="h-3 w-3" /> },
+    { id: "docs", label: "Documents", icon: <FileText className="h-3 w-3" /> },
+    { id: "project", label: "Project Alpha" },
+  ])
+
+  const addItem = () => {
+    const newItem = { id: `item-${Date.now()}`, label: `Folder ${items.length}` }
+    setItems([...items, newItem])
+  }
+
+  return (
+    <div className="space-y-4">
+      <WakaBreadcrumbPath
+        items={items}
+        showPath
+        size="md"
+      />
+      <Button size="sm" variant="outline" onClick={addItem}>
+        <Plus className="h-4 w-4 mr-2" /> Add Level
+      </Button>
+    </div>
+  )
+}
+
+export const breadcrumbPathShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Fil d'Ariane anime",
+      description: "Breadcrumb avec animation SVG de chemin",
+      preview: <BreadcrumbPathDemo />,
+      code: `const [items, setItems] = useState([
+  { id: "home", label: "Home", icon: <Home /> },
+  { id: "docs", label: "Documents", icon: <FileText /> },
+  { id: "project", label: "Project Alpha" },
+])
+
+<WakaBreadcrumbPath
+  items={items}
+  showPath
+  size="md"
+/>`,
+    },
+    {
+      title: "Avec items collapsed",
+      description: "Collapse automatique des items intermediaires",
+      preview: (
+        <WakaBreadcrumbPath
+          items={[
+            { id: "1", label: "Home" },
+            { id: "2", label: "Documents" },
+            { id: "3", label: "Work" },
+            { id: "4", label: "Projects" },
+            { id: "5", label: "2024" },
+            { id: "6", label: "Current" },
+          ]}
+          maxItems={4}
+          showPath={false}
+        />
+      ),
+      code: `<WakaBreadcrumbPath
+  items={longItemsList}
+  maxItems={4}
+  showPath={false}
+/>`,
+    },
+    {
+      title: "Tailles",
+      description: "Differentes tailles disponibles",
+      preview: (
+        <div className="space-y-4">
+          <WakaBreadcrumbPath
+            items={[{ id: "1", label: "Home" }, { id: "2", label: "Docs" }, { id: "3", label: "Page" }]}
+            size="sm"
+            showPath={false}
+          />
+          <WakaBreadcrumbPath
+            items={[{ id: "1", label: "Home" }, { id: "2", label: "Docs" }, { id: "3", label: "Page" }]}
+            size="md"
+            showPath={false}
+          />
+          <WakaBreadcrumbPath
+            items={[{ id: "1", label: "Home" }, { id: "2", label: "Docs" }, { id: "3", label: "Page" }]}
+            size="lg"
+            showPath={false}
+          />
+        </div>
+      ),
+      code: `<WakaBreadcrumbPath items={items} size="sm" />
+<WakaBreadcrumbPath items={items} size="md" />
+<WakaBreadcrumbPath items={items} size="lg" />`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA TABS MORPH SHOWCASE
+// ============================================
+function TabsMorphDemo() {
+  const [activeTab, setActiveTab] = useState("overview")
+
+  const tabs = [
+    { id: "overview", label: "Overview", icon: <Grid className="h-4 w-4" /> },
+    { id: "analytics", label: "Analytics", icon: <Activity className="h-4 w-4" />, badge: 3 },
+    { id: "reports", label: "Reports", icon: <FileText className="h-4 w-4" /> },
+    { id: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> },
+  ]
+
+  return (
+    <WakaTabsMorph
+      tabs={tabs}
+      activeTab={activeTab}
+      onChange={setActiveTab}
+      variant="default"
+    />
+  )
+}
+
+export const tabsMorphShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Tabs avec indicateur morphing",
+      description: "L'indicateur s'anime fluidement entre les tabs",
+      preview: <TabsMorphDemo />,
+      code: `const [activeTab, setActiveTab] = useState("overview")
+
+const tabs = [
+  { id: "overview", label: "Overview", icon: <Grid /> },
+  { id: "analytics", label: "Analytics", badge: 3 },
+  { id: "reports", label: "Reports" },
+  { id: "settings", label: "Settings" },
+]
+
+<WakaTabsMorph
+  tabs={tabs}
+  activeTab={activeTab}
+  onChange={setActiveTab}
+/>`,
+    },
+    {
+      title: "Variantes de style",
+      description: "Differents styles visuels disponibles",
+      preview: (
+        <div className="space-y-6">
+          <div>
+            <p className="text-sm text-muted-foreground mb-2">Default</p>
+            <WakaTabsMorph
+              tabs={[
+                { id: "1", label: "Tab 1" },
+                { id: "2", label: "Tab 2" },
+                { id: "3", label: "Tab 3" },
+              ]}
+              defaultTab="1"
+              variant="default"
+            />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground mb-2">Pills</p>
+            <WakaTabsMorph
+              tabs={[
+                { id: "1", label: "Tab 1" },
+                { id: "2", label: "Tab 2" },
+                { id: "3", label: "Tab 3" },
+              ]}
+              defaultTab="1"
+              variant="pills"
+            />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground mb-2">Underline</p>
+            <WakaTabsMorph
+              tabs={[
+                { id: "1", label: "Tab 1" },
+                { id: "2", label: "Tab 2" },
+                { id: "3", label: "Tab 3" },
+              ]}
+              defaultTab="1"
+              variant="underline"
+            />
+          </div>
+        </div>
+      ),
+      code: `<WakaTabsMorph tabs={tabs} variant="default" />
+<WakaTabsMorph tabs={tabs} variant="pills" />
+<WakaTabsMorph tabs={tabs} variant="underline" />`,
+    },
+    {
+      title: "Orientation verticale",
+      description: "Tabs empiles verticalement",
+      preview: (
+        <WakaTabsMorph
+          tabs={[
+            { id: "general", label: "General", icon: <Settings className="h-4 w-4" /> },
+            { id: "security", label: "Security", icon: <Eye className="h-4 w-4" /> },
+            { id: "notifications", label: "Notifications", icon: <Bell className="h-4 w-4" /> },
+          ]}
+          defaultTab="general"
+          orientation="vertical"
+        />
+      ),
+      code: `<WakaTabsMorph
+  tabs={tabs}
+  orientation="vertical"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA ORBITAL MENU SHOWCASE
+// ============================================
+function OrbitalMenuDemo() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const items = [
+    { id: "home", icon: <Home className="h-5 w-5" />, label: "Home", onClick: () => console.log("Home") },
+    { id: "search", icon: <Search className="h-5 w-5" />, label: "Search", onClick: () => console.log("Search") },
+    { id: "star", icon: <Star className="h-5 w-5" />, label: "Favorites", onClick: () => console.log("Star") },
+    { id: "settings", icon: <Settings className="h-5 w-5" />, label: "Settings", onClick: () => console.log("Settings") },
+    { id: "user", icon: <User className="h-5 w-5" />, label: "Profile", onClick: () => console.log("Profile") },
+  ]
+
+  return (
+    <div className="flex items-center justify-center py-8">
+      <WakaOrbitalMenu
+        items={items}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        radius={100}
+      />
+    </div>
+  )
+}
+
+export const orbitalMenuShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Menu orbital",
+      description: "Menu circulaire avec items disposes en orbite",
+      preview: <OrbitalMenuDemo />,
+      code: `const [isOpen, setIsOpen] = useState(false)
+
+const items = [
+  { id: "home", icon: <Home />, label: "Home", onClick: () => {} },
+  { id: "search", icon: <Search />, label: "Search", onClick: () => {} },
+  { id: "star", icon: <Star />, label: "Favorites", onClick: () => {} },
+  { id: "settings", icon: <Settings />, label: "Settings", onClick: () => {} },
+]
+
+<WakaOrbitalMenu
+  items={items}
+  isOpen={isOpen}
+  onOpenChange={setIsOpen}
+  radius={100}
+/>`,
+    },
+    {
+      title: "Tailles et configurations",
+      description: "Differentes tailles d'items et bouton central",
+      preview: (
+        <div className="flex items-center justify-center py-8">
+          <WakaOrbitalMenu
+            items={[
+              { id: "1", icon: <Heart className="h-5 w-5" />, label: "Like" },
+              { id: "2", icon: <MessageCircle className="h-5 w-5" />, label: "Comment" },
+              { id: "3", icon: <Send className="h-5 w-5" />, label: "Share" },
+            ]}
+            radius={80}
+            itemSize="sm"
+            centerSize="default"
+            angleSpan={180}
+            startAngle={-180}
+          />
+        </div>
+      ),
+      code: `<WakaOrbitalMenu
+  items={items}
+  radius={80}
+  itemSize="sm"
+  angleSpan={180}
+  startAngle={-180}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA DOCK SHOWCASE
+// ============================================
+function DockDemo() {
+  const items = [
+    { id: "home", icon: <Home className="h-6 w-6" />, label: "Home", active: true },
+    { id: "search", icon: <Search className="h-6 w-6" />, label: "Search" },
+    { id: "mail", icon: <Mail className="h-6 w-6" />, label: "Mail", badge: 5 },
+    { id: "calendar", icon: <CalendarIcon className="h-6 w-6" />, label: "Calendar" },
+    { id: "settings", icon: <Settings className="h-6 w-6" />, label: "Settings" },
+  ]
+
+  return (
+    <div className="flex items-end justify-center h-32 pb-4">
+      <WakaDock
+        items={items}
+        position="bottom"
+        fixed={false}
+        magnification={1.5}
+      />
+    </div>
+  )
+}
+
+export const dockShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Dock style macOS",
+      description: "Barre de dock avec effet de magnification au survol",
+      preview: <DockDemo />,
+      code: `const items = [
+  { id: "home", icon: <Home />, label: "Home", active: true },
+  { id: "search", icon: <Search />, label: "Search" },
+  { id: "mail", icon: <Mail />, label: "Mail", badge: 5 },
+  { id: "calendar", icon: <Calendar />, label: "Calendar" },
+  { id: "settings", icon: <Settings />, label: "Settings" },
+]
+
+<WakaDock
+  items={items}
+  position="bottom"
+  magnification={1.5}
+/>`,
+    },
+    {
+      title: "Positions",
+      description: "Dock positionne a gauche ou a droite",
+      preview: (
+        <div className="flex gap-8 h-40">
+          <div className="flex items-center">
+            <WakaDock
+              items={[
+                { id: "1", icon: <Home className="h-5 w-5" />, label: "Home" },
+                { id: "2", icon: <FileText className="h-5 w-5" />, label: "Files" },
+                { id: "3", icon: <Settings className="h-5 w-5" />, label: "Settings" },
+              ]}
+              position="left"
+              fixed={false}
+              size="sm"
+            />
+          </div>
+          <div className="flex items-center ml-auto">
+            <WakaDock
+              items={[
+                { id: "1", icon: <Home className="h-5 w-5" />, label: "Home" },
+                { id: "2", icon: <FileText className="h-5 w-5" />, label: "Files" },
+                { id: "3", icon: <Settings className="h-5 w-5" />, label: "Settings" },
+              ]}
+              position="right"
+              fixed={false}
+              size="sm"
+            />
+          </div>
+        </div>
+      ),
+      code: `<WakaDock items={items} position="left" />
+<WakaDock items={items} position="right" />`,
+    },
+    {
+      title: "Tailles",
+      description: "Differentes tailles disponibles",
+      preview: (
+        <div className="space-y-8">
+          <div className="flex justify-center">
+            <WakaDock
+              items={[
+                { id: "1", icon: <Home className="h-4 w-4" />, label: "Home" },
+                { id: "2", icon: <Search className="h-4 w-4" />, label: "Search" },
+                { id: "3", icon: <Settings className="h-4 w-4" />, label: "Settings" },
+              ]}
+              size="sm"
+              fixed={false}
+            />
+          </div>
+          <div className="flex justify-center">
+            <WakaDock
+              items={[
+                { id: "1", icon: <Home className="h-5 w-5" />, label: "Home" },
+                { id: "2", icon: <Search className="h-5 w-5" />, label: "Search" },
+                { id: "3", icon: <Settings className="h-5 w-5" />, label: "Settings" },
+              ]}
+              size="default"
+              fixed={false}
+            />
+          </div>
+          <div className="flex justify-center">
+            <WakaDock
+              items={[
+                { id: "1", icon: <Home className="h-7 w-7" />, label: "Home" },
+                { id: "2", icon: <Search className="h-7 w-7" />, label: "Search" },
+                { id: "3", icon: <Settings className="h-7 w-7" />, label: "Settings" },
+              ]}
+              size="lg"
+              fixed={false}
+            />
+          </div>
+        </div>
+      ),
+      code: `<WakaDock items={items} size="sm" />
+<WakaDock items={items} size="default" />
+<WakaDock items={items} size="lg" />`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA SPOTLIGHT SHOWCASE
+// ============================================
+function SpotlightDemo() {
+  const { open, onOpenChange } = useSpotlight()
+
+  const handleSearch = async (query: string) => {
+    // Simulate search
+    await new Promise(resolve => setTimeout(resolve, 100))
+    const allResults = [
+      { id: "1", title: "Dashboard", subtitle: "View your dashboard", type: "page" as const },
+      { id: "2", title: "Create Project", subtitle: "Start a new project", type: "action" as const },
+      { id: "3", title: "User Settings", subtitle: "Manage your account", type: "setting" as const },
+      { id: "4", title: "Documentation", subtitle: "Read the docs", type: "external" as const },
+    ]
+    return allResults.filter(r =>
+      r.title.toLowerCase().includes(query.toLowerCase()) ||
+      r.subtitle?.toLowerCase().includes(query.toLowerCase())
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      <Button onClick={() => onOpenChange(true)}>
+        <Search className="h-4 w-4 mr-2" />
+        Ouvrir Spotlight (Cmd+/)
+      </Button>
+      <WakaSpotlight
+        open={open}
+        onOpenChange={onOpenChange}
+        onSearch={handleSearch}
+        placeholder="Rechercher des pages, actions..."
+        recentItems={[
+          { id: "r1", title: "Dashboard", type: "page" as const },
+          { id: "r2", title: "Settings", type: "setting" as const },
+        ]}
+        filters={[
+          { id: "pages", label: "Pages", type: "page" },
+          { id: "actions", label: "Actions", type: "action" },
+        ]}
+      />
+    </div>
+  )
+}
+
+export const spotlightShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Spotlight Search",
+      description: "Recherche globale style macOS Spotlight",
+      preview: <SpotlightDemo />,
+      code: `const { open, onOpenChange } = useSpotlight()
+
+const handleSearch = async (query: string) => {
+  const results = await fetchResults(query)
+  return results
+}
+
+<Button onClick={() => onOpenChange(true)}>
+  <Search /> Ouvrir Spotlight
+</Button>
+
+<WakaSpotlight
+  open={open}
+  onOpenChange={onOpenChange}
+  onSearch={handleSearch}
+  placeholder="Rechercher..."
+  recentItems={recentItems}
+  filters={[
+    { id: "pages", label: "Pages" },
+    { id: "actions", label: "Actions" },
+  ]}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// WAKA COMMAND BAR SHOWCASE
+// ============================================
+function CommandBarDemo() {
+  const { open, onOpenChange } = useCommandBar()
+
+  const commands = [
+    {
+      id: "navigation",
+      label: "Navigation",
+      items: [
+        { id: "home", label: "Go to Home", description: "Navigate to homepage", icon: <Home className="h-4 w-4" />, shortcut: ["G", "H"] },
+        { id: "settings", label: "Open Settings", description: "Manage preferences", icon: <Settings className="h-4 w-4" />, shortcut: ["G", "S"] },
+        { id: "profile", label: "View Profile", description: "See your profile", icon: <User className="h-4 w-4" /> },
+      ],
+    },
+    {
+      id: "actions",
+      label: "Actions",
+      items: [
+        { id: "new", label: "Create New", description: "Create a new item", icon: <Plus className="h-4 w-4" />, shortcut: ["C", "N"] },
+        { id: "search", label: "Search", description: "Search everything", icon: <Search className="h-4 w-4" />, shortcut: ["Cmd", "K"] },
+      ],
+    },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <Button onClick={() => onOpenChange(true)}>
+        <Terminal className="h-4 w-4 mr-2" />
+        Ouvrir Command Bar (Cmd+K)
+      </Button>
+      <WakaCommandBar
+        open={open}
+        onOpenChange={onOpenChange}
+        items={commands}
+        placeholder="Tapez une commande..."
+        onSelect={(item) => console.log("Selected:", item)}
+      />
+    </div>
+  )
+}
+
+export const commandBarShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Command Bar",
+      description: "Palette de commandes style VS Code",
+      preview: <CommandBarDemo />,
+      code: `const { open, onOpenChange } = useCommandBar()
+
+const commands = [
+  {
+    label: "Navigation",
+    items: [
+      { id: "home", label: "Go to Home", icon: <Home />, shortcut: ["G", "H"] },
+      { id: "settings", label: "Settings", icon: <Settings />, shortcut: ["G", "S"] },
+    ],
+  },
+  {
+    label: "Actions",
+    items: [
+      { id: "new", label: "Create New", icon: <Plus />, shortcut: ["C", "N"] },
+    ],
+  },
+]
+
+<Button onClick={() => onOpenChange(true)}>
+  <Terminal /> Ouvrir Command Bar
+</Button>
+
+<WakaCommandBar
+  open={open}
+  onOpenChange={onOpenChange}
+  items={commands}
+  placeholder="Tapez une commande..."
+  onSelect={(item) => handleCommand(item)}
+/>`,
+    },
+    {
+      title: "Items avec shortcuts",
+      description: "Commandes avec raccourcis clavier affiches",
+      preview: (
+        <div className="border rounded-lg p-4 bg-muted/30">
+          <p className="text-sm text-muted-foreground mb-2">Exemple de rendu des items:</p>
+          <div className="space-y-1">
+            <div className="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-accent">
+              <span className="flex h-8 w-8 items-center justify-center rounded-md border bg-background">
+                <Home className="h-4 w-4" />
+              </span>
+              <div className="flex-1">
+                <div className="font-medium">Go to Home</div>
+                <div className="text-xs text-muted-foreground">Navigate to homepage</div>
+              </div>
+              <div className="flex items-center gap-1">
+                <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs">G</kbd>
+                <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs">H</kbd>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-accent/50">
+              <span className="flex h-8 w-8 items-center justify-center rounded-md border bg-background">
+                <Settings className="h-4 w-4" />
+              </span>
+              <div className="flex-1">
+                <div className="font-medium">Open Settings</div>
+                <div className="text-xs text-muted-foreground">Manage preferences</div>
+              </div>
+              <div className="flex items-center gap-1">
+                <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs">G</kbd>
+                <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs">S</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      code: `const commands = [
+  {
+    id: "home",
+    label: "Go to Home",
+    description: "Navigate to homepage",
+    icon: <Home />,
+    shortcut: ["G", "H"],
+    action: () => router.push("/")
+  },
+  {
+    id: "settings",
+    label: "Open Settings",
+    description: "Manage preferences",
+    icon: <Settings />,
+    shortcut: ["G", "S"]
+  },
+]`,
+    },
+  ],
+}
+
+// ============================================
+// BADGE SHOWCASE (Gamification)
+// ============================================
+export const badgeShowcaseShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Badge Collection Grid",
+      description: "Display a collection of badges in a grid layout with unlock states and progress",
+      preview: (
+        <WakaBadgeShowcase
+          badges={[
+            {
+              id: "1",
+              name: "First Steps",
+              description: "Complete your first quest",
+              icon: <Star className="h-6 w-6" />,
+              rarity: "common",
+              unlocked: true,
+              unlockedAt: new Date(),
+            },
+            {
+              id: "2",
+              name: "Streak Master",
+              description: "Maintain a 7-day streak",
+              icon: <Flame className="h-6 w-6" />,
+              rarity: "rare",
+              unlocked: true,
+              isNew: true,
+            },
+            {
+              id: "3",
+              name: "Elite Achiever",
+              description: "Unlock 50 achievements",
+              icon: <Trophy className="h-6 w-6" />,
+              rarity: "epic",
+              unlocked: false,
+              progress: 68,
+            },
+            {
+              id: "4",
+              name: "Legendary Hero",
+              description: "Reach the top of the leaderboard",
+              icon: <Crown className="h-6 w-6" />,
+              rarity: "legendary",
+              unlocked: false,
+              progress: 25,
+            },
+          ]}
+          variant="grid"
+          showProgress
+          showLocked
+          size="md"
+          columns={4}
+        />
+      ),
+      code: `<WakaBadgeShowcase
+  badges={[
+    {
+      id: "1",
+      name: "First Steps",
+      description: "Complete your first quest",
+      icon: <Star className="h-6 w-6" />,
+      rarity: "common",
+      unlocked: true,
+    },
+    {
+      id: "2",
+      name: "Streak Master",
+      description: "Maintain a 7-day streak",
+      icon: <Flame className="h-6 w-6" />,
+      rarity: "rare",
+      unlocked: true,
+      isNew: true,
+    },
+    // ... more badges
+  ]}
+  variant="grid"
+  showProgress
+  showLocked
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// DAILY REWARD SHOWCASE
+// ============================================
+export const dailyRewardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Weekly Daily Rewards",
+      description: "A 7-day reward calendar with streak tracking and claim functionality",
+      preview: (
+        <WakaDailyReward
+          currentDay={3}
+          streak={5}
+          rewards={[
+            { day: 1, reward: { type: "coins", value: 100 }, claimed: true },
+            { day: 2, reward: { type: "xp", value: 50 }, claimed: true },
+            { day: 3, reward: { type: "coins", value: 150 }, claimed: false },
+            { day: 4, reward: { type: "item", value: "Mystery Box" }, claimed: false },
+            { day: 5, reward: { type: "xp", value: 100 }, claimed: false },
+            { day: 6, reward: { type: "coins", value: 200 }, claimed: false },
+            { day: 7, reward: { type: "badge", value: "Weekly Champion" }, claimed: false, isBonus: true },
+          ]}
+          canClaim={true}
+          nextRewardIn={3600}
+          size="md"
+          onClaim={(day) => console.log("Claimed day:", day)}
+        />
+      ),
+      code: `<WakaDailyReward
+  currentDay={3}
+  streak={5}
+  rewards={[
+    { day: 1, reward: { type: "coins", value: 100 }, claimed: true },
+    { day: 2, reward: { type: "xp", value: 50 }, claimed: true },
+    { day: 3, reward: { type: "coins", value: 150 }, claimed: false },
+    { day: 4, reward: { type: "item", value: "Mystery Box" }, claimed: false },
+    { day: 5, reward: { type: "xp", value: 100 }, claimed: false },
+    { day: 6, reward: { type: "coins", value: 200 }, claimed: false },
+    { day: 7, reward: { type: "badge", value: "Weekly Champion" }, claimed: false, isBonus: true },
+  ]}
+  canClaim={true}
+  nextRewardIn={3600}
+  onClaim={(day) => console.log("Claimed day:", day)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// LOOT BOX SHOWCASE
+// ============================================
+export const lootBoxShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Loot Box with Items",
+      description: "An interactive loot box with animated opening sequence and item reveals",
+      preview: (
+        <WakaLootBox
+          items={[
+            { id: "1", name: "Golden Sword", description: "A legendary weapon", rarity: "legendary" },
+            { id: "2", name: "Health Potion", description: "Restores 50 HP", rarity: "common", quantity: 3 },
+            { id: "3", name: "Magic Shield", description: "Blocks magic attacks", rarity: "epic" },
+          ]}
+          variant="chest"
+          size="default"
+          onOpen={() => console.log("Opening loot box")}
+          onRevealComplete={(items) => console.log("Revealed items:", items)}
+        />
+      ),
+      code: `<WakaLootBox
+  items={[
+    { id: "1", name: "Golden Sword", description: "A legendary weapon", rarity: "legendary" },
+    { id: "2", name: "Health Potion", description: "Restores 50 HP", rarity: "common", quantity: 3 },
+    { id: "3", name: "Magic Shield", description: "Blocks magic attacks", rarity: "epic" },
+  ]}
+  variant="chest"
+  size="default"
+  onOpen={() => console.log("Opening")}
+  onRevealComplete={(items) => console.log("Items:", items)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SKILL TREE SHOWCASE
+// ============================================
+export const skillTreeShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "RPG Skill Tree",
+      description: "An interactive skill tree with branches, prerequisites, and unlock mechanics",
+      preview: (
+        <div className="h-[500px] w-full">
+          <WakaSkillTree
+            skillPoints={5}
+            skills={[
+              { id: "s1", name: "Fireball", description: "Basic fire spell", unlocked: true, available: true, position: { x: 200, y: 100 }, branch: "fire", cost: 1 },
+              { id: "s2", name: "Inferno", description: "Advanced fire spell", unlocked: false, available: true, prerequisites: ["s1"], position: { x: 200, y: 200 }, branch: "fire", cost: 2 },
+              { id: "s3", name: "Ice Shard", description: "Basic ice spell", unlocked: true, available: true, position: { x: 400, y: 100 }, branch: "ice", cost: 1 },
+              { id: "s4", name: "Blizzard", description: "Advanced ice spell", unlocked: false, available: false, prerequisites: ["s3"], position: { x: 400, y: 200 }, branch: "ice", cost: 3 },
+            ]}
+            branches={[
+              { id: "fire", name: "Fire Magic", color: "#ef4444" },
+              { id: "ice", name: "Ice Magic", color: "#3b82f6" },
+            ]}
+            onUnlock={(skillId) => console.log("Unlocked:", skillId)}
+          />
+        </div>
+      ),
+      code: `<WakaSkillTree
+  skillPoints={5}
+  skills={[
+    { id: "s1", name: "Fireball", description: "Basic fire spell", unlocked: true, available: true, position: { x: 200, y: 100 }, branch: "fire", cost: 1 },
+    { id: "s2", name: "Inferno", description: "Advanced fire spell", unlocked: false, available: true, prerequisites: ["s1"], position: { x: 200, y: 200 }, branch: "fire", cost: 2 },
+    // ... more skills
+  ]}
+  branches={[
+    { id: "fire", name: "Fire Magic", color: "#ef4444" },
+    { id: "ice", name: "Ice Magic", color: "#3b82f6" },
+  ]}
+  onUnlock={(skillId) => console.log("Unlocked:", skillId)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// CHALLENGE TIMER SHOWCASE
+// ============================================
+export const challengeTimerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Daily Challenge Timer",
+      description: "A countdown timer for time-limited challenges with tasks and rewards",
+      preview: (
+        <WakaChallengeTimer
+          challenge={{
+            id: "daily-1",
+            name: "Daily Quest",
+            description: "Complete all tasks before time runs out",
+            endTime: new Date(Date.now() + 3600000),
+            category: "daily",
+            tasks: [
+              { id: "t1", text: "Win 3 matches", completed: true, current: 3, target: 3 },
+              { id: "t2", text: "Score 1000 points", completed: false, current: 650, target: 1000 },
+              { id: "t3", text: "Use 5 power-ups", completed: false, current: 2, target: 5 },
+            ],
+            rewards: [
+              { type: "xp", label: "Experience", value: 500 },
+              { type: "currency", label: "Gold", value: 100 },
+            ],
+          }}
+          size="default"
+          onComplete={(id) => console.log("Challenge completed:", id)}
+          onTaskClick={(challengeId, taskId) => console.log("Task clicked:", taskId)}
+        />
+      ),
+      code: `<WakaChallengeTimer
+  challenge={{
+    id: "daily-1",
+    name: "Daily Quest",
+    description: "Complete all tasks before time runs out",
+    endTime: new Date(Date.now() + 3600000),
+    category: "daily",
+    tasks: [
+      { id: "t1", text: "Win 3 matches", completed: true, current: 3, target: 3 },
+      { id: "t2", text: "Score 1000 points", completed: false, current: 650, target: 1000 },
+    ],
+    rewards: [
+      { type: "xp", label: "Experience", value: 500 },
+    ],
+  }}
+  onComplete={(id) => console.log("Completed:", id)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// RANK BADGE SHOWCASE
+// ============================================
+export const rankBadgeShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Player Rank Badges",
+      description: "Display competitive rank badges with divisions and point progress",
+      preview: (
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          <WakaRankBadge rank="bronze" division={3} size="md" showDivision />
+          <WakaRankBadge rank="silver" division={1} size="md" showDivision />
+          <WakaRankBadge rank="gold" division={2} points={1250} pointsToNext={500} size="md" showPoints showDivision />
+          <WakaRankBadge rank="platinum" division={1} size="md" showDivision animated />
+          <WakaRankBadge rank="diamond" size="lg" animated />
+          <WakaRankBadge rank="master" size="lg" animated />
+          <WakaRankBadge rank="grandmaster" size="xl" animated />
+        </div>
+      ),
+      code: `<WakaRankBadge
+  rank="gold"
+  division={2}
+  points={1250}
+  pointsToNext={500}
+  size="md"
+  showPoints
+  showDivision
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// TOURNAMENT BRACKET SHOWCASE
+// ============================================
+export const tournamentBracketShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Single Elimination Bracket",
+      description: "A tournament bracket visualization with match results and progression",
+      preview: (
+        <div className="h-[400px] w-full overflow-auto">
+          <WakaTournamentBracket
+            title="Spring Championship"
+            type="single_elimination"
+            rounds={[
+              {
+                name: "Semi Finals",
+                matches: [
+                  { id: "m1", round: 0, position: 0, participant1: { id: "p1", name: "Team Alpha", seed: 1 }, participant2: { id: "p2", name: "Team Beta", seed: 4 }, score1: 3, score2: 1, status: "completed", winnerId: "p1" },
+                  { id: "m2", round: 0, position: 1, participant1: { id: "p3", name: "Team Gamma", seed: 2 }, participant2: { id: "p4", name: "Team Delta", seed: 3 }, score1: 2, score2: 3, status: "completed", winnerId: "p4" },
+                ],
+              },
+              {
+                name: "Finals",
+                matches: [
+                  { id: "m3", round: 1, position: 0, participant1: { id: "p1", name: "Team Alpha", seed: 1 }, participant2: { id: "p4", name: "Team Delta", seed: 3 }, status: "in_progress" },
+                ],
+              },
+            ]}
+            enableZoomPan
+            showTimes
+            onMatchClick={(match) => console.log("Match clicked:", match)}
+          />
+        </div>
+      ),
+      code: `<WakaTournamentBracket
+  title="Spring Championship"
+  type="single_elimination"
+  rounds={[
+    {
+      name: "Semi Finals",
+      matches: [
+        { id: "m1", round: 0, position: 0, participant1: { id: "p1", name: "Team Alpha" }, participant2: { id: "p2", name: "Team Beta" }, score1: 3, score2: 1, status: "completed", winnerId: "p1" },
+      ],
+    },
+    {
+      name: "Finals",
+      matches: [
+        { id: "m2", round: 1, position: 0, status: "pending" },
+      ],
+    },
+  ]}
+  enableZoomPan
+  onMatchClick={(match) => console.log("Match:", match)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// TEAM BANNER SHOWCASE
+// ============================================
+export const teamBannerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Team Profile Banner",
+      description: "Display team information with stats, members, and achievements",
+      preview: (
+        <WakaTeamBanner
+          name="Phoenix Rising"
+          motto="From the ashes, we rise"
+          stats={{
+            wins: 156,
+            rank: 12,
+            totalRanks: 500,
+            members: 8,
+            maxMembers: 10,
+            winRate: 72,
+            streak: 5,
+            points: 25000,
+          }}
+          members={[
+            { id: "1", name: "Alex", avatar: "https://i.pravatar.cc/100?u=1", role: "Leader", isLeader: true },
+            { id: "2", name: "Jordan", avatar: "https://i.pravatar.cc/100?u=2", role: "Co-Leader" },
+            { id: "3", name: "Sam", avatar: "https://i.pravatar.cc/100?u=3" },
+            { id: "4", name: "Taylor", avatar: "https://i.pravatar.cc/100?u=4" },
+          ]}
+          achievements={[
+            { id: "a1", name: "Tournament Winner", icon: <Trophy className="h-4 w-4" />, rarity: "legendary" },
+            { id: "a2", name: "Undefeated Week", icon: <Flame className="h-4 w-4" />, rarity: "epic" },
+          ]}
+          theme={{ primary: "#f97316", secondary: "#ea580c" }}
+          size="md"
+        />
+      ),
+      code: `<WakaTeamBanner
+  name="Phoenix Rising"
+  motto="From the ashes, we rise"
+  stats={{
+    wins: 156,
+    rank: 12,
+    members: 8,
+    winRate: 72,
+  }}
+  members={[
+    { id: "1", name: "Alex", role: "Leader", isLeader: true },
+    { id: "2", name: "Jordan", role: "Co-Leader" },
+  ]}
+  achievements={[
+    { id: "a1", name: "Tournament Winner", icon: <Trophy />, rarity: "legendary" },
+  ]}
+  theme={{ primary: "#f97316" }}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ACTIVITY FEED SHOWCASE
+// ============================================
+export const activityFeedShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Social Activity Feed",
+      description: "A feed showing recent activities with likes, timestamps, and load more",
+      preview: (
+        <WakaActivityFeed
+          activities={[
+            {
+              id: "1",
+              type: "achievement",
+              user: { id: "u1", name: "Alex Chen", avatar: "https://i.pravatar.cc/100?u=alex" },
+              content: "unlocked the 'First Victory' achievement",
+              timestamp: new Date(Date.now() - 300000),
+              likes: 12,
+              liked: false,
+            },
+            {
+              id: "2",
+              type: "level_up",
+              user: { id: "u2", name: "Sarah Miller", avatar: "https://i.pravatar.cc/100?u=sarah" },
+              content: "reached Level 25",
+              timestamp: new Date(Date.now() - 900000),
+              likes: 8,
+              liked: true,
+            },
+            {
+              id: "3",
+              type: "challenge",
+              user: { id: "u3", name: "Mike Johnson", avatar: "https://i.pravatar.cc/100?u=mike" },
+              content: "completed the Daily Challenge",
+              timestamp: new Date(Date.now() - 1800000),
+              likes: 5,
+            },
+          ]}
+          showLikes
+          hasMore
+          animated
+          onLike={(id) => console.log("Liked:", id)}
+          onLoadMore={() => console.log("Load more")}
+        />
+      ),
+      code: `<WakaActivityFeed
+  activities={[
+    {
+      id: "1",
+      type: "achievement",
+      user: { id: "u1", name: "Alex Chen" },
+      content: "unlocked the 'First Victory' achievement",
+      timestamp: new Date(),
+      likes: 12,
+    },
+    // ... more activities
+  ]}
+  showLikes
+  hasMore
+  animated
+  onLike={(id) => console.log("Liked:", id)}
+  onLoadMore={() => console.log("Load more")}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// POWER-UP SHOWCASE
+// ============================================
+export const powerUpShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Active Power-Ups",
+      description: "Display active power-ups with countdown timers and effects",
+      preview: (
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <WakaPowerUp
+            powerUp={{
+              id: "1",
+              type: "speed",
+              name: "Speed Boost",
+              description: "Move 50% faster",
+              duration: 30000,
+              multiplier: 1.5,
+              isActive: true,
+              activatedAt: Date.now(),
+            }}
+            variant="card"
+            showCountdown
+            showDescription
+            glowEnabled
+          />
+          <WakaPowerUp
+            powerUp={{
+              id: "2",
+              type: "shield",
+              name: "Energy Shield",
+              description: "Block all damage",
+              duration: 15000,
+              multiplier: 1,
+              isActive: true,
+              activatedAt: Date.now(),
+            }}
+            variant="badge"
+            showCountdown
+            pulseEnabled
+          />
+          <WakaPowerUp
+            powerUp={{
+              id: "3",
+              type: "damage",
+              name: "Double Damage",
+              description: "Deal 2x damage",
+              duration: 20000,
+              multiplier: 2,
+              stackCount: 2,
+              maxStack: 3,
+              isActive: true,
+              activatedAt: Date.now(),
+            }}
+            variant="compact"
+            showCountdown
+          />
+        </div>
+      ),
+      code: `<WakaPowerUp
+  powerUp={{
+    id: "1",
+    type: "speed",
+    name: "Speed Boost",
+    description: "Move 50% faster",
+    duration: 30000,
+    multiplier: 1.5,
+    isActive: true,
+    activatedAt: Date.now(),
+  }}
+  variant="card"
+  showCountdown
+  showDescription
+  glowEnabled
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// POINTS POPUP SHOWCASE
+// ============================================
+function PointsPopupPreview() {
+  const [popups, setPopups] = React.useState<Array<{ id: string; points: number; x: number; y: number }>>([])
+
+  const triggerPopup = (points: number) => {
+    const id = Math.random().toString(36).slice(2)
+    setPopups((prev) => [...prev, { id, points, x: 50 + Math.random() * 100, y: 50 + Math.random() * 50 }])
+    setTimeout(() => {
+      setPopups((prev) => prev.filter((p) => p.id !== id))
+    }, 1000)
+  }
+
+  return (
+    <div className="relative h-40 w-full rounded-lg border bg-muted/30">
+      <div className="flex h-full items-center justify-center gap-4">
+        <Button onClick={() => triggerPopup(100)} variant="outline">+100 Points</Button>
+        <Button onClick={() => triggerPopup(500)} variant="outline">+500 Points</Button>
+        <Button onClick={() => triggerPopup(-50)} variant="destructive">-50 Points</Button>
+      </div>
+      {popups.map((popup) => (
+        <WakaPointsPopup
+          key={popup.id}
+          points={popup.points}
+          x={popup.x}
+          y={popup.y}
+          size="lg"
+        />
+      ))}
+    </div>
+  )
+}
+
+export const pointsPopupShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Points Popup Animation",
+      description: "Animated floating points that appear when players earn or lose points",
+      preview: <PointsPopupPreview />,
+      code: `const { trigger, PopupContainer } = usePointsPopup()
+
+// Trigger a popup
+trigger(100, { prefix: "XP" })
+trigger(-50, { color: "red" })
+
+// Render the container
+<PopupContainer />`,
+    },
+  ],
+}
+
+// ============================================
+// SPIN WHEEL SHOWCASE
+// ============================================
+export const spinWheelShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Prize Wheel",
+      description: "An interactive spinning wheel for prizes and rewards",
+      preview: (
+        <WakaSpinWheel
+          segments={[
+            { id: "1", label: "100 Coins", color: "#fbbf24", weight: 30 },
+            { id: "2", label: "50 XP", color: "#a855f7", weight: 25 },
+            { id: "3", label: "Rare Item", color: "#3b82f6", weight: 15 },
+            { id: "4", label: "200 Coins", color: "#22c55e", weight: 20 },
+            { id: "5", label: "Epic Chest", color: "#ec4899", weight: 5 },
+            { id: "6", label: "Try Again", color: "#6b7280", weight: 5 },
+          ]}
+          size="md"
+          showLabels
+          onSpin={() => console.log("Spinning...")}
+          onResult={(segment) => console.log("Won:", segment.label)}
+        />
+      ),
+      code: `<WakaSpinWheel
+  segments={[
+    { id: "1", label: "100 Coins", color: "#fbbf24", weight: 30 },
+    { id: "2", label: "50 XP", color: "#a855f7", weight: 25 },
+    { id: "3", label: "Rare Item", color: "#3b82f6", weight: 15 },
+    { id: "4", label: "200 Coins", color: "#22c55e", weight: 20 },
+    { id: "5", label: "Epic Chest", color: "#ec4899", weight: 5 },
+    { id: "6", label: "Try Again", color: "#6b7280", weight: 5 },
+  ]}
+  size="md"
+  showLabels
+  onSpin={() => console.log("Spinning...")}
+  onResult={(segment) => console.log("Won:", segment.label)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// PLAYER CARD SHOWCASE
+// ============================================
+export const playerCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Player Profile Cards",
+      description: "Collectible player cards with stats, rarity, and flip animation",
+      preview: (
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          <WakaPlayerCard
+            player={{
+              id: "1",
+              name: "ShadowBlade",
+              avatar: "https://i.pravatar.cc/200?u=shadow",
+              title: "Master Assassin",
+              level: 75,
+              rarity: "legendary",
+              stats: [
+                { name: "Attack", value: 95, max: 100 },
+                { name: "Defense", value: 60, max: 100 },
+                { name: "Speed", value: 88, max: 100 },
+              ],
+              achievements: 142,
+            }}
+            variant="default"
+            size="md"
+            showBack
+            animated
+          />
+          <WakaPlayerCard
+            player={{
+              id: "2",
+              name: "FrostMage",
+              avatar: "https://i.pravatar.cc/200?u=frost",
+              title: "Ice Sorceress",
+              level: 62,
+              rarity: "epic",
+              stats: [
+                { name: "Magic", value: 92, max: 100 },
+                { name: "Defense", value: 45, max: 100 },
+                { name: "Mana", value: 98, max: 100 },
+              ],
+            }}
+            variant="default"
+            size="md"
+            animated
+          />
+        </div>
+      ),
+      code: `<WakaPlayerCard
+  player={{
+    id: "1",
+    name: "ShadowBlade",
+    avatar: "https://example.com/avatar.jpg",
+    title: "Master Assassin",
+    level: 75,
+    rarity: "legendary",
+    stats: [
+      { name: "Attack", value: 95, max: 100 },
+      { name: "Defense", value: 60, max: 100 },
+      { name: "Speed", value: 88, max: 100 },
+    ],
+    achievements: 142,
+  }}
+  variant="default"
+  size="md"
+  showBack
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// STATS HEXAGON SHOWCASE
+// ============================================
+export const statsHexagonShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Character Stats Hexagon",
+      description: "A hexagonal radar chart for displaying 6 character attributes",
+      preview: (
+        <WakaStatsHexagon
+          stats={[
+            { id: "str", label: "Strength", value: 85, max: 100 },
+            { id: "dex", label: "Dexterity", value: 72, max: 100 },
+            { id: "int", label: "Intelligence", value: 90, max: 100 },
+            { id: "vit", label: "Vitality", value: 65, max: 100 },
+            { id: "wis", label: "Wisdom", value: 78, max: 100 },
+            { id: "luk", label: "Luck", value: 55, max: 100 },
+          ]}
+          profile={{
+            id: "player1",
+            name: "Hero",
+            stats: [85, 72, 90, 65, 78, 55],
+            color: "#3b82f6",
+            fillOpacity: 0.3,
+          }}
+          comparisonProfile={{
+            id: "average",
+            name: "Average",
+            stats: [60, 60, 60, 60, 60, 60],
+            color: "#94a3b8",
+            fillOpacity: 0.1,
+          }}
+          size={300}
+          theme="blue"
+          showGrid
+          showLabels
+          showValues
+          showLegend
+          animated
+        />
+      ),
+      code: `<WakaStatsHexagon
+  stats={[
+    { id: "str", label: "Strength", value: 85, max: 100 },
+    { id: "dex", label: "Dexterity", value: 72, max: 100 },
+    { id: "int", label: "Intelligence", value: 90, max: 100 },
+    { id: "vit", label: "Vitality", value: 65, max: 100 },
+    { id: "wis", label: "Wisdom", value: 78, max: 100 },
+    { id: "luk", label: "Luck", value: 55, max: 100 },
+  ]}
+  profile={{
+    id: "player1",
+    name: "Hero",
+    stats: [85, 72, 90, 65, 78, 55],
+    color: "#3b82f6",
+  }}
+  size={300}
+  theme="blue"
+  showGrid
+  showLabels
+  showValues
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SEASON PASS SHOWCASE
+// ============================================
+export const seasonPassShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Battle Pass Progress",
+      description: "A season pass with free and premium tiers, rewards, and progress tracking",
+      preview: (
+        <WakaSeasonPass
+          levels={[
+            { level: 1, freeReward: { type: "coins", value: 100 }, premiumReward: { type: "skin", value: "Golden Armor" }, xpRequired: 0 },
+            { level: 2, freeReward: { type: "xp", value: 500 }, premiumReward: { type: "emote", value: "Victory Dance" }, xpRequired: 1000 },
+            { level: 3, freeReward: { type: "coins", value: 200 }, premiumReward: { type: "banner", value: "Fire Banner" }, xpRequired: 2500 },
+            { level: 4, premiumReward: { type: "pet", value: "Shadow Cat" }, xpRequired: 4500 },
+            { level: 5, freeReward: { type: "chest", value: "Rare Chest" }, premiumReward: { type: "title", value: "Champion" }, xpRequired: 7000 },
+          ]}
+          currentLevel={3}
+          currentXP={3200}
+          isPremium={false}
+          seasonEndsAt={new Date(Date.now() + 86400000 * 14)}
+          onClaimReward={(level, tier) => console.log("Claim:", level, tier)}
+          onUpgrade={() => console.log("Upgrade to premium")}
+        />
+      ),
+      code: `<WakaSeasonPass
+  levels={[
+    { level: 1, freeReward: { type: "coins", value: 100 }, premiumReward: { type: "skin", value: "Golden Armor" }, xpRequired: 0 },
+    { level: 2, freeReward: { type: "xp", value: 500 }, premiumReward: { type: "emote", value: "Victory Dance" }, xpRequired: 1000 },
+    { level: 3, freeReward: { type: "coins", value: 200 }, premiumReward: { type: "banner", value: "Fire Banner" }, xpRequired: 2500 },
+    // ... more levels
+  ]}
+  currentLevel={3}
+  currentXP={3200}
+  isPremium={false}
+  seasonEndsAt={new Date(Date.now() + 86400000 * 14)}
+  onClaimReward={(level, tier) => console.log("Claim:", level, tier)}
+  onUpgrade={() => console.log("Upgrade")}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// GAMIFICATION COMPONENTS (Part 1)
+// ============================================
+
+export const achievementUnlockShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Achievement Unlock",
+      description: "Celebrate user achievements with animated unlock effects",
+      preview: (
+        <div className="flex flex-col gap-4">
+          <WakaAchievementUnlock
+            achievement={{
+              id: "first-login",
+              title: "First Steps",
+              description: "Complete your first login",
+              rarity: "common",
+              xpReward: 50,
+            }}
+            isUnlocked={true}
+            size="default"
+          />
+        </div>
+      ),
+      code: `<WakaAchievementUnlock
+  achievement={{
+    id: "first-login",
+    title: "First Steps",
+    description: "Complete your first login",
+    rarity: "common",
+    xpReward: 50,
+  }}
+  isUnlocked={true}
+/>`,
+    },
+    {
+      title: "Rarity Variants",
+      description: "Different rarity levels with unique visual styles",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaAchievementUnlock
+            achievement={{
+              id: "common-ach",
+              title: "Beginner",
+              description: "Started the journey",
+              rarity: "common",
+              xpReward: 50,
+            }}
+            isUnlocked={true}
+            autoHideDelay={0}
+          />
+          <WakaAchievementUnlock
+            achievement={{
+              id: "rare-ach",
+              title: "Explorer",
+              description: "Discovered 10 features",
+              rarity: "rare",
+              xpReward: 150,
+            }}
+            isUnlocked={true}
+            autoHideDelay={0}
+          />
+          <WakaAchievementUnlock
+            achievement={{
+              id: "epic-ach",
+              title: "Champion",
+              description: "Won 50 challenges",
+              rarity: "epic",
+              xpReward: 500,
+            }}
+            isUnlocked={true}
+            autoHideDelay={0}
+          />
+          <WakaAchievementUnlock
+            achievement={{
+              id: "legendary-ach",
+              title: "Legend",
+              description: "Mastered all skills",
+              rarity: "legendary",
+              xpReward: 1000,
+            }}
+            isUnlocked={true}
+            autoHideDelay={0}
+          />
+        </div>
+      ),
+      code: `<WakaAchievementUnlock
+  achievement={{
+    id: "legendary-ach",
+    title: "Legend",
+    description: "Mastered all skills",
+    rarity: "legendary",
+    xpReward: 1000,
+  }}
+  isUnlocked={true}
+/>`,
+    },
+  ],
+}
+
+export const comboCounterShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Combo Counter",
+      description: "Track consecutive actions with fire effects and multipliers",
+      preview: (
+        <div className="flex flex-wrap gap-8 items-center">
+          <WakaComboCounter
+            combo={25}
+            multiplier={3}
+            timeRemaining={75}
+            intensity="medium"
+            showTimer
+            showMultiplier
+          />
+          <WakaComboCounter
+            combo={100}
+            multiplier={8}
+            timeRemaining={90}
+            intensity="extreme"
+            showTimer
+            showMultiplier
+          />
+        </div>
+      ),
+      code: `<WakaComboCounter
+  combo={25}
+  multiplier={3}
+  timeRemaining={75}
+  intensity="medium"
+  showTimer
+  showMultiplier
+/>`,
+    },
+    {
+      title: "Size Variants",
+      description: "Different sizes for various contexts",
+      preview: (
+        <div className="flex flex-wrap gap-6 items-end">
+          <WakaComboCounter combo={10} size="sm" />
+          <WakaComboCounter combo={25} size="md" />
+          <WakaComboCounter combo={50} size="lg" />
+        </div>
+      ),
+      code: `<WakaComboCounter combo={25} size="md" />`,
+    },
+  ],
+}
+
+export const levelProgressShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Level Progress",
+      description: "Display XP progress towards the next level",
+      preview: (
+        <WakaLevelProgress
+          currentXp={2500}
+          currentLevel={7}
+          xpForNextLevel={4000}
+          xpAtCurrentLevel={2000}
+          showXpNumbers
+          theme="gold"
+        />
+      ),
+      code: `<WakaLevelProgress
+  currentXp={2500}
+  currentLevel={7}
+  xpForNextLevel={4000}
+  xpAtCurrentLevel={2000}
+  showXpNumbers
+  theme="gold"
+/>`,
+    },
+    {
+      title: "Theme Variants",
+      description: "Different color themes for various game styles",
+      preview: (
+        <div className="space-y-6">
+          <WakaLevelProgress currentXp={750} currentLevel={3} xpForNextLevel={1000} theme="default" showXpNumbers />
+          <WakaLevelProgress currentXp={600} currentLevel={5} xpForNextLevel={1000} theme="purple" showXpNumbers />
+          <WakaLevelProgress currentXp={800} currentLevel={10} xpForNextLevel={1500} theme="green" showXpNumbers />
+        </div>
+      ),
+      code: `<WakaLevelProgress
+  currentXp={750}
+  currentLevel={3}
+  xpForNextLevel={1000}
+  theme="purple"
+  showXpNumbers
+/>`,
+    },
+  ],
+}
+
+export const leaderboardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Leaderboard",
+      description: "Display player rankings with podium and scores",
+      preview: (
+        <WakaLeaderboard
+          entries={[
+            { id: "1", name: "NinjaMaster", score: 15250, rank: 1 },
+            { id: "2", name: "ShadowFox", score: 14800, rank: 2 },
+            { id: "3", name: "CyberWolf", score: 13500, rank: 3 },
+            { id: "4", name: "BlazingPhoenix", score: 12900, rank: 4, previousRank: 6 },
+            { id: "5", name: "IceQueen", score: 12100, rank: 5 },
+            { id: "current", name: "You", score: 8500, rank: 12, isCurrentUser: true },
+          ]}
+          title="Weekly Rankings"
+          showPodium
+          showRankChange
+          scoreLabel="pts"
+        />
+      ),
+      code: `<WakaLeaderboard
+  entries={[
+    { id: "1", name: "NinjaMaster", score: 15250, rank: 1 },
+    { id: "2", name: "ShadowFox", score: 14800, rank: 2 },
+    { id: "3", name: "CyberWolf", score: 13500, rank: 3 },
+    { id: "4", name: "BlazingPhoenix", score: 12900, rank: 4 },
+    { id: "current", name: "You", score: 8500, rank: 12, isCurrentUser: true },
+  ]}
+  title="Weekly Rankings"
+  showPodium
+  showRankChange
+  scoreLabel="pts"
+/>`,
+    },
+  ],
+}
+
+export const milestoneRoadShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Milestone Road",
+      description: "Visual journey map showing progress through milestones",
+      preview: (
+        <div style={{ height: 500 }}>
+          <WakaMilestoneRoad
+            milestones={[
+              { id: "m1", name: "Start", completed: true, rewards: [{ type: "xp", value: 100 }] },
+              { id: "m2", name: "First Win", completed: true, rewards: [{ type: "badge", value: "Winner" }] },
+              { id: "m3", name: "10 Streak", completed: false, isCurrent: true, rewards: [{ type: "xp", value: 500 }] },
+              { id: "m4", name: "Champion", completed: false, rewards: [{ type: "item", value: "Gold Trophy" }] },
+              { id: "m5", name: "Legend", completed: false, rewards: [{ type: "xp", value: 2000 }] },
+            ]}
+            progress={45}
+            theme="gold"
+            variant="winding"
+            showCharacter
+            showProgressLabel
+          />
+        </div>
+      ),
+      code: `<WakaMilestoneRoad
+  milestones={[
+    { id: "m1", name: "Start", completed: true, rewards: [{ type: "xp", value: 100 }] },
+    { id: "m2", name: "First Win", completed: true },
+    { id: "m3", name: "10 Streak", completed: false, isCurrent: true },
+    { id: "m4", name: "Champion", completed: false },
+  ]}
+  progress={45}
+  theme="gold"
+  variant="winding"
+  showCharacter
+/>`,
+    },
+  ],
+}
+
+export const streakCounterShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Streak Counter",
+      description: "Track consecutive day streaks with fire animations",
+      preview: (
+        <div className="flex flex-wrap gap-6">
+          <WakaStreakCounter
+            count={7}
+            label="day streak"
+            variant="flame"
+            bestStreak={14}
+            milestones={[7, 30, 100, 365]}
+          />
+          <WakaStreakCounter
+            count={30}
+            label="day streak"
+            variant="flame"
+            bestStreak={30}
+            milestones={[7, 30, 100, 365]}
+          />
+        </div>
+      ),
+      code: `<WakaStreakCounter
+  count={7}
+  label="day streak"
+  variant="flame"
+  bestStreak={14}
+  milestones={[7, 30, 100, 365]}
+/>`,
+    },
+    {
+      title: "Variant Icons",
+      description: "Different visual styles for various streak types",
+      preview: (
+        <div className="flex flex-wrap gap-4">
+          <WakaStreakCounter count={12} variant="flame" size="sm" />
+          <WakaStreakCounter count={25} variant="lightning" size="sm" />
+          <WakaStreakCounter count={50} variant="trophy" size="sm" />
+          <WakaStreakCounter count={100} variant="star" size="sm" />
+        </div>
+      ),
+      code: `<WakaStreakCounter count={25} variant="lightning" />`,
+    },
+  ],
+}
+
+export const questCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Quest Card",
+      description: "Display quest details with objectives and rewards",
+      preview: (
+        <div className="max-w-md">
+          <WakaQuestCard
+            quest={{
+              id: "daily-1",
+              title: "Daily Champion",
+              description: "Complete these objectives to earn bonus rewards today!",
+              type: "daily",
+              difficulty: "medium",
+              progress: 66,
+              status: "in_progress",
+              objectives: [
+                { id: "obj1", text: "Win 3 matches", completed: true, current: 3, target: 3 },
+                { id: "obj2", text: "Score 1000 points", completed: true, current: 1000, target: 1000 },
+                { id: "obj3", text: "Complete a challenge", completed: false, current: 0, target: 1 },
+              ],
+              rewards: [
+                { type: "xp", value: 500 },
+                { type: "currency", value: 100 },
+              ],
+              expiresAt: new Date(Date.now() + 6 * 60 * 60 * 1000),
+            }}
+          />
+        </div>
+      ),
+      code: `<WakaQuestCard
+  quest={{
+    id: "daily-1",
+    title: "Daily Champion",
+    description: "Complete these objectives!",
+    type: "daily",
+    difficulty: "medium",
+    progress: 66,
+    status: "in_progress",
+    objectives: [
+      { id: "obj1", text: "Win 3 matches", completed: true },
+      { id: "obj2", text: "Score 1000 points", completed: false },
+    ],
+    rewards: [
+      { type: "xp", value: 500 },
+      { type: "currency", value: 100 },
+    ],
+  }}
+/>`,
+    },
+    {
+      title: "Quest Types",
+      description: "Different quest types for various gameplay loops",
+      preview: (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <WakaQuestCard
+            quest={{
+              id: "story-1",
+              title: "The Beginning",
+              description: "Start your adventure",
+              type: "story",
+              difficulty: "easy",
+              progress: 100,
+              status: "completed",
+              objectives: [{ id: "obj1", text: "Create your character", completed: true }],
+              rewards: [{ type: "xp", value: 200 }],
+            }}
+            variant="compact"
+          />
+          <WakaQuestCard
+            quest={{
+              id: "challenge-1",
+              title: "Speed Demon",
+              description: "Complete in record time",
+              type: "challenge",
+              difficulty: "hard",
+              progress: 50,
+              status: "in_progress",
+              objectives: [{ id: "obj1", text: "Finish in under 2 minutes", completed: false }],
+              rewards: [{ type: "badge", value: "Speedster" }],
+            }}
+            variant="compact"
+          />
+        </div>
+      ),
+      code: `<WakaQuestCard
+  quest={{
+    id: "story-1",
+    title: "The Beginning",
+    type: "story",
+    difficulty: "easy",
+    status: "completed",
+    progress: 100,
+    objectives: [{ id: "obj1", text: "Create your character", completed: true }],
+    rewards: [{ type: "xp", value: 200 }],
+  }}
+  variant="compact"
+/>`,
+    },
+  ],
+}
+
+export const scratchCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Scratch Card",
+      description: "Interactive scratch-to-reveal prize card",
+      preview: (
+        <div className="flex justify-center">
+          <WakaScratchCard
+            prize={{
+              id: "prize-1",
+              name: "Golden Reward",
+              description: "You won an exclusive item!",
+              rarity: "legendary",
+              value: "1000 Coins",
+            }}
+            width={300}
+            height={200}
+            revealThreshold={0.5}
+            showProgress
+          />
+        </div>
+      ),
+      code: `<WakaScratchCard
+  prize={{
+    id: "prize-1",
+    name: "Golden Reward",
+    description: "You won an exclusive item!",
+    rarity: "legendary",
+    value: "1000 Coins",
+  }}
+  width={300}
+  height={200}
+  revealThreshold={0.5}
+  showProgress
+/>`,
+    },
+    {
+      title: "Rarity Styles",
+      description: "Different prize rarities with unique visual effects",
+      preview: (
+        <div className="flex flex-wrap gap-4 justify-center">
+          <WakaScratchCard
+            prize={{ id: "p1", name: "Basic Reward", rarity: "common", value: "50 Coins" }}
+            width={200}
+            height={150}
+          />
+          <WakaScratchCard
+            prize={{ id: "p2", name: "Rare Find", rarity: "rare", value: "250 Coins" }}
+            width={200}
+            height={150}
+          />
+          <WakaScratchCard
+            prize={{ id: "p3", name: "Epic Loot", rarity: "epic", value: "500 Coins" }}
+            width={200}
+            height={150}
+          />
+        </div>
+      ),
+      code: `<WakaScratchCard
+  prize={{
+    id: "p2",
+    name: "Rare Find",
+    rarity: "rare",
+    value: "250 Coins",
+  }}
+  width={200}
+  height={150}
+/>`,
+    },
+  ],
+}
+
+export const versusCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Versus Card",
+      description: "Head-to-head competition display with live updates",
+      preview: (
+        <WakaVersusCard
+          competitorLeft={{
+            id: "player1",
+            name: "DragonSlayer",
+            score: 2850,
+            winStreak: 5,
+          }}
+          competitorRight={{
+            id: "player2",
+            name: "StormBringer",
+            score: 2720,
+            isCurrentUser: true,
+          }}
+          challenge={{
+            type: "score",
+            name: "Weekly Showdown",
+            description: "First to 3000 points wins!",
+            targetScore: 3000,
+            rewards: [
+              { type: "xp", value: 500 },
+              { type: "badge", value: "Champion" },
+            ],
+          }}
+          status="live"
+          showLivePulse
+        />
+      ),
+      code: `<WakaVersusCard
+  competitorLeft={{
+    id: "player1",
+    name: "DragonSlayer",
+    score: 2850,
+    winStreak: 5,
+  }}
+  competitorRight={{
+    id: "player2",
+    name: "StormBringer",
+    score: 2720,
+    isCurrentUser: true,
+  }}
+  challenge={{
+    type: "score",
+    name: "Weekly Showdown",
+    targetScore: 3000,
+    rewards: [{ type: "xp", value: 500 }],
+  }}
+  status="live"
+/>`,
+    },
+    {
+      title: "Challenge Types",
+      description: "Different competition formats",
+      preview: (
+        <div className="space-y-4">
+          <WakaVersusCard
+            competitorLeft={{ id: "p1", name: "SpeedRunner", score: 145 }}
+            competitorRight={{ id: "p2", name: "TimeKeeper", score: 132 }}
+            challenge={{
+              type: "time",
+              name: "Time Trial",
+              rewards: [{ type: "xp", value: 300 }],
+            }}
+            status="finished"
+            winnerId="p1"
+            size="sm"
+          />
+          <WakaVersusCard
+            competitorLeft={{ id: "p3", name: "FireStarter", score: 15 }}
+            competitorRight={{ id: "p4", name: "IceBreaker", score: 12 }}
+            challenge={{
+              type: "streak",
+              name: "Streak Battle",
+              rewards: [{ type: "currency", value: 200 }],
+            }}
+            status="live"
+            size="sm"
+          />
+        </div>
+      ),
+      code: `<WakaVersusCard
+  competitorLeft={{ id: "p1", name: "SpeedRunner", score: 145 }}
+  competitorRight={{ id: "p2", name: "TimeKeeper", score: 132 }}
+  challenge={{
+    type: "time",
+    name: "Time Trial",
+    rewards: [{ type: "xp", value: 300 }],
+  }}
+  status="finished"
+  winnerId="p1"
+/>`,
+    },
+  ],
+}
+
+export const xpBarShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "XP Bar",
+      description: "Animated experience points progress bar with particles",
+      preview: (
+        <WakaXPBar
+          currentXP={750}
+          requiredXP={1000}
+          level={12}
+          showLevel
+          showXPCount
+          showParticles
+          animated
+          size="md"
+        />
+      ),
+      code: `<WakaXPBar
+  currentXP={750}
+  requiredXP={1000}
+  level={12}
+  showLevel
+  showXPCount
+  showParticles
+  animated
+/>`,
+    },
+    {
+      title: "Size Variants",
+      description: "Different sizes for various UI contexts",
+      preview: (
+        <div className="space-y-6">
+          <WakaXPBar currentXP={300} requiredXP={500} level={5} size="sm" showXPCount />
+          <WakaXPBar currentXP={750} requiredXP={1000} level={12} size="md" showXPCount />
+          <WakaXPBar currentXP={4500} requiredXP={5000} level={25} size="lg" showXPCount />
+        </div>
+      ),
+      code: `<WakaXPBar
+  currentXP={750}
+  requiredXP={1000}
+  level={12}
+  size="md"
+  showXPCount
+/>`,
+    },
+    {
+      title: "Level Colors",
+      description: "Colors change based on level tiers",
+      preview: (
+        <div className="space-y-4">
+          <WakaXPBar currentXP={800} requiredXP={1000} level={3} size="sm" showLevel showXPCount />
+          <WakaXPBar currentXP={800} requiredXP={1000} level={15} size="sm" showLevel showXPCount />
+          <WakaXPBar currentXP={800} requiredXP={1000} level={35} size="sm" showLevel showXPCount />
+          <WakaXPBar currentXP={800} requiredXP={1000} level={75} size="sm" showLevel showXPCount />
+        </div>
+      ),
+      code: `<WakaXPBar
+  currentXP={800}
+  requiredXP={1000}
+  level={35}
+  showLevel
+  showXPCount
+  levelColors={{
+    1: "#3b82f6",
+    10: "#8b5cf6",
+    30: "#ef4444",
+    50: "#ec4899",
+  }}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// 3D PIE CHART SHOWCASE
+// ============================================
+export const threeDPieChartShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique 3D basique",
+      description: "Graphique circulaire 3D avec donnees de revenus",
+      preview: (
+        <Waka3DPieChart
+          data={[
+            { id: "product", label: "Produits", value: 45000, color: "#3b82f6" },
+            { id: "services", label: "Services", value: 32000, color: "#22c55e" },
+            { id: "subscriptions", label: "Abonnements", value: 28000, color: "#f59e0b" },
+            { id: "consulting", label: "Conseil", value: 18000, color: "#8b5cf6" },
+          ]}
+          size={280}
+          depth={25}
+          showLegend={true}
+          legendPosition="right"
+          showPercentages={true}
+        />
+      ),
+      code: `<Waka3DPieChart data={[{ id: "product", label: "Produits", value: 45000 }, ...]} size={280} depth={25} showLegend={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// RADAR SCORE SHOWCASE
+// ============================================
+export const radarScoreShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Score radar",
+      description: "Visualisation des competences",
+      preview: (
+        <WakaRadarScore
+          axes={["JavaScript", "TypeScript", "React", "Node.js", "CSS", "Testing"]}
+          datasets={[{ id: "skills", label: "Competences", data: [85, 90, 88, 75, 70, 65], color: "#3b82f6", fillOpacity: 0.3 }]}
+          size={300}
+          levels={5}
+          maxValue={100}
+          showPoints={true}
+          animated={true}
+        />
+      ),
+      code: `<WakaRadarScore axes={["JavaScript", ...]} datasets={[{ id: "skills", data: [85, 90, 88, 75, 70, 65], color: "#3b82f6" }]} size={300} />`,
+    },
+  ],
+}
+
+// ============================================
+// RESOURCE GAUGE SHOWCASE
+// ============================================
+export const resourceGaugeShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Jauges de ressources",
+      description: "Monitoring des ressources serveur",
+      preview: (
+        <div className="flex flex-wrap gap-6 items-center justify-center">
+          <WakaResourceGauge value={72} max={100} label="CPU" unit="%" size="md" thresholds={{ warning: 70, danger: 85 }} animated={true} glowOnDanger={true} />
+          <WakaResourceGauge value={12.4} max={16} label="RAM" unit="GB" size="md" thresholds={{ warning: 70, danger: 85 }} animated={true} />
+        </div>
+      ),
+      code: `<WakaResourceGauge value={72} max={100} label="CPU" unit="%" thresholds={{ warning: 70, danger: 85 }} />`,
+    },
+  ],
+}
+
+// ============================================
+// STATUS MATRIX SHOWCASE
+// ============================================
+export const statusMatrixShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Matrice de contribution",
+      description: "Style GitHub - historique des contributions",
+      preview: (() => {
+        const data = Array.from({ length: 90 }, (_, i) => { const date = new Date(); date.setDate(date.getDate() - (89 - i)); return { date, value: Math.random() > 0.3 ? Math.floor(Math.random() * 10) : 0 } })
+        return <WakaStatusMatrix data={data} view="quarter" colorScheme="green" cellSize="sm" showLabels={true} showLegend={true} />
+      })(),
+      code: `<WakaStatusMatrix data={contributions} view="year" colorScheme="green" cellSize="sm" showLabels={true} showLegend={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// CONTRIBUTION GRAPH SHOWCASE
+// ============================================
+export const contributionGraphShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Graphique de contribution",
+      description: "Activite de code sur l'annee",
+      preview: (() => {
+        const contributions = Array.from({ length: 120 }, (_, i) => { const date = new Date(); date.setDate(date.getDate() - (119 - i)); return { date, count: Math.random() > 0.25 ? Math.floor(Math.random() * 12) + 1 : 0 } })
+        return <WakaContributionGraph contributions={contributions} colorScheme="green" showStreak={true} showWeekdayLabels={true} showMonthLabels={true} showLegend={true} cellSize={10} />
+      })(),
+      code: `<WakaContributionGraph contributions={data} colorScheme="green" showStreak={true} showWeekdayLabels={true} showLegend={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// COST BREAKDOWN SHOWCASE
+// ============================================
+export const costBreakdownShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Ventilation des couts",
+      description: "Repartition hierarchique des depenses",
+      preview: (
+        <WakaCostBreakdown
+          data={[
+            { id: "compute", name: "Compute", value: 12500, change: 5.2, children: [{ id: "ec2", name: "EC2", value: 8000 }, { id: "lambda", name: "Lambda", value: 4500 }] },
+            { id: "storage", name: "Stockage", value: 5200, change: -1.8 },
+            { id: "database", name: "Database", value: 4800, change: 8.5 },
+          ]}
+          variant="treemap"
+          currency="$"
+          showLegend={true}
+          showComparison={true}
+          animated={true}
+        />
+      ),
+      code: `<WakaCostBreakdown data={[{ id: "compute", name: "Compute", value: 12500, children: [...] }]} variant="treemap" currency="$" showLegend={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// BUDGET BURN SHOWCASE
+// ============================================
+export const budgetBurnShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Suivi de budget",
+      description: "Visualisation du burn-down budgetaire",
+      preview: (() => {
+        const startDate = new Date(); startDate.setDate(1)
+        const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+        const spendHistory = Array.from({ length: Math.min(new Date().getDate(), 15) }, (_, i) => { const date = new Date(startDate); date.setDate(date.getDate() + i); return { date, amount: 1500 + Math.random() * 500 } })
+        return <WakaBudgetBurn budget={50000} startDate={startDate} endDate={endDate} spendHistory={spendHistory} categories={[{ id: "infra", name: "Infrastructure", budget: 20000, spent: 12500, color: "#3b82f6" }, { id: "services", name: "Services", budget: 15000, spent: 8800, color: "#22c55e" }]} currency="$" showProjection={true} showIdealLine={true} showCategories={true} showTrends={true} animated={true} height={280} />
+      })(),
+      code: `<WakaBudgetBurn budget={50000} startDate={startDate} endDate={endDate} spendHistory={history} categories={categories} showProjection={true} showIdealLine={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// METRIC SPARKLINE SHOWCASE
+// ============================================
+export const metricSparklineShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Sparklines avec tendance",
+      description: "Mini-graphiques pour KPIs",
+      preview: (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-3 border rounded-lg">
+            <span className="text-sm text-muted-foreground">Revenus</span>
+            <WakaMetricSparkline data={[12000, 14500, 13200, 15800, 17200, 16500, 18900, 21000]} value={21000} previousValue={18900} variant="area" width={100} height={28} showValue={true} showTrend={true} formatValue={(v) => `$${(v / 1000).toFixed(1)}k`} />
+          </div>
+          <div className="flex items-center justify-between p-3 border rounded-lg">
+            <span className="text-sm text-muted-foreground">Utilisateurs</span>
+            <WakaMetricSparkline data={[1200, 1350, 1280, 1420, 1380, 1510, 1620, 1750]} value={1750} previousValue={1620} variant="line" width={100} height={28} color="#22c55e" showValue={true} showTrend={true} />
+          </div>
+        </div>
+      ),
+      code: `<WakaMetricSparkline data={[12000, 14500, ...]} value={21000} previousValue={18900} variant="area" showValue={true} showTrend={true} />`,
+    },
+  ],
+}
+
+// ============================================
+// RESOURCE POOL SHOWCASE
+// ============================================
+export const resourcePoolShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Pools de ressources avec blocs",
+      description: "Visualisation des ressources infrastructure sous forme de blocs",
+      preview: (
+        <WakaResourcePool
+          pools={[
+            { id: "cpu", name: "CPU Cluster", total: 100, used: 72, reserved: 10, type: "compute", unit: "vCPUs" },
+            { id: "memory", name: "Memory Pool", total: 256, used: 180, reserved: 32, type: "memory", unit: "GB" },
+            { id: "storage", name: "SSD Storage", total: 2000, used: 1400, reserved: 200, type: "storage", unit: "GB" },
+          ]}
+          variant="blocks"
+          showLabels={true}
+          showCapacity={true}
+          animated={true}
+        />
+      ),
+      code: `<WakaResourcePool
+  pools={[
+    { id: "cpu", name: "CPU Cluster", total: 100, used: 72, reserved: 10, type: "compute", unit: "vCPUs" },
+    { id: "memory", name: "Memory Pool", total: 256, used: 180, reserved: 32, type: "memory", unit: "GB" },
+    { id: "storage", name: "SSD Storage", total: 2000, used: 1400, reserved: 200, type: "storage", unit: "GB" },
+  ]}
+  variant="blocks"
+  showLabels={true}
+  showCapacity={true}
+  animated={true}
+/>`,
+    },
+    {
+      title: "Visualisation en barres",
+      description: "Affichage des pools avec barres de progression",
+      preview: (
+        <WakaResourcePool
+          pools={[
+            { id: "network", name: "Network Bandwidth", total: 10000, used: 6500, type: "network", unit: "Mbps" },
+            { id: "gpu", name: "GPU Compute", total: 8, used: 5, reserved: 1, type: "compute", unit: "GPUs" },
+          ]}
+          variant="bar"
+          showLabels={true}
+          showCapacity={true}
+        />
+      ),
+      code: `<WakaResourcePool
+  pools={[
+    { id: "network", name: "Network Bandwidth", total: 10000, used: 6500, type: "network", unit: "Mbps" },
+    { id: "gpu", name: "GPU Compute", total: 8, used: 5, reserved: 1, type: "compute", unit: "GPUs" },
+  ]}
+  variant="bar"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// QUOTA BAR SHOWCASE
+// ============================================
+export const quotaBarShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Quotas avec limites souples et dures",
+      description: "Barres de quota montrant l'utilisation par rapport aux seuils",
+      preview: (
+        <div className="space-y-6">
+          <WakaQuotaBar
+            current={7500}
+            softLimit={8000}
+            hardLimit={10000}
+            label="API Requests"
+            unit="requests"
+            showLabels={true}
+            showMarkers={true}
+            variant="detailed"
+          />
+          <WakaQuotaBar
+            current={450}
+            softLimit={400}
+            hardLimit={500}
+            label="Storage Usage"
+            unit="GB"
+            showLabels={true}
+            showMarkers={true}
+            variant="simple"
+          />
+          <WakaQuotaBar
+            current={520}
+            hardLimit={500}
+            label="Bandwidth (Over Limit)"
+            unit="TB"
+            showLabels={true}
+          />
+        </div>
+      ),
+      code: `<WakaQuotaBar
+  current={7500}
+  softLimit={8000}
+  hardLimit={10000}
+  label="API Requests"
+  unit="requests"
+  variant="detailed"
+  showLabels={true}
+  showMarkers={true}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// CAPACITY PLANNER SHOWCASE
+// ============================================
+export const capacityPlannerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Planification de capacite avec projections",
+      description: "Vue d'ensemble des ressources avec timeline et recommandations",
+      preview: (
+        <WakaCapacityPlanner
+          resources={[
+            {
+              id: "cpu",
+              name: "CPU Compute",
+              type: "cpu",
+              current: 68,
+              total: 100,
+              unit: "vCPUs",
+              projections: { "1m": 72, "3m": 80, "6m": 92, "12m": 110 },
+              growthRate: 4,
+            },
+            {
+              id: "memory",
+              name: "Memory",
+              type: "memory",
+              current: 180,
+              total: 256,
+              unit: "GB",
+              projections: { "1m": 190, "3m": 210, "6m": 235, "12m": 280 },
+              growthRate: 5,
+            },
+            {
+              id: "storage",
+              name: "Block Storage",
+              type: "storage",
+              current: 1800,
+              total: 2000,
+              unit: "GB",
+              projections: { "1m": 1850, "3m": 1950, "6m": 2100, "12m": 2400 },
+              growthRate: 3,
+            },
+          ]}
+          recommendations={[
+            {
+              id: "rec-1",
+              resourceId: "storage",
+              type: "scale_up",
+              priority: "high",
+              title: "Expand Storage Capacity",
+              description: "Storage projected to exceed capacity in 3 months",
+              action: "Add 500GB",
+              timeframe: "2-3 months",
+              costImpact: "+$50/month",
+            },
+            {
+              id: "rec-2",
+              resourceId: "memory",
+              type: "monitor",
+              priority: "medium",
+              title: "Monitor Memory Growth",
+              description: "Memory usage approaching warning threshold",
+              action: "Review",
+              timeframe: "6 months",
+            },
+          ]}
+          showTimeline={true}
+          showProjectionChart={true}
+          showRecommendations={true}
+          size="md"
+        />
+      ),
+      code: `<WakaCapacityPlanner
+  resources={[
+    { id: "cpu", name: "CPU Compute", type: "cpu", current: 68, total: 100, unit: "vCPUs", projections: { "1m": 72, "3m": 80, "6m": 92 }, growthRate: 4 },
+    { id: "memory", name: "Memory", type: "memory", current: 180, total: 256, unit: "GB", projections: { "1m": 190, "3m": 210, "6m": 235 }, growthRate: 5 },
+  ]}
+  recommendations={[...]}
+  showTimeline={true}
+  showProjectionChart={true}
+  showRecommendations={true}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ALLOCATION MATRIX SHOWCASE
+// ============================================
+export const allocationMatrixShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Matrice d'allocation des ressources",
+      description: "Visualisation des allocations entre ressources et projets",
+      preview: (
+        <WakaAllocationMatrix
+          resources={[
+            { id: "dev-team", name: "Dev Team", category: "Engineering" },
+            { id: "qa-team", name: "QA Team", category: "Engineering" },
+            { id: "infra", name: "Infrastructure", category: "Platform" },
+            { id: "security", name: "Security", category: "Platform" },
+          ]}
+          consumers={[
+            { id: "project-alpha", name: "Alpha", priority: "high" },
+            { id: "project-beta", name: "Beta", priority: "medium" },
+            { id: "project-gamma", name: "Gamma", priority: "low" },
+            { id: "maintenance", name: "Maintenance", priority: "critical" },
+          ]}
+          allocations={[
+            { resourceId: "dev-team", consumerId: "project-alpha", value: 40 },
+            { resourceId: "dev-team", consumerId: "project-beta", value: 35 },
+            { resourceId: "dev-team", consumerId: "project-gamma", value: 15 },
+            { resourceId: "dev-team", consumerId: "maintenance", value: 10 },
+            { resourceId: "qa-team", consumerId: "project-alpha", value: 50 },
+            { resourceId: "qa-team", consumerId: "project-beta", value: 30 },
+            { resourceId: "qa-team", consumerId: "project-gamma", value: 20 },
+            { resourceId: "infra", consumerId: "project-alpha", value: 25 },
+            { resourceId: "infra", consumerId: "project-beta", value: 25 },
+            { resourceId: "infra", consumerId: "maintenance", value: 50 },
+            { resourceId: "security", consumerId: "project-alpha", value: 30 },
+            { resourceId: "security", consumerId: "maintenance", value: 40 },
+          ]}
+          editable={true}
+          showRowTotals={true}
+          showColumnTotals={true}
+          showSummary={true}
+          cellSize="md"
+          colorScheme="blue"
+        />
+      ),
+      code: `<WakaAllocationMatrix
+  resources={[
+    { id: "dev-team", name: "Dev Team", category: "Engineering" },
+    { id: "qa-team", name: "QA Team", category: "Engineering" },
+    ...
+  ]}
+  consumers={[
+    { id: "project-alpha", name: "Alpha", priority: "high" },
+    { id: "project-beta", name: "Beta", priority: "medium" },
+    ...
+  ]}
+  allocations={[
+    { resourceId: "dev-team", consumerId: "project-alpha", value: 40 },
+    ...
+  ]}
+  editable={true}
+  showRowTotals={true}
+  showColumnTotals={true}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// DEPLOYMENT LANE SHOWCASE
+// ============================================
+export const deploymentLaneShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Pipeline de deploiement",
+      description: "Visualisation des deploiements par environnement avec promotion",
+      preview: (
+        <WakaDeploymentLane
+          environments={[
+            {
+              id: "dev",
+              name: "Development",
+              deployments: [
+                { id: "dep-1", version: "2.4.1", commit: "a1b2c3d", status: "running", deployedAt: new Date(Date.now() - 3600000), deployedBy: "CI Pipeline" },
+                { id: "dep-2", version: "2.4.0", commit: "e4f5g6h", status: "stopped", deployedAt: new Date(Date.now() - 86400000), deployedBy: "john.dev" },
+              ],
+            },
+            {
+              id: "staging",
+              name: "Staging",
+              requiresApproval: false,
+              deployments: [
+                { id: "dep-3", version: "2.3.5", commit: "i7j8k9l", status: "running", deployedAt: new Date(Date.now() - 7200000), deployedBy: "CI Pipeline" },
+              ],
+            },
+            {
+              id: "prod",
+              name: "Production",
+              requiresApproval: true,
+              approvers: ["Tech Lead", "SRE Team"],
+              deployments: [
+                { id: "dep-4", version: "2.3.4", commit: "m0n1o2p", status: "running", deployedAt: new Date(Date.now() - 172800000), deployedBy: "release-bot" },
+              ],
+            },
+          ]}
+          draggable={true}
+          onPromote={(deploymentId, fromEnv, toEnv) => console.log(`Promote ${deploymentId} from ${fromEnv} to ${toEnv}`)}
+          onRollback={(deploymentId, envId) => console.log(`Rollback ${deploymentId} in ${envId}`)}
+        />
+      ),
+      code: `<WakaDeploymentLane
+  environments={[
+    { id: "dev", name: "Development", deployments: [...] },
+    { id: "staging", name: "Staging", deployments: [...] },
+    { id: "prod", name: "Production", requiresApproval: true, approvers: ["Tech Lead"], deployments: [...] },
+  ]}
+  draggable={true}
+  onPromote={(deploymentId, fromEnv, toEnv) => {...}}
+  onRollback={(deploymentId, envId) => {...}}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// APPROVAL CHAIN SHOWCASE
+// ============================================
+export const approvalChainShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Chaine d'approbation horizontale",
+      description: "Workflow d'approbation multi-niveaux",
+      preview: (
+        <WakaApprovalChain
+          steps={[
+            { id: "step-1", approver: { id: "user-1", name: "Sarah Chen", role: "Team Lead" }, status: "approved", timestamp: new Date(Date.now() - 86400000), comment: "LGTM, good to proceed" },
+            { id: "step-2", approver: { id: "user-2", name: "Mike Johnson", role: "Security Officer" }, status: "approved", timestamp: new Date(Date.now() - 43200000) },
+            { id: "step-3", approver: { id: "user-3", name: "Emily Davis", role: "VP Engineering" }, status: "pending" },
+            { id: "step-4", approver: { id: "user-4", name: "Alex Thompson", role: "CTO" }, status: "pending" },
+          ]}
+          variant="horizontal"
+          size="md"
+          showComments={true}
+          currentUserId="user-3"
+          onApprove={(stepId, comment) => console.log(`Approved step ${stepId}`, comment)}
+          onReject={(stepId, comment) => console.log(`Rejected step ${stepId}`, comment)}
+        />
+      ),
+      code: `<WakaApprovalChain
+  steps={[
+    { id: "step-1", approver: { id: "user-1", name: "Sarah Chen", role: "Team Lead" }, status: "approved", timestamp: new Date(), comment: "LGTM" },
+    { id: "step-2", approver: { id: "user-2", name: "Mike Johnson", role: "Security" }, status: "approved" },
+    { id: "step-3", approver: { id: "user-3", name: "Emily Davis", role: "VP" }, status: "pending" },
+  ]}
+  variant="horizontal"
+  showComments={true}
+  onApprove={(stepId, comment) => {...}}
+/>`,
+    },
+    {
+      title: "Chaine d'approbation verticale",
+      description: "Vue detaillee avec timeline verticale",
+      preview: (
+        <WakaApprovalChain
+          steps={[
+            { id: "v-step-1", approver: { id: "v-user-1", name: "DevOps Team", role: "Infrastructure Review" }, status: "approved", timestamp: new Date(Date.now() - 172800000), comment: "Infrastructure changes verified" },
+            { id: "v-step-2", approver: { id: "v-user-2", name: "QA Lead", role: "Quality Assurance" }, status: "rejected", timestamp: new Date(Date.now() - 86400000), comment: "Tests failing on edge cases" },
+            { id: "v-step-3", approver: { id: "v-user-3", name: "Product Owner", role: "Business Sign-off" }, status: "skipped" },
+          ]}
+          variant="vertical"
+          size="md"
+          showComments={true}
+        />
+      ),
+      code: `<WakaApprovalChain
+  steps={[...]}
+  variant="vertical"
+  showComments={true}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// CONNECTION MATRIX SHOWCASE
+// ============================================
+export const connectionMatrixShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Matrice de connexions des services",
+      description: "Visualisation des dependances entre microservices",
+      preview: (
+        <WakaConnectionMatrix
+          services={[
+            { id: "api-gateway", name: "API Gateway", category: "Frontend" },
+            { id: "auth-service", name: "Auth Service", category: "Core" },
+            { id: "user-service", name: "User Service", category: "Core" },
+            { id: "order-service", name: "Order Service", category: "Business" },
+            { id: "payment-service", name: "Payment Service", category: "Business" },
+            { id: "notification", name: "Notifications", category: "Support" },
+          ]}
+          connections={[
+            { source: "api-gateway", target: "auth-service", weight: 95, type: "http", count: 15420, latency: 12, errorRate: 0.1 },
+            { source: "api-gateway", target: "user-service", weight: 80, type: "http", count: 12300, latency: 18, errorRate: 0.2 },
+            { source: "api-gateway", target: "order-service", weight: 70, type: "http", count: 8540, latency: 25, errorRate: 0.3 },
+            { source: "auth-service", target: "user-service", weight: 60, type: "grpc", count: 9200, latency: 5, errorRate: 0.05 },
+            { source: "order-service", target: "payment-service", weight: 85, type: "grpc", count: 4200, latency: 45, errorRate: 0.8 },
+            { source: "order-service", target: "notification", weight: 40, type: "queue", count: 4100, latency: 120, errorRate: 0.1 },
+            { source: "payment-service", target: "notification", weight: 50, type: "queue", count: 2100, latency: 100, errorRate: 0.2 },
+            { source: "user-service", target: "notification", weight: 30, type: "queue", count: 3500, latency: 80, errorRate: 0.1 },
+          ]}
+          title="Service Dependencies"
+          showStatistics={true}
+          showFilters={true}
+          colorScheme="blue"
+          cellSize="md"
+          showCounts={false}
+        />
+      ),
+      code: `<WakaConnectionMatrix
+  services={[
+    { id: "api-gateway", name: "API Gateway", category: "Frontend" },
+    { id: "auth-service", name: "Auth Service", category: "Core" },
+    ...
+  ]}
+  connections={[
+    { source: "api-gateway", target: "auth-service", weight: 95, type: "http", count: 15420, latency: 12 },
+    ...
+  ]}
+  title="Service Dependencies"
+  showStatistics={true}
+  colorScheme="blue"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ALERT STACK SHOWCASE
+// ============================================
+export const alertStackShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Pile d'alertes infrastructure",
+      description: "Alertes empilees avec priorite et actions",
+      preview: (
+        <WakaAlertStack
+          alerts={[
+            {
+              id: "alert-1",
+              title: "High CPU Usage on prod-web-01",
+              description: "CPU utilization has exceeded 90% for the last 15 minutes. Consider scaling horizontally or investigating resource-intensive processes.",
+              severity: "critical",
+              source: "Prometheus",
+              timestamp: new Date(Date.now() - 300000),
+              count: 3,
+            },
+            {
+              id: "alert-2",
+              title: "Database Connection Pool Exhausted",
+              description: "PostgreSQL connection pool at 95% capacity. New connections may be rejected.",
+              severity: "warning",
+              source: "PgBouncer",
+              timestamp: new Date(Date.now() - 900000),
+            },
+            {
+              id: "alert-3",
+              title: "SSL Certificate Expiring Soon",
+              description: "Certificate for api.example.com expires in 7 days",
+              severity: "warning",
+              source: "Cert Manager",
+              timestamp: new Date(Date.now() - 3600000),
+              acknowledged: true,
+              acknowledgedBy: "ops-team",
+            },
+            {
+              id: "alert-4",
+              title: "New Deployment Completed",
+              description: "Version 2.4.1 successfully deployed to production",
+              severity: "info",
+              source: "ArgoCD",
+              timestamp: new Date(Date.now() - 7200000),
+            },
+          ]}
+          maxVisible={3}
+          groupSimilar={true}
+          animated={true}
+          onAcknowledge={(alertId) => console.log(`Acknowledged: ${alertId}`)}
+          onSnooze={(alertId, duration) => console.log(`Snoozed ${alertId} for ${duration}ms`)}
+          onDismiss={(alertId) => console.log(`Dismissed: ${alertId}`)}
+        />
+      ),
+      code: `<WakaAlertStack
+  alerts={[
+    { id: "alert-1", title: "High CPU Usage", severity: "critical", source: "Prometheus", timestamp: new Date(), count: 3 },
+    { id: "alert-2", title: "Connection Pool Exhausted", severity: "warning", source: "PgBouncer", timestamp: new Date() },
+    ...
+  ]}
+  maxVisible={3}
+  groupSimilar={true}
+  onAcknowledge={(alertId) => {...}}
+  onSnooze={(alertId, duration) => {...}}
+  onDismiss={(alertId) => {...}}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SLA TRACKER SHOWCASE
+// ============================================
+export const slaTrackerShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Suivi SLA detaille",
+      description: "Tableau de bord SLA avec budget d'erreur et tendances",
+      preview: (
+        <div className="space-y-6">
+          <WakaSLATracker
+            uptime={99.95}
+            target={99.9}
+            period="month"
+            downtimeMinutes={21.6}
+            incidentCount={2}
+            trend="up"
+            variant="detailed"
+            size="md"
+          />
+        </div>
+      ),
+      code: `<WakaSLATracker
+  uptime={99.95}
+  target={99.9}
+  period="month"
+  downtimeMinutes={21.6}
+  incidentCount={2}
+  trend="up"
+  variant="detailed"
+/>`,
+    },
+    {
+      title: "Variantes de SLA",
+      description: "Differents formats d'affichage",
+      preview: (
+        <div className="space-y-6">
+          <div className="flex flex-wrap gap-4">
+            <WakaSLATracker
+              uptime={99.99}
+              target={99.9}
+              period="week"
+              variant="compact"
+              size="md"
+            />
+            <WakaSLATracker
+              uptime={99.85}
+              target={99.9}
+              period="month"
+              variant="compact"
+              size="md"
+            />
+          </div>
+          <WakaSLATracker
+            uptime={99.92}
+            target={99.9}
+            period="quarter"
+            downtimeMinutes={115}
+            incidentCount={5}
+            trend="stable"
+            variant="card"
+            size="md"
+          />
+        </div>
+      ),
+      code: `// Compact variant
+<WakaSLATracker uptime={99.99} target={99.9} period="week" variant="compact" />
+
+// Card variant
+<WakaSLATracker uptime={99.92} target={99.9} period="quarter" variant="card" />`,
+    },
+  ],
+}
+
+// ============================================
+// GLOW CARD SHOWCASE
+// ============================================
+export const glowCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Glow Card basique",
+      description: "Carte avec effet de lueur au survol qui suit le curseur",
+      preview: (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <WakaGlowCard className="p-6">
+            <h3 className="text-lg font-semibold mb-2">Effet Lift</h3>
+            <p className="text-sm text-muted-foreground">
+              La carte se souleve au survol avec une lueur qui suit le curseur.
+            </p>
+          </WakaGlowCard>
+          <WakaGlowCard
+            className="p-6"
+            glowColor="hsl(142.1 76.2% 36.3%)"
+            hoverEffect="scale"
+          >
+            <h3 className="text-lg font-semibold mb-2">Effet Scale</h3>
+            <p className="text-sm text-muted-foreground">
+              La carte s&apos;agrandit legerement au survol avec une lueur verte.
+            </p>
+          </WakaGlowCard>
+        </div>
+      ),
+      code: `<WakaGlowCard className="p-6">
+  <h3 className="text-lg font-semibold mb-2">Effet Lift</h3>
+  <p className="text-sm text-muted-foreground">
+    La carte se souleve au survol avec une lueur qui suit le curseur.
+  </p>
+</WakaGlowCard>
+
+<WakaGlowCard
+  className="p-6"
+  glowColor="hsl(142.1 76.2% 36.3%)"
+  hoverEffect="scale"
+>
+  <h3 className="text-lg font-semibold mb-2">Effet Scale</h3>
+  <p className="text-sm text-muted-foreground">
+    La carte s'agrandit legerement au survol avec une lueur verte.
+  </p>
+</WakaGlowCard>`,
+    },
+    {
+      title: "Couleurs et intensites",
+      description: "Differentes couleurs de lueur et niveaux d'intensite",
+      preview: (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <WakaGlowCard
+            className="p-4"
+            glowColor="#3b82f6"
+            glowIntensity={0.3}
+          >
+            <h4 className="font-medium">Bleu intense</h4>
+            <p className="text-xs text-muted-foreground mt-1">Intensite 0.3</p>
+          </WakaGlowCard>
+          <WakaGlowCard
+            className="p-4"
+            glowColor="#f59e0b"
+            glowIntensity={0.2}
+            gradient
+          >
+            <h4 className="font-medium">Orange gradient</h4>
+            <p className="text-xs text-muted-foreground mt-1">Avec fond degrade</p>
+          </WakaGlowCard>
+          <WakaGlowCard
+            className="p-4"
+            glowColor="#ec4899"
+            hoverEffect="tilt"
+          >
+            <h4 className="font-medium">Rose tilt</h4>
+            <p className="text-xs text-muted-foreground mt-1">Effet 3D au survol</p>
+          </WakaGlowCard>
+        </div>
+      ),
+      code: `<WakaGlowCard
+  className="p-4"
+  glowColor="#3b82f6"
+  glowIntensity={0.3}
+>
+  <h4 className="font-medium">Bleu intense</h4>
+</WakaGlowCard>
+
+<WakaGlowCard
+  className="p-4"
+  glowColor="#f59e0b"
+  glowIntensity={0.2}
+  gradient
+>
+  <h4 className="font-medium">Orange gradient</h4>
+</WakaGlowCard>`,
+    },
+  ],
+}
+
+// ============================================
+// TILT CARD SHOWCASE
+// ============================================
+export const tiltCardShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Tilt Card basique",
+      description: "Carte avec effet de perspective 3D au survol",
+      preview: (
+        <div className="flex flex-wrap gap-6 justify-center">
+          <WakaTiltCard maxTilt={15} className="w-64">
+            <div className="p-6 rounded-xl border bg-card">
+              <h3 className="text-lg font-semibold mb-2">Effet 3D</h3>
+              <p className="text-sm text-muted-foreground">
+                Deplacez votre curseur sur cette carte pour voir l&apos;effet de perspective 3D.
+              </p>
+            </div>
+          </WakaTiltCard>
+          <WakaTiltCard maxTilt={20} glare maxGlare={0.3} className="w-64">
+            <div className="p-6 rounded-xl border bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+              <h3 className="text-lg font-semibold mb-2">Avec reflet</h3>
+              <p className="text-sm text-muted-foreground">
+                Effet de lumiere qui suit le curseur.
+              </p>
+            </div>
+          </WakaTiltCard>
+        </div>
+      ),
+      code: `<WakaTiltCard maxTilt={15}>
+  <div className="p-6 rounded-xl border bg-card">
+    <h3 className="text-lg font-semibold mb-2">Effet 3D</h3>
+    <p className="text-sm text-muted-foreground">
+      Deplacez votre curseur sur cette carte.
+    </p>
+  </div>
+</WakaTiltCard>
+
+<WakaTiltCard maxTilt={20} glare maxGlare={0.3}>
+  <div className="p-6 rounded-xl border bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+    <h3 className="text-lg font-semibold mb-2">Avec reflet</h3>
+  </div>
+</WakaTiltCard>`,
+    },
+    {
+      title: "Configuration avancee",
+      description: "Differentes options de personnalisation",
+      preview: (
+        <div className="flex flex-wrap gap-4 justify-center">
+          <WakaTiltCard
+            maxTilt={25}
+            scale={1.05}
+            speed={200}
+            className="w-48"
+          >
+            <div className="p-4 rounded-lg border bg-card text-center">
+              <Zap className="h-8 w-8 mx-auto mb-2 text-yellow-500" />
+              <h4 className="font-medium">Rapide</h4>
+              <p className="text-xs text-muted-foreground">200ms</p>
+            </div>
+          </WakaTiltCard>
+          <WakaTiltCard
+            maxTilt={10}
+            reverse
+            className="w-48"
+          >
+            <div className="p-4 rounded-lg border bg-card text-center">
+              <RotateCcw className="h-8 w-8 mx-auto mb-2 text-blue-500" />
+              <h4 className="font-medium">Inverse</h4>
+              <p className="text-xs text-muted-foreground">Direction opposee</p>
+            </div>
+          </WakaTiltCard>
+          <WakaTiltCard
+            maxTilt={15}
+            glare
+            maxGlare={0.4}
+            perspective={800}
+            className="w-48"
+          >
+            <div className="p-4 rounded-lg border bg-card text-center">
+              <Star className="h-8 w-8 mx-auto mb-2 text-amber-500" />
+              <h4 className="font-medium">Premium</h4>
+              <p className="text-xs text-muted-foreground">Reflet intense</p>
+            </div>
+          </WakaTiltCard>
+        </div>
+      ),
+      code: `<WakaTiltCard
+  maxTilt={25}
+  scale={1.05}
+  speed={200}
+>
+  <div className="p-4 rounded-lg border bg-card text-center">
+    <Zap className="h-8 w-8 mx-auto mb-2" />
+    <h4 className="font-medium">Rapide</h4>
+  </div>
+</WakaTiltCard>
+
+<WakaTiltCard maxTilt={10} reverse>
+  <div className="p-4 rounded-lg border bg-card text-center">
+    <RotateCcw className="h-8 w-8 mx-auto mb-2" />
+    <h4 className="font-medium">Inverse</h4>
+  </div>
+</WakaTiltCard>`,
+    },
+  ],
+}
+
+// ============================================
+// MAGIC LINK SHOWCASE
+// ============================================
+export const magicLinkShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Magic Link basique",
+      description: "Formulaire de connexion sans mot de passe par lien magique",
+      preview: (
+        <div className="max-w-md mx-auto">
+          <WakaMagicLink
+            onSubmit={async (email) => {
+              await new Promise((resolve) => setTimeout(resolve, 1500))
+              console.log("Magic link sent to:", email)
+            }}
+            placeholder="Entrez votre email"
+            buttonText={{
+              idle: "Envoyer le lien",
+              loading: "Envoi...",
+              sent: "Verifiez votre boite",
+            }}
+            successMessage="Nous avons envoye un lien magique a votre adresse email"
+          />
+        </div>
+      ),
+      code: `<WakaMagicLink
+  onSubmit={async (email) => {
+    await sendMagicLink(email)
+  }}
+  placeholder="Entrez votre email"
+  buttonText={{
+    idle: "Envoyer le lien",
+    loading: "Envoi...",
+    sent: "Verifiez votre boite",
+  }}
+  successMessage="Nous avons envoye un lien magique a votre adresse email"
+/>`,
+    },
+    {
+      title: "Variantes de style",
+      description: "Differents styles visuels et tailles",
+      preview: (
+        <div className="space-y-6 max-w-md mx-auto">
+          <div>
+            <p className="text-sm font-medium mb-2">Style minimal</p>
+            <WakaMagicLink
+              onSubmit={async () => new Promise((r) => setTimeout(r, 1000))}
+              variant="minimal"
+              size="sm"
+            />
+          </div>
+          <div>
+            <p className="text-sm font-medium mb-2">Style gradient</p>
+            <WakaMagicLink
+              onSubmit={async () => new Promise((r) => setTimeout(r, 1000))}
+              variant="gradient"
+              size="lg"
+            />
+          </div>
+        </div>
+      ),
+      code: `// Style minimal
+<WakaMagicLink
+  onSubmit={async (email) => sendMagicLink(email)}
+  variant="minimal"
+  size="sm"
+/>
+
+// Style gradient
+<WakaMagicLink
+  onSubmit={async (email) => sendMagicLink(email)}
+  variant="gradient"
+  size="lg"
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// NOTIFICATIONS SHOWCASE
+// ============================================
+function NotificationsShowcaseDemo() {
+  const sampleNotifications: Notification[] = [
+    {
+      id: "1",
+      title: "Nouvelle commande",
+      message: "Vous avez recu une nouvelle commande #12345",
+      type: "success",
+      read: false,
+      timestamp: new Date(Date.now() - 5 * 60 * 1000),
+    },
+    {
+      id: "2",
+      title: "Alerte de securite",
+      message: "Une connexion suspecte a ete detectee sur votre compte",
+      type: "warning",
+      read: false,
+      timestamp: new Date(Date.now() - 30 * 60 * 1000),
+    },
+    {
+      id: "3",
+      title: "Mise a jour disponible",
+      message: "Une nouvelle version de l'application est disponible",
+      type: "info",
+      read: true,
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+    },
+    {
+      id: "4",
+      title: "Erreur de paiement",
+      message: "Le paiement pour la facture #98765 a echoue",
+      type: "error",
+      read: false,
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+    },
+  ]
+
+  const {
+    notifications,
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+  } = useNotifications(sampleNotifications)
+
+  return (
+    <div className="flex justify-center">
+      <WakaNotifications
+        notifications={notifications}
+        onMarkAsRead={markAsRead}
+        onMarkAllAsRead={markAllAsRead}
+        onDelete={deleteNotification}
+        showTabs
+        showBadge
+      />
+    </div>
+  )
+}
+
+export const notificationsShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Centre de notifications",
+      description: "Popover de notifications avec onglets et actions",
+      preview: <NotificationsShowcaseDemo />,
+      code: `const {
+  notifications,
+  markAsRead,
+  markAllAsRead,
+  deleteNotification,
+} = useNotifications(initialNotifications)
+
+<WakaNotifications
+  notifications={notifications}
+  onMarkAsRead={markAsRead}
+  onMarkAllAsRead={markAllAsRead}
+  onDelete={deleteNotification}
+  showTabs
+  showBadge
+/>`,
+    },
+    {
+      title: "Types de notifications",
+      description: "Differents types visuels pour les notifications",
+      preview: (
+        <div className="space-y-2 max-w-md mx-auto p-4 border rounded-lg">
+          <div className="flex gap-3 p-3 rounded-lg border-l-4 border-l-blue-500 bg-blue-50 dark:bg-blue-950/20">
+            <Bell className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-sm">Info</p>
+              <p className="text-xs text-muted-foreground">Notification informative</p>
+            </div>
+          </div>
+          <div className="flex gap-3 p-3 rounded-lg border-l-4 border-l-green-500 bg-green-50 dark:bg-green-950/20">
+            <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-sm">Succes</p>
+              <p className="text-xs text-muted-foreground">Operation reussie</p>
+            </div>
+          </div>
+          <div className="flex gap-3 p-3 rounded-lg border-l-4 border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20">
+            <AlertTriangle className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-sm">Avertissement</p>
+              <p className="text-xs text-muted-foreground">Attention requise</p>
+            </div>
+          </div>
+          <div className="flex gap-3 p-3 rounded-lg border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20">
+            <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-sm">Erreur</p>
+              <p className="text-xs text-muted-foreground">Action requise</p>
+            </div>
+          </div>
+        </div>
+      ),
+      code: `// Types disponibles: "info" | "success" | "warning" | "error"
+const notifications: Notification[] = [
+  {
+    id: "1",
+    title: "Nouvelle commande",
+    message: "Vous avez recu une nouvelle commande",
+    type: "success",
+    read: false,
+    timestamp: new Date(),
+  },
+  {
+    id: "2",
+    title: "Alerte",
+    message: "Attention requise",
+    type: "warning",
+    read: false,
+    timestamp: new Date(),
+  },
+]`,
+    },
+  ],
+}
+
+// ============================================
+// SIDEBAR SHOWCASE
+// ============================================
+export const sidebarShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Sidebar complete",
+      description: "Sidebar avec logo, menu hierarchique et profil utilisateur",
+      preview: (
+        <div className="border rounded-lg overflow-hidden" style={{ height: 500 }}>
+          <WakaSidebar
+            position="relative"
+            width={260}
+            logo={{
+              title: "WAKASTART",
+            }}
+            menu={[
+              {
+                id: "dashboard",
+                label: "Tableau de bord",
+                icon: <LayoutDashboard className="h-5 w-5" />,
+                active: true,
+              },
+              {
+                id: "analytics",
+                label: "Analytics",
+                icon: <BarChart className="h-5 w-5" />,
+                badge: "New",
+              },
+              {
+                id: "projects",
+                label: "Projets",
+                icon: <Folder className="h-5 w-5" />,
+                children: [
+                  { id: "project-list", label: "Liste des projets" },
+                  { id: "project-create", label: "Nouveau projet" },
+                  { id: "project-archive", label: "Archives" },
+                ],
+              },
+              {
+                id: "messages",
+                label: "Messages",
+                icon: <Inbox className="h-5 w-5" />,
+                badge: 12,
+              },
+              {
+                id: "settings",
+                label: "Parametres",
+                icon: <Settings className="h-5 w-5" />,
+              },
+            ]}
+            user={{
+              name: "Jean Dupont",
+              email: "jean@wakastart.com",
+              initials: "JD",
+            }}
+            showHamburger={false}
+          />
+        </div>
+      ),
+      code: `<WakaSidebar
+  logo={{ title: "WAKASTART" }}
+  menu={[
+    {
+      id: "dashboard",
+      label: "Tableau de bord",
+      icon: <LayoutDashboard className="h-5 w-5" />,
+      active: true,
+    },
+    {
+      id: "analytics",
+      label: "Analytics",
+      icon: <BarChart className="h-5 w-5" />,
+      badge: "New",
+    },
+    {
+      id: "projects",
+      label: "Projets",
+      icon: <Folder className="h-5 w-5" />,
+      children: [
+        { id: "project-list", label: "Liste des projets" },
+        { id: "project-create", label: "Nouveau projet" },
+      ],
+    },
+  ]}
+  user={{
+    name: "Jean Dupont",
+    email: "jean@wakastart.com",
+    initials: "JD",
+  }}
+/>`,
+    },
+    {
+      title: "Personnalisation des couleurs",
+      description: "Sidebar avec theme de couleurs personnalise",
+      preview: (
+        <div className="border rounded-lg overflow-hidden" style={{ height: 400 }}>
+          <WakaSidebar
+            position="relative"
+            width={240}
+            backgroundColor="hsl(262 47% 15%)"
+            activeColor="hsl(262 83% 58%)"
+            textColor="hsl(262 20% 90%)"
+            logo={{
+              title: "PURPLE UI",
+            }}
+            menu={[
+              {
+                id: "home",
+                label: "Accueil",
+                icon: <Home className="h-5 w-5" />,
+                active: true,
+              },
+              {
+                id: "products",
+                label: "Produits",
+                icon: <Box className="h-5 w-5" />,
+              },
+              {
+                id: "orders",
+                label: "Commandes",
+                icon: <ShoppingCart className="h-5 w-5" />,
+                badge: 3,
+              },
+              {
+                id: "users",
+                label: "Utilisateurs",
+                icon: <Users className="h-5 w-5" />,
+              },
+            ]}
+            userPosition="top"
+            user={{
+              name: "Admin",
+              email: "admin@purple.ui",
+            }}
+            showHamburger={false}
+          />
+        </div>
+      ),
+      code: `<WakaSidebar
+  backgroundColor="hsl(262 47% 15%)"
+  activeColor="hsl(262 83% 58%)"
+  textColor="hsl(262 20% 90%)"
+  logo={{ title: "PURPLE UI" }}
+  menu={[
+    { id: "home", label: "Accueil", icon: <Home />, active: true },
+    { id: "products", label: "Produits", icon: <Box /> },
+    { id: "orders", label: "Commandes", icon: <ShoppingCart />, badge: 3 },
+    { id: "users", label: "Utilisateurs", icon: <Users /> },
+  ]}
+  userPosition="top"
+  user={{
+    name: "Admin",
+    email: "admin@purple.ui",
+  }}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// SERVER RACK SHOWCASE
+// ============================================
+export const serverRackShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Data Center Rack",
+      description: "Interactive 3D server rack visualization with real-time metrics",
+      preview: (() => {
+        const servers = [
+          { id: "srv-web-01", name: "Web Server 01", unit: 40, height: 2, status: "online" as const, cpu: 45, ram: 62, disk: 34, network: { in: 850, out: 420 } },
+          { id: "srv-db-01", name: "Database Primary", unit: 37, height: 3, status: "online" as const, cpu: 78, ram: 85, disk: 67, network: { in: 1200, out: 980 } },
+          { id: "srv-cache-01", name: "Redis Cache", unit: 35, height: 2, status: "warning" as const, cpu: 92, ram: 88, disk: 45, network: { in: 2100, out: 1850 } },
+          { id: "srv-api-01", name: "API Gateway", unit: 33, height: 1, status: "online" as const, cpu: 34, ram: 41, disk: 22, network: { in: 3500, out: 3200 } },
+          { id: "srv-worker-01", name: "Worker Node 01", unit: 31, height: 2, status: "online" as const, cpu: 56, ram: 67, disk: 41 },
+          { id: "srv-worker-02", name: "Worker Node 02", unit: 29, height: 2, status: "offline" as const, cpu: 0, ram: 0, disk: 41 },
+          { id: "srv-storage-01", name: "Storage Array", unit: 25, height: 4, status: "online" as const, cpu: 12, ram: 24, disk: 89, network: { in: 500, out: 4500 } },
+          { id: "srv-backup-01", name: "Backup Server", unit: 22, height: 3, status: "maintenance" as const, cpu: 5, ram: 15, disk: 72 },
+        ]
+        return (
+          <div className="p-4 bg-zinc-950 rounded-xl">
+            <WakaServerRack
+              servers={servers}
+              totalUnits={42}
+              showMetrics
+              animated
+            />
+          </div>
+        )
+      })(),
+      code: `const servers = [
+  { id: "srv-web-01", name: "Web Server 01", unit: 40, height: 2, status: "online", cpu: 45, ram: 62, disk: 34, network: { in: 850, out: 420 } },
+  { id: "srv-db-01", name: "Database Primary", unit: 37, height: 3, status: "online", cpu: 78, ram: 85, disk: 67 },
+  { id: "srv-cache-01", name: "Redis Cache", unit: 35, height: 2, status: "warning", cpu: 92, ram: 88, disk: 45 },
+  { id: "srv-worker-02", name: "Worker Node 02", unit: 29, height: 2, status: "offline", cpu: 0, ram: 0, disk: 41 },
+]
+
+<WakaServerRack
+  servers={servers}
+  totalUnits={42}
+  showMetrics
+  animated
+/>`,
+    },
+    {
+      title: "Compact Rack View",
+      description: "Smaller rack configuration without metrics display",
+      preview: (() => {
+        const servers = [
+          { id: "edge-01", name: "Edge Node 01", unit: 10, height: 1, status: "online" as const, cpu: 32, ram: 45, disk: 28 },
+          { id: "edge-02", name: "Edge Node 02", unit: 9, height: 1, status: "online" as const, cpu: 28, ram: 42, disk: 25 },
+          { id: "edge-03", name: "Edge Node 03", unit: 8, height: 1, status: "warning" as const, cpu: 85, ram: 78, disk: 62 },
+          { id: "switch-01", name: "Network Switch", unit: 6, height: 2, status: "online" as const, cpu: 15, ram: 20, disk: 5 },
+        ]
+        return (
+          <div className="p-4 bg-zinc-950 rounded-xl">
+            <WakaServerRack
+              servers={servers}
+              totalUnits={12}
+              showMetrics={false}
+              animated
+            />
+          </div>
+        )
+      })(),
+      code: `<WakaServerRack
+  servers={edgeServers}
+  totalUnits={12}
+  showMetrics={false}
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// NETWORK TOPOLOGY SHOWCASE
+// ============================================
+export const networkTopologyShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Network Topology Map",
+      description: "Interactive network diagram with node status and traffic visualization",
+      preview: (() => {
+        const nodes = [
+          { id: "internet", label: "Internet", type: "cloud" as const, status: "healthy" as const, x: 400, y: 50 },
+          { id: "firewall", label: "Firewall", type: "firewall" as const, status: "healthy" as const, x: 400, y: 130, metrics: { cpu: 15, memory: 32 } },
+          { id: "lb-01", label: "Load Balancer", type: "loadbalancer" as const, status: "healthy" as const, x: 400, y: 210, metrics: { connections: 1250 } },
+          { id: "web-01", label: "Web Server 01", type: "server" as const, status: "healthy" as const, x: 250, y: 300, metrics: { cpu: 45, memory: 62 } },
+          { id: "web-02", label: "Web Server 02", type: "server" as const, status: "warning" as const, x: 400, y: 300, metrics: { cpu: 88, memory: 75 } },
+          { id: "web-03", label: "Web Server 03", type: "server" as const, status: "healthy" as const, x: 550, y: 300, metrics: { cpu: 52, memory: 48 } },
+          { id: "db-primary", label: "DB Primary", type: "database" as const, status: "healthy" as const, x: 325, y: 400, metrics: { cpu: 65, memory: 80 } },
+          { id: "db-replica", label: "DB Replica", type: "database" as const, status: "healthy" as const, x: 475, y: 400, metrics: { cpu: 35, memory: 60 } },
+          { id: "cache", label: "Redis Cache", type: "server" as const, status: "healthy" as const, x: 250, y: 400, metrics: { memory: 45 } },
+        ]
+        const edges = [
+          { source: "internet", target: "firewall", latency: 5, traffic: "high" as const, status: "active" as const },
+          { source: "firewall", target: "lb-01", latency: 1, traffic: "high" as const, status: "active" as const },
+          { source: "lb-01", target: "web-01", latency: 2, traffic: "medium" as const, status: "active" as const },
+          { source: "lb-01", target: "web-02", latency: 2, traffic: "high" as const, status: "active" as const },
+          { source: "lb-01", target: "web-03", latency: 2, traffic: "medium" as const, status: "active" as const },
+          { source: "web-01", target: "db-primary", latency: 3, traffic: "medium" as const, status: "active" as const },
+          { source: "web-02", target: "db-primary", latency: 3, traffic: "high" as const, status: "active" as const },
+          { source: "web-03", target: "db-primary", latency: 3, traffic: "low" as const, status: "active" as const },
+          { source: "db-primary", target: "db-replica", latency: 1, traffic: "medium" as const, status: "active" as const },
+          { source: "web-01", target: "cache", latency: 1, traffic: "high" as const, status: "active" as const },
+          { source: "web-02", target: "cache", latency: 1, traffic: "high" as const, status: "active" as const },
+        ]
+        return (
+          <div className="h-[500px] w-full">
+            <WakaNetworkTopology
+              nodes={nodes}
+              edges={edges}
+              showLatency
+              showTraffic
+              animated
+            />
+          </div>
+        )
+      })(),
+      code: `const nodes = [
+  { id: "internet", label: "Internet", type: "cloud", status: "healthy", x: 400, y: 50 },
+  { id: "firewall", label: "Firewall", type: "firewall", status: "healthy", x: 400, y: 130 },
+  { id: "lb-01", label: "Load Balancer", type: "loadbalancer", status: "healthy", x: 400, y: 210 },
+  { id: "web-01", label: "Web Server 01", type: "server", status: "healthy", x: 250, y: 300 },
+  { id: "db-primary", label: "DB Primary", type: "database", status: "healthy", x: 325, y: 400 },
+]
+
+const edges = [
+  { source: "internet", target: "firewall", latency: 5, traffic: "high", status: "active" },
+  { source: "firewall", target: "lb-01", latency: 1, traffic: "high", status: "active" },
+  { source: "lb-01", target: "web-01", latency: 2, traffic: "medium", status: "active" },
+]
+
+<WakaNetworkTopology
+  nodes={nodes}
+  edges={edges}
+  showLatency
+  showTraffic
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// HEALTH PULSE SHOWCASE
+// ============================================
+export const healthPulseShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Service Health Monitor",
+      description: "ECG-style health visualization with various status states",
+      preview: (
+        <div className="grid grid-cols-2 gap-4">
+          <WakaHealthPulse
+            status="healthy"
+            label="API Gateway"
+            value={99.9}
+            unit="%"
+            pulseRate={72}
+            size="md"
+            showValue
+            animated
+          />
+          <WakaHealthPulse
+            status="warning"
+            label="Database"
+            value={156}
+            unit="ms"
+            pulseRate={90}
+            size="md"
+            showValue
+            animated
+          />
+          <WakaHealthPulse
+            status="critical"
+            label="Cache Server"
+            value={2}
+            unit="errors"
+            pulseRate={120}
+            size="md"
+            showValue
+            animated
+          />
+          <WakaHealthPulse
+            status="down"
+            label="Worker Node"
+            pulseRate={0}
+            size="md"
+            animated
+          />
+        </div>
+      ),
+      code: `<WakaHealthPulse
+  status="healthy"
+  label="API Gateway"
+  value={99.9}
+  unit="%"
+  pulseRate={72}
+  size="md"
+  showValue
+  animated
+/>
+
+<WakaHealthPulse
+  status="warning"
+  label="Database"
+  value={156}
+  unit="ms"
+  pulseRate={90}
+  size="md"
+  showValue
+  animated
+/>
+
+<WakaHealthPulse
+  status="critical"
+  label="Cache Server"
+  value={2}
+  unit="errors"
+  pulseRate={120}
+  size="md"
+  showValue
+  animated
+/>
+
+<WakaHealthPulse
+  status="down"
+  label="Worker Node"
+  pulseRate={0}
+  size="md"
+  animated
+/>`,
+    },
+    {
+      title: "Size Variants",
+      description: "Different sizes for various dashboard layouts",
+      preview: (
+        <div className="space-y-4">
+          <WakaHealthPulse status="healthy" label="Small" value={45} unit="req/s" size="sm" showValue animated />
+          <WakaHealthPulse status="healthy" label="Medium" value={1250} unit="req/s" size="md" showValue animated />
+          <WakaHealthPulse status="healthy" label="Large" value={8500} unit="req/s" size="lg" showValue animated />
+        </div>
+      ),
+      code: `<WakaHealthPulse status="healthy" label="Small" size="sm" showValue animated />
+<WakaHealthPulse status="healthy" label="Medium" size="md" showValue animated />
+<WakaHealthPulse status="healthy" label="Large" size="lg" showValue animated />`,
+    },
+  ],
+}
+
+// ============================================
+// TERMINAL OUTPUT SHOWCASE
+// ============================================
+export const terminalOutputShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Live Terminal Output",
+      description: "Real-time log viewer with syntax highlighting and filtering",
+      preview: (() => {
+        const lines = [
+          { content: "[2024-01-15 10:30:45] INFO Starting application server...", level: "info" as const, timestamp: new Date("2024-01-15T10:30:45") },
+          { content: "[2024-01-15 10:30:46] INFO Connected to database at 192.168.1.100:5432", level: "info" as const, timestamp: new Date("2024-01-15T10:30:46") },
+          { content: "[2024-01-15 10:30:47] DEBUG Loading configuration from /etc/app/config.yaml", level: "debug" as const, timestamp: new Date("2024-01-15T10:30:47") },
+          { content: "[2024-01-15 10:30:48] INFO HTTP server listening on port 8080", level: "info" as const, timestamp: new Date("2024-01-15T10:30:48") },
+          { content: "[2024-01-15 10:30:50] INFO GET /api/health 200 OK - 2ms", level: "info" as const, timestamp: new Date("2024-01-15T10:30:50") },
+          { content: "[2024-01-15 10:30:52] WARN High memory usage detected: 85%", level: "warn" as const, timestamp: new Date("2024-01-15T10:30:52") },
+          { content: "[2024-01-15 10:30:55] INFO POST /api/users 201 Created - 45ms", level: "info" as const, timestamp: new Date("2024-01-15T10:30:55") },
+          { content: "[2024-01-15 10:31:00] ERROR Connection to cache server failed: ECONNREFUSED 192.168.1.50:6379", level: "error" as const, timestamp: new Date("2024-01-15T10:31:00") },
+          { content: "[2024-01-15 10:31:01] WARN Retrying cache connection (attempt 1/3)...", level: "warn" as const, timestamp: new Date("2024-01-15T10:31:01") },
+          { content: "[2024-01-15 10:31:03] INFO Cache connection restored", level: "info" as const, timestamp: new Date("2024-01-15T10:31:03") },
+          { content: "[2024-01-15 10:31:05] DEBUG Request processed: {\"userId\": \"usr_12345\", \"action\": \"login\"}", level: "debug" as const, timestamp: new Date("2024-01-15T10:31:05") },
+          { content: "[2024-01-15 10:31:10] INFO GET /api/products?page=1&limit=20 200 OK - 125ms", level: "info" as const, timestamp: new Date("2024-01-15T10:31:10") },
+        ]
+        return (
+          <WakaTerminalOutput
+            lines={lines}
+            height={350}
+            showLineNumbers
+            showTimestamps
+            searchable
+            filterable
+            autoScroll
+          />
+        )
+      })(),
+      code: `const lines = [
+  { content: "[2024-01-15 10:30:45] INFO Starting application server...", level: "info", timestamp: new Date() },
+  { content: "[2024-01-15 10:30:52] WARN High memory usage detected: 85%", level: "warn", timestamp: new Date() },
+  { content: "[2024-01-15 10:31:00] ERROR Connection failed: ECONNREFUSED", level: "error", timestamp: new Date() },
+]
+
+<WakaTerminalOutput
+  lines={lines}
+  height={350}
+  showLineNumbers
+  showTimestamps
+  searchable
+  filterable
+  autoScroll
+/>`,
+    },
+    {
+      title: "ANSI Color Support",
+      description: "Terminal output with ANSI escape codes for colored output",
+      preview: (() => {
+        const lines = [
+          { content: "\x1b[32m\x1b[1m✓\x1b[0m All tests passed (42 tests in 3.5s)", level: "info" as const },
+          { content: "\x1b[33mwarning\x1b[0m: unused variable 'temp' in src/utils.ts:15", level: "warn" as const },
+          { content: "\x1b[31m\x1b[1merror\x1b[0m: Cannot find module '@/components/Button'", level: "error" as const },
+          { content: "\x1b[36minfo\x1b[0m: Building for production...", level: "info" as const },
+          { content: "\x1b[35mdebug\x1b[0m: Resolved 1,234 dependencies", level: "debug" as const },
+        ]
+        return (
+          <WakaTerminalOutput
+            lines={lines}
+            height={200}
+            showLineNumbers={false}
+          />
+        )
+      })(),
+      code: `const lines = [
+  { content: "\\x1b[32m\\x1b[1m✓\\x1b[0m All tests passed", level: "info" },
+  { content: "\\x1b[33mwarning\\x1b[0m: unused variable", level: "warn" },
+]
+
+<WakaTerminalOutput
+  lines={lines}
+  height={200}
+  showLineNumbers={false}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// INCIDENT TIMELINE SHOWCASE
+// ============================================
+export const incidentTimelineShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Incident Timeline",
+      description: "Chronological view of system incidents with status tracking",
+      preview: (() => {
+        const now = new Date()
+        const incidents = [
+          {
+            id: "inc-001",
+            title: "Database Connection Pool Exhaustion",
+            description: "High load caused connection pool to reach maximum capacity",
+            severity: "critical" as const,
+            status: "resolved" as const,
+            startedAt: new Date(now.getTime() - 3600000 * 4),
+            resolvedAt: new Date(now.getTime() - 3600000 * 2),
+            impact: { services: 3, users: 15000 },
+            updates: [
+              { message: "Investigating increased database latency", timestamp: new Date(now.getTime() - 3600000 * 4), status: "Investigating" },
+              { message: "Root cause identified: connection pool exhaustion", timestamp: new Date(now.getTime() - 3600000 * 3.5), status: "Identified" },
+              { message: "Increased pool size and deployed fix", timestamp: new Date(now.getTime() - 3600000 * 2.5), status: "Monitoring" },
+              { message: "All systems operating normally", timestamp: new Date(now.getTime() - 3600000 * 2), status: "Resolved" },
+            ],
+          },
+          {
+            id: "inc-002",
+            title: "CDN Cache Invalidation Delay",
+            description: "Cache purge requests experiencing higher than normal latency",
+            severity: "minor" as const,
+            status: "monitoring" as const,
+            startedAt: new Date(now.getTime() - 3600000),
+            impact: { services: 1 },
+            updates: [
+              { message: "Reports of stale content being served", timestamp: new Date(now.getTime() - 3600000), status: "Investigating" },
+              { message: "CDN provider notified, implementing workaround", timestamp: new Date(now.getTime() - 1800000), status: "Monitoring" },
+            ],
+          },
+          {
+            id: "inc-003",
+            title: "Scheduled Maintenance: API Version Upgrade",
+            description: "Planned upgrade to API v2.5.0 with breaking changes",
+            severity: "info" as const,
+            status: "investigating" as const,
+            startedAt: new Date(now.getTime() - 600000),
+            impact: { services: 5 },
+          },
+        ]
+        return (
+          <WakaIncidentTimeline
+            incidents={incidents}
+            showFilters
+            showImpact
+          />
+        )
+      })(),
+      code: `const incidents = [
+  {
+    id: "inc-001",
+    title: "Database Connection Pool Exhaustion",
+    severity: "critical",
+    status: "resolved",
+    startedAt: new Date(),
+    resolvedAt: new Date(),
+    impact: { services: 3, users: 15000 },
+    updates: [
+      { message: "Investigating increased latency", timestamp: new Date(), status: "Investigating" },
+      { message: "All systems operating normally", timestamp: new Date(), status: "Resolved" },
+    ],
+  },
+]
+
+<WakaIncidentTimeline
+  incidents={incidents}
+  showFilters
+  showImpact
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// FLOW DIAGRAM SHOWCASE
+// ============================================
+export const flowDiagramShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Process Flow Diagram",
+      description: "Interactive flow diagram with draggable nodes and connections",
+      preview: (() => {
+        const nodes = [
+          { id: "start", type: "start" as const, label: "Start", position: { x: 150, y: 80 } },
+          { id: "validate", type: "action" as const, label: "Validate Input", position: { x: 150, y: 160 } },
+          { id: "check-auth", type: "decision" as const, label: "Authorized?", position: { x: 150, y: 260 } },
+          { id: "process", type: "process" as const, label: "Process Request", position: { x: 250, y: 360 } },
+          { id: "deny", type: "action" as const, label: "Deny Access", position: { x: 50, y: 360 } },
+          { id: "end", type: "end" as const, label: "End", position: { x: 150, y: 460 } },
+        ]
+        const connections = [
+          { id: "c1", from: "start", to: "validate", animated: true },
+          { id: "c2", from: "validate", to: "check-auth", animated: true },
+          { id: "c3", from: "check-auth", to: "process", label: "Yes", color: "#22c55e" },
+          { id: "c4", from: "check-auth", to: "deny", label: "No", color: "#ef4444" },
+          { id: "c5", from: "process", to: "end", animated: true },
+          { id: "c6", from: "deny", to: "end" },
+        ]
+        return (
+          <div className="h-[520px]">
+            <WakaFlowDiagram
+              nodes={nodes}
+              connections={connections}
+              draggable
+              editable={false}
+              showGrid
+              zoom={1}
+            />
+          </div>
+        )
+      })(),
+      code: `const nodes = [
+  { id: "start", type: "start", label: "Start", position: { x: 150, y: 80 } },
+  { id: "validate", type: "action", label: "Validate Input", position: { x: 150, y: 160 } },
+  { id: "check-auth", type: "decision", label: "Authorized?", position: { x: 150, y: 260 } },
+  { id: "process", type: "process", label: "Process Request", position: { x: 250, y: 360 } },
+  { id: "end", type: "end", label: "End", position: { x: 150, y: 460 } },
+]
+
+const connections = [
+  { id: "c1", from: "start", to: "validate", animated: true },
+  { id: "c2", from: "validate", to: "check-auth", animated: true },
+  { id: "c3", from: "check-auth", to: "process", label: "Yes", color: "#22c55e" },
+  { id: "c4", from: "check-auth", to: "deny", label: "No", color: "#ef4444" },
+]
+
+<WakaFlowDiagram
+  nodes={nodes}
+  connections={connections}
+  draggable
+  showGrid
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// PIPELINE VIEW SHOWCASE
+// ============================================
+export const pipelineViewShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "CI/CD Pipeline",
+      description: "Visual representation of deployment pipeline stages",
+      preview: (() => {
+        const stages = [
+          { id: "build", name: "Build", status: "success" as const, duration: 145, jobs: [
+            { id: "compile", name: "Compile", status: "success" as const, duration: 85 },
+            { id: "lint", name: "Lint", status: "success" as const, duration: 32 },
+            { id: "unit-test", name: "Unit Tests", status: "success" as const, duration: 120 },
+          ]},
+          { id: "test", name: "Test", status: "success" as const, duration: 312, jobs: [
+            { id: "integration", name: "Integration", status: "success" as const, duration: 180 },
+            { id: "e2e", name: "E2E Tests", status: "success" as const, duration: 245 },
+          ]},
+          { id: "security", name: "Security Scan", status: "success" as const, duration: 89 },
+          { id: "staging", name: "Deploy Staging", status: "running" as const, duration: 67, jobs: [
+            { id: "deploy-stg", name: "Deploy", status: "running" as const, duration: 45 },
+            { id: "smoke-stg", name: "Smoke Tests", status: "pending" as const },
+          ]},
+          { id: "production", name: "Deploy Production", status: "pending" as const, jobs: [
+            { id: "deploy-prod", name: "Deploy", status: "pending" as const },
+            { id: "smoke-prod", name: "Smoke Tests", status: "pending" as const },
+          ]},
+        ]
+        return (
+          <WakaPipelineView
+            stages={stages}
+            variant="horizontal"
+            size="md"
+            showDuration
+            showJobs
+            animated
+          />
+        )
+      })(),
+      code: `const stages = [
+  { id: "build", name: "Build", status: "success", duration: 145, jobs: [
+    { id: "compile", name: "Compile", status: "success", duration: 85 },
+    { id: "lint", name: "Lint", status: "success", duration: 32 },
+  ]},
+  { id: "test", name: "Test", status: "success", duration: 312 },
+  { id: "staging", name: "Deploy Staging", status: "running", duration: 67 },
+  { id: "production", name: "Deploy Production", status: "pending" },
+]
+
+<WakaPipelineView
+  stages={stages}
+  variant="horizontal"
+  size="md"
+  showDuration
+  showJobs
+  animated
+/>`,
+    },
+    {
+      title: "Vertical Pipeline",
+      description: "Pipeline stages displayed in vertical layout",
+      preview: (() => {
+        const stages = [
+          { id: "checkout", name: "Checkout", status: "success" as const, duration: 8 },
+          { id: "install", name: "Install Dependencies", status: "success" as const, duration: 45 },
+          { id: "build", name: "Build Application", status: "success" as const, duration: 120 },
+          { id: "test", name: "Run Tests", status: "failed" as const, duration: 89 },
+          { id: "deploy", name: "Deploy", status: "skipped" as const },
+        ]
+        return (
+          <WakaPipelineView
+            stages={stages}
+            variant="vertical"
+            size="sm"
+            showDuration
+            animated
+          />
+        )
+      })(),
+      code: `<WakaPipelineView
+  stages={stages}
+  variant="vertical"
+  size="sm"
+  showDuration
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// ROLLBACK SLIDER SHOWCASE
+// ============================================
+export const rollbackSliderShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Deployment Rollback",
+      description: "Visual deployment history with rollback capabilities",
+      preview: (() => {
+        const now = new Date()
+        const versions = [
+          { id: "v1", version: "1.0.0", commit: "a1b2c3d", commitMessage: "Initial release", deployedBy: "John Doe", deployedAt: new Date(now.getTime() - 86400000 * 7), health: "healthy" as const },
+          { id: "v2", version: "1.1.0", commit: "e4f5g6h", commitMessage: "Add user authentication", deployedBy: "Jane Smith", deployedAt: new Date(now.getTime() - 86400000 * 5), health: "healthy" as const },
+          { id: "v3", version: "1.2.0", commit: "i7j8k9l", commitMessage: "Performance improvements", deployedBy: "Bob Johnson", deployedAt: new Date(now.getTime() - 86400000 * 3), health: "degraded" as const },
+          { id: "v4", version: "1.2.1", commit: "m1n2o3p", commitMessage: "Fix memory leak in worker", deployedBy: "Alice Brown", deployedAt: new Date(now.getTime() - 86400000 * 2), health: "healthy" as const },
+          { id: "v5", version: "1.3.0", commit: "q4r5s6t", commitMessage: "New dashboard features", deployedBy: "Charlie Davis", deployedAt: new Date(now.getTime() - 86400000), health: "healthy" as const, isActive: true },
+          { id: "v6", version: "1.3.1", commit: "u7v8w9x", commitMessage: "Hotfix: API rate limiting", deployedBy: "Diana Wilson", deployedAt: new Date(now.getTime() - 3600000 * 2), health: "unhealthy" as const },
+        ]
+        return (
+          <WakaRollbackSlider
+            versions={versions}
+            showDetails
+            draggable
+            onRollbackConfirm={(v) => console.log("Rolling back to:", v.version)}
+          />
+        )
+      })(),
+      code: `const versions = [
+  { id: "v1", version: "1.0.0", commit: "a1b2c3d", deployedBy: "John Doe", deployedAt: new Date(), health: "healthy" },
+  { id: "v2", version: "1.1.0", commit: "e4f5g6h", deployedBy: "Jane Smith", deployedAt: new Date(), health: "healthy" },
+  { id: "v3", version: "1.2.0", commit: "i7j8k9l", deployedAt: new Date(), health: "degraded" },
+  { id: "v4", version: "1.3.0", commit: "q4r5s6t", deployedAt: new Date(), health: "healthy", isActive: true },
+]
+
+<WakaRollbackSlider
+  versions={versions}
+  showDetails
+  draggable
+  onRollbackConfirm={(v) => console.log("Rolling back to:", v.version)}
+/>`,
+    },
+  ],
+}
+
+// ============================================
+// REGION MAP SHOWCASE
+// ============================================
+export const regionMapShowcase: ComponentShowcaseConfig = {
+  examples: [
+    {
+      title: "Cloud Region Map",
+      description: "Interactive world map showing cloud region status and latency",
+      preview: (() => {
+        const regions = [
+          { id: "us-east-1", name: "US East (N. Virginia)", location: { lat: 39.0481, lng: -77.4729 }, latency: 25, status: "active" as const, provider: "aws" as const },
+          { id: "us-west-2", name: "US West (Oregon)", location: { lat: 45.5152, lng: -122.6784 }, latency: 45, status: "active" as const, provider: "aws" as const },
+          { id: "eu-west-1", name: "EU (Ireland)", location: { lat: 53.3498, lng: -6.2603 }, latency: 85, status: "active" as const, provider: "aws" as const },
+          { id: "eu-central-1", name: "EU (Frankfurt)", location: { lat: 50.1109, lng: 8.6821 }, latency: 92, status: "degraded" as const, provider: "aws" as const },
+          { id: "ap-southeast-1", name: "Asia Pacific (Singapore)", location: { lat: 1.3521, lng: 103.8198 }, latency: 180, status: "active" as const, provider: "aws" as const },
+          { id: "ap-northeast-1", name: "Asia Pacific (Tokyo)", location: { lat: 35.6762, lng: 139.6503 }, latency: 165, status: "active" as const, provider: "aws" as const },
+          { id: "gcp-us-central", name: "GCP US Central", location: { lat: 41.2619, lng: -95.8608 }, latency: 32, status: "active" as const, provider: "gcp" as const },
+          { id: "azure-westeurope", name: "Azure West Europe", location: { lat: 52.3676, lng: 4.9041 }, latency: 78, status: "offline" as const, provider: "azure" as const },
+        ]
+        return (
+          <div className="h-[400px]">
+            <WakaRegionMap
+              regions={regions}
+              userLocation={{ lat: 40.7128, lng: -74.006 }}
+              showLatency
+              showConnections
+              animated
+            />
+          </div>
+        )
+      })(),
+      code: `const regions = [
+  { id: "us-east-1", name: "US East (N. Virginia)", location: { lat: 39.04, lng: -77.47 }, latency: 25, status: "active", provider: "aws" },
+  { id: "eu-west-1", name: "EU (Ireland)", location: { lat: 53.35, lng: -6.26 }, latency: 85, status: "active", provider: "aws" },
+  { id: "ap-southeast-1", name: "Asia Pacific (Singapore)", location: { lat: 1.35, lng: 103.82 }, latency: 180, status: "active", provider: "aws" },
+  { id: "gcp-us-central", name: "GCP US Central", location: { lat: 41.26, lng: -95.86 }, latency: 32, status: "active", provider: "gcp" },
+]
+
+<WakaRegionMap
+  regions={regions}
+  userLocation={{ lat: 40.7128, lng: -74.006 }}
+  showLatency
+  showConnections
+  animated
+/>`,
+    },
+    {
+      title: "Simple Region Display",
+      description: "Basic region map without connections",
+      preview: (() => {
+        const regions = [
+          { id: "us-1", name: "United States", location: { lat: 37.0902, lng: -95.7129 }, status: "active" as const, provider: "custom" as const },
+          { id: "eu-1", name: "Europe", location: { lat: 54.526, lng: 15.2551 }, status: "active" as const, provider: "custom" as const },
+          { id: "asia-1", name: "Asia Pacific", location: { lat: 34.0479, lng: 100.6197 }, status: "degraded" as const, provider: "custom" as const },
+        ]
+        return (
+          <div className="h-[300px]">
+            <WakaRegionMap
+              regions={regions}
+              showLatency={false}
+              showConnections={false}
+              animated
+            />
+          </div>
+        )
+      })(),
+      code: `<WakaRegionMap
+  regions={regions}
+  showLatency={false}
+  showConnections={false}
+  animated
+/>`,
+    },
+  ],
+}
+
+// ============================================
 // Map des showcases par slug
 // ============================================
 export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
@@ -5446,4 +12416,145 @@ export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
   // Utility components
   collapsible: collapsibleShowcase,
   "theme-manager": themeManagerShowcase,
+  // E-commerce components
+  "pricing-table": pricingTableShowcase,
+  "cart-summary": cartSummaryShowcase,
+  "product-card": productCardShowcase,
+  "checkout-stepper": checkoutStepperShowcase,
+  "coupon-input": couponInputShowcase,
+  "payment-method-picker": paymentMethodPickerShowcase,
+  "order-tracker": orderTrackerShowcase,
+  "invoice-preview": invoicePreviewShowcase,
+  // Security components
+  "password-strength": passwordStrengthShowcase,
+  "two-factor-setup": twoFactorSetupShowcase,
+  "session-manager": sessionManagerShowcase,
+  "permission-matrix": permissionMatrixShowcase,
+  "audit-log": auditLogShowcase,
+  "security-score": securityScoreShowcase,
+  "biometric-prompt": biometricPromptShowcase,
+  "device-trust": deviceTrustShowcase,
+  // Communication components
+  "chat-bubble": chatBubbleShowcase,
+  "typing-indicator": typingIndicatorShowcase,
+  "video-call": videoCallShowcase,
+  "mention-input": mentionInputShowcase,
+  "thread-view": threadViewShowcase,
+  "presence-indicator": presenceIndicatorShowcase,
+  "reaction-picker": reactionPickerShowcase,
+  "voice-message": voiceMessageShowcase,
+  // Analytics components
+  "funnel-chart": funnelChartShowcase,
+  "cohort-table": cohortTableShowcase,
+  "kpi-dashboard": kpiDashboardShowcase,
+  "compare-period": comparePeriodShowcase,
+  "goal-progress": goalProgressShowcase,
+  heatmap: heatmapShowcase,
+  "sankey-diagram": sankeyDiagramShowcase,
+  "treemap-chart": treemapChartShowcase,
+  // Forms components
+  "signature-pad": signaturePadShowcase,
+  "address-autocomplete": addressAutocompleteShowcase,
+  "phone-input": phoneInputShowcase,
+  "credit-card-input": creditCardInputShowcase,
+  "tag-input": tagInputShowcase,
+  "slider-range": sliderRangeShowcase,
+  "rating-input": ratingInputShowcase,
+  "schedule-picker": schedulePickerShowcase,
+  // Onboarding components
+  "tour-guide": tourGuideShowcase,
+  hotspot: hotspotShowcase,
+  checklist: checklistShowcase,
+  "empty-state": emptyStateShowcase,
+  "feature-announcement": featureAnnouncementShowcase,
+  "progress-onboarding": progressOnboardingShowcase,
+  "tooltip-tour": tooltipTourShowcase,
+  "welcome-modal": welcomeModalShowcase,
+  // Mobile-first components
+  "bottom-sheet": bottomSheetShowcase,
+  "pull-to-refresh": pullToRefreshShowcase,
+  "swipe-card": swipeCardShowcase,
+  // Animation components
+  "error-shake": errorShakeShowcase,
+  "loading-orbit": loadingOrbitShowcase,
+  "skeleton-wave": skeletonWaveShowcase,
+  "success-explosion": successExplosionShowcase,
+  typewriter: typewriterShowcase,
+  // Button components
+  "haptic-button": hapticButtonShowcase,
+  "morph-button": morphButtonShowcase,
+  "liquid-button": liquidButtonShowcase,
+  "magnetic-button": magneticButtonShowcase,
+  // Navigation components
+  "floating-nav": floatingNavShowcase,
+  "breadcrumb-path": breadcrumbPathShowcase,
+  "tabs-morph": tabsMorphShowcase,
+  "orbital-menu": orbitalMenuShowcase,
+  dock: dockShowcase,
+  spotlight: spotlightShowcase,
+  "command-bar": commandBarShowcase,
+  // Gamification components (Part 1)
+  "achievement-unlock": achievementUnlockShowcase,
+  "combo-counter": comboCounterShowcase,
+  "level-progress": levelProgressShowcase,
+  leaderboard: leaderboardShowcase,
+  "milestone-road": milestoneRoadShowcase,
+  "streak-counter": streakCounterShowcase,
+  "quest-card": questCardShowcase,
+  "scratch-card": scratchCardShowcase,
+  "versus-card": versusCardShowcase,
+  "xp-bar": xpBarShowcase,
+  // Gamification components (Part 2)
+  "badge-showcase": badgeShowcaseShowcase,
+  "daily-reward": dailyRewardShowcase,
+  "loot-box": lootBoxShowcase,
+  "skill-tree": skillTreeShowcase,
+  "challenge-timer": challengeTimerShowcase,
+  "rank-badge": rankBadgeShowcase,
+  "tournament-bracket": tournamentBracketShowcase,
+  "team-banner": teamBannerShowcase,
+  "activity-feed": activityFeedShowcase,
+  "power-up": powerUpShowcase,
+  "points-popup": pointsPopupShowcase,
+  "spin-wheel": spinWheelShowcase,
+  "player-card": playerCardShowcase,
+  "stats-hexagon": statsHexagonShowcase,
+  "season-pass": seasonPassShowcase,
+  // Data Visualization components
+  "3d-pie-chart": threeDPieChartShowcase,
+  "radar-score": radarScoreShowcase,
+  "resource-gauge": resourceGaugeShowcase,
+  "status-matrix": statusMatrixShowcase,
+  "contribution-graph": contributionGraphShowcase,
+  "cost-breakdown": costBreakdownShowcase,
+  "budget-burn": budgetBurnShowcase,
+  "metric-sparkline": metricSparklineShowcase,
+  // Infrastructure & Resource Management components (Part 2)
+  "resource-pool": resourcePoolShowcase,
+  "quota-bar": quotaBarShowcase,
+  "capacity-planner": capacityPlannerShowcase,
+  "allocation-matrix": allocationMatrixShowcase,
+  "deployment-lane": deploymentLaneShowcase,
+  "approval-chain": approvalChainShowcase,
+  "connection-matrix": connectionMatrixShowcase,
+  "alert-stack": alertStackShowcase,
+  "sla-tracker": slaTrackerShowcase,
+  // Card Effects components
+  "glow-card": glowCardShowcase,
+  "tilt-card": tiltCardShowcase,
+  "magic-link": magicLinkShowcase,
+  // Notifications component
+  notifications: notificationsShowcase,
+  // Sidebar component (from blocks)
+  sidebar: sidebarShowcase,
+  // Infrastructure & DevOps components (Part 1)
+  "server-rack": serverRackShowcase,
+  "network-topology": networkTopologyShowcase,
+  "health-pulse": healthPulseShowcase,
+  "terminal-output": terminalOutputShowcase,
+  "incident-timeline": incidentTimelineShowcase,
+  "flow-diagram": flowDiagramShowcase,
+  "pipeline-view": pipelineViewShowcase,
+  "rollback-slider": rollbackSliderShowcase,
+  "region-map": regionMapShowcase,
 }
