@@ -40,14 +40,14 @@ export function SiteHeader() {
               <span className="sr-only">Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-72 p-0">
+          <SheetContent side="left" className="w-[min(100vw-3rem,288px)] p-0">
             <SidebarNav mobile onNavigate={() => setMobileOpen(false)} />
           </SheetContent>
         </Sheet>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 mr-6">
-          <span className="font-bold text-xl">@wakastellar/ui</span>
+        <Link href="/" className="flex items-center space-x-2 mr-4 md:mr-6">
+          <span className="font-bold text-lg sm:text-xl truncate">@wakastellar/ui</span>
         </Link>
 
         {/* Main nav - desktop */}
@@ -72,7 +72,7 @@ export function SiteHeader() {
         <div className="flex-1" />
 
         {/* Right side */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Command Palette - Search */}
           <CommandPalette
             isDarkMode={isDarkMode}
@@ -95,8 +95,10 @@ export function SiteHeader() {
             </span>
           </Button>
 
-          {/* Theme selector with all themes */}
-          <ThemeSelector variant="compact" />
+          {/* Theme selector with all themes - hidden on small screens */}
+          <div className="hidden sm:block">
+            <ThemeSelector variant="compact" />
+          </div>
 
           {/* Language selector - flag only */}
           <LanguageSelector

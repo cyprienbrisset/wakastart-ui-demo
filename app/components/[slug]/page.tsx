@@ -15,6 +15,10 @@ import {
   Badge,
   Button,
   Separator,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@wakastellar/ui"
 import {
   ChevronLeft,
@@ -27,6 +31,8 @@ import {
   Code2,
   Settings,
   BookOpen,
+  Terminal,
+  Package,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -37,7 +43,6 @@ interface ComponentPageProps {
 export default function ComponentPage({ params }: ComponentPageProps) {
   const { slug } = use(params)
   const component = getComponentBySlug(slug)
-  const [copied, setCopied] = useState(false)
 
   if (!component) {
     return notFound()
@@ -55,11 +60,14 @@ export default function ComponentPage({ params }: ComponentPageProps) {
   const legacyExample = componentExamples[slug]
 
   const importCode = `import { ${component.importPath} } from "@wakastellar/ui"`
+  const cliAddCode = `npx wakastellar-ui add ${slug}`
 
-  const copyImport = async () => {
-    await navigator.clipboard.writeText(importCode)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const [copiedType, setCopiedType] = useState<"import" | "cli" | null>(null)
+
+  const copyToClipboard = async (text: string, type: "import" | "cli") => {
+    await navigator.clipboard.writeText(text)
+    setCopiedType(type)
+    setTimeout(() => setCopiedType(null), 2000)
   }
 
   // Table des matières
@@ -119,29 +127,77 @@ export default function ComponentPage({ params }: ComponentPageProps) {
             </div>
           </div>
 
-          {/* Quick Import */}
-          <div className="mt-6 flex items-center gap-3 p-3 rounded-lg bg-muted border">
-            <code className="flex-1 text-sm font-mono text-foreground">
-              {importCode}
-            </code>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={copyImport}
-              className="shrink-0"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4 mr-1 text-green-500" />
-                  Copié
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copier
-                </>
-              )}
-            </Button>
+          {/* Quick Install */}
+          <div className="mt-6">
+            <Tabs defaultValue="package" className="w-full">
+              <TabsList className="grid w-full max-w-md grid-cols-2">
+                <TabsTrigger value="package" className="gap-2">
+                  <Package className="h-4 w-4" />
+                  Package
+                </TabsTrigger>
+                <TabsTrigger value="cli" className="gap-2">
+                  <Terminal className="h-4 w-4" />
+                  CLI
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="package" className="mt-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted border">
+                  <code className="flex-1 text-sm font-mono text-foreground overflow-x-auto">
+                    {importCode}
+                  </code>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copyToClipboard(importCode, "import")}
+                    className="shrink-0"
+                  >
+                    {copiedType === "import" ? (
+                      <>
+                        <Check className="h-4 w-4 mr-1 text-green-500" />
+                        Copié
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-4 w-4 mr-1" />
+                        Copier
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Utilisez cette méthode si vous avez installé le package complet @wakastellar/ui
+                </p>
+              </TabsContent>
+              <TabsContent value="cli" className="mt-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted border">
+                  <code className="flex-1 text-sm font-mono text-foreground overflow-x-auto">
+                    {cliAddCode}
+                  </code>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copyToClipboard(cliAddCode, "cli")}
+                    className="shrink-0"
+                  >
+                    {copiedType === "cli" ? (
+                      <>
+                        <Check className="h-4 w-4 mr-1 text-green-500" />
+                        Copié
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-4 w-4 mr-1" />
+                        Copier
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Ajoute le composant à votre projet. Requiert <code className="px-1 py-0.5 rounded bg-muted text-xs">components.json</code>.{" "}
+                  <a href="/docs/cli" className="text-primary hover:underline">En savoir plus</a>
+                </p>
+              </TabsContent>
+            </Tabs>
           </div>
         </header>
 

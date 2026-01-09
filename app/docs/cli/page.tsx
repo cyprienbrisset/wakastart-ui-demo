@@ -5,7 +5,7 @@ import { CodeBlock } from "@/components/docs/code-block"
 import { Callout } from "@/components/docs/callout"
 import { PackageManagerTabs } from "@/components/docs/tabs-content"
 import { Badge } from "@wakastellar/ui"
-import { Terminal, Zap, Settings, Download } from "lucide-react"
+import { Terminal, Zap, Settings, Download, Search, List } from "lucide-react"
 
 export default function CLIPage() {
   return (
@@ -14,7 +14,7 @@ export default function CLIPage() {
       <div className="space-y-4 mb-10">
         <div className="flex items-center gap-3">
           <h1 className="text-4xl font-bold tracking-tight">CLI</h1>
-          <Badge>Coming Soon</Badge>
+          <Badge variant="default">v2.0.0</Badge>
         </div>
         <p className="text-xl text-muted-foreground">
           Interface en ligne de commande pour initialiser et gérer vos projets @wakastellar/ui.
@@ -39,6 +39,20 @@ export default function CLIPage() {
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-lg border">
+            <List className="h-6 w-6 text-purple-500 shrink-0 mt-1" />
+            <div>
+              <p className="font-medium">Liste des composants</p>
+              <p className="text-sm text-muted-foreground">Explorez les 200+ composants disponibles</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-4 rounded-lg border">
+            <Search className="h-6 w-6 text-green-500 shrink-0 mt-1" />
+            <div>
+              <p className="font-medium">Recherche</p>
+              <p className="text-sm text-muted-foreground">Trouvez des composants par nom ou description</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-4 rounded-lg border">
             <Settings className="h-6 w-6 text-muted-foreground shrink-0 mt-1" />
             <div>
               <p className="font-medium">Configuration</p>
@@ -46,108 +60,190 @@ export default function CLIPage() {
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Terminal className="h-6 w-6 text-green-500 shrink-0 mt-1" />
+            <Terminal className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
             <div>
               <p className="font-medium">Interactif</p>
               <p className="text-sm text-muted-foreground">Prompts pour guider la configuration</p>
             </div>
           </div>
         </div>
-
-        <Callout type="info" title="Note">
-          Le CLI est actuellement en développement. En attendant, vous pouvez installer la librairie complète
-          via npm/pnpm et importer les composants dont vous avez besoin.
-        </Callout>
       </Section>
 
       {/* Installation */}
-      <Section id="installation" title="Installation (Preview)">
+      <Section id="installation" title="Installation">
         <p className="text-muted-foreground mb-4">
-          Le CLI sera disponible via npx ou en installation globale.
+          Le CLI est inclus avec le package @wakastellar/ui. Utilisez npx pour l'exécuter directement ou installez-le globalement.
         </p>
 
+        <h3 className="text-lg font-semibold mt-6 mb-4">Via npx (recommandé)</h3>
         <PackageManagerTabs
-          npm="npx @wakastellar/cli init"
-          pnpm="pnpm dlx @wakastellar/cli init"
-          yarn="npx @wakastellar/cli init"
+          npm="npx wakastellar-ui --help"
+          pnpm="pnpm dlx wakastellar-ui --help"
+          yarn="npx wakastellar-ui --help"
+        />
+
+        <h3 className="text-lg font-semibold mt-6 mb-4">Installation globale</h3>
+        <PackageManagerTabs
+          npm="npm install -g @wakastellar/ui"
+          pnpm="pnpm add -g @wakastellar/ui"
+          yarn="yarn global add @wakastellar/ui"
+        />
+
+        <CodeBlock
+          code={`# Après installation globale
+wakastellar-ui --help`}
+          language="bash"
         />
       </Section>
 
       {/* Init Command */}
       <Section id="init" title="Commande init">
         <p className="text-muted-foreground mb-4">
-          La commande <code className="px-1.5 py-0.5 rounded bg-muted text-sm">init</code> configure votre projet.
+          La commande <code className="px-1.5 py-0.5 rounded bg-muted text-sm">init</code> configure votre projet et crée le fichier components.json.
         </p>
 
         <CodeBlock
-          code={`npx @wakastellar/cli init
+          code={`# Initialiser un projet (interactif)
+npx wakastellar-ui init
 
-# Options disponibles
-npx @wakastellar/cli init --defaults    # Utilise les paramètres par défaut
-npx @wakastellar/cli init --yes         # Répond oui à toutes les questions
-npx @wakastellar/cli init --cwd ./app   # Spécifie le répertoire cible`}
+# Utiliser les paramètres par défaut
+npx wakastellar-ui init --defaults
+
+# Spécifier un répertoire cible
+npx wakastellar-ui init --cwd ./my-app`}
           language="bash"
         />
 
         <h3 className="text-lg font-semibold mt-6 mb-4">Questions interactives</h3>
         <div className="p-4 rounded-lg border bg-muted/30 font-mono text-sm space-y-2">
-          <p className="text-muted-foreground">? Which style would you like to use? › Default</p>
-          <p className="text-muted-foreground">? Which color would you like to use as base color? › Slate</p>
-          <p className="text-muted-foreground">? Where is your global CSS file? › app/globals.css</p>
-          <p className="text-muted-foreground">? Would you like to use CSS variables for colors? › Yes</p>
-          <p className="text-muted-foreground">? Are you using a src/ directory? › No</p>
-          <p className="text-muted-foreground">? Configure the import alias for components? › @/components</p>
-          <p className="text-muted-foreground">? Configure the import alias for utils? › @/lib/utils</p>
+          <p className="text-green-500">✔ Projet détecté : Next.js</p>
+          <p className="text-muted-foreground">? Répertoire des composants (components/ui)</p>
+          <p className="text-muted-foreground">? Chemin de l'utilitaire cn (lib/utils)</p>
+          <p className="text-muted-foreground">? Version de Tailwind CSS (v4 / v3)</p>
+          <p className="text-muted-foreground">? Chemin du fichier CSS global (app/globals.css)</p>
+          <p className="text-green-500">✔ Fichier components.json créé</p>
+          <p className="text-green-500">✔ Package @wakastellar/ui installé</p>
         </div>
       </Section>
 
       {/* Add Command */}
       <Section id="add" title="Commande add">
         <p className="text-muted-foreground mb-4">
-          Ajoutez des composants individuels à votre projet.
+          Ajoutez des composants individuels à votre projet. Les dépendances sont automatiquement résolues.
         </p>
 
         <CodeBlock
           code={`# Ajouter un composant
-npx @wakastellar/cli add button
+npx wakastellar-ui add button
 
 # Ajouter plusieurs composants
-npx @wakastellar/cli add button card input
+npx wakastellar-ui add button card input dialog
 
-# Ajouter tous les composants d'une catégorie
-npx @wakastellar/cli add --all-forms
+# Ajouter un composant avancé (avec dépendances)
+npx wakastellar-ui add waka-datatable
+# → Installe automatiquement: button, input, select, checkbox, badge
 
-# Lister les composants disponibles
-npx @wakastellar/cli add --list`}
+# Forcer l'écrasement des fichiers existants
+npx wakastellar-ui add button --overwrite`}
           language="bash"
         />
+
+        <Callout type="info" title="Résolution des dépendances">
+          Le CLI détecte et installe automatiquement les dépendances internes. Par exemple, ajouter
+          <code className="px-1.5 py-0.5 rounded bg-muted text-sm mx-1">waka-modal</code>
+          installera aussi <code className="px-1.5 py-0.5 rounded bg-muted text-sm mx-1">button</code> s'il n'est pas déjà présent.
+        </Callout>
+      </Section>
+
+      {/* List Command */}
+      <Section id="list" title="Commande list">
+        <p className="text-muted-foreground mb-4">
+          Affichez tous les composants disponibles, organisés par catégorie.
+        </p>
+
+        <CodeBlock
+          code={`# Lister tous les composants
+npx wakastellar-ui list
+
+# Lister par type
+npx wakastellar-ui list --type ui
+npx wakastellar-ui list --type component
+
+# Lister par catégorie
+npx wakastellar-ui list --category gamification
+npx wakastellar-ui list --category forms`}
+          language="bash"
+        />
+
+        <h3 className="text-lg font-semibold mt-6 mb-4">Exemple de sortie</h3>
+        <div className="p-4 rounded-lg border bg-muted/30 font-mono text-xs sm:text-sm space-y-2 overflow-x-auto">
+          <p className="text-primary font-bold">📦 @wakastellar/ui - Composants disponibles</p>
+          <p></p>
+          <p className="text-blue-500 font-semibold">UI Components (22)</p>
+          <p className="text-muted-foreground pl-4">button, card, input, textarea, checkbox, switch...</p>
+          <p></p>
+          <p className="text-purple-500 font-semibold">Gamification (15)</p>
+          <p className="text-muted-foreground pl-4">waka-xp-bar, waka-leaderboard, waka-achievement-unlock...</p>
+          <p></p>
+          <p className="text-green-500 font-semibold">Forms (8)</p>
+          <p className="text-muted-foreground pl-4">waka-datetime-picker, waka-color-picker, waka-file-upload...</p>
+          <p></p>
+          <p className="text-muted-foreground">Total: 197 composants + 4 blocs</p>
+        </div>
+      </Section>
+
+      {/* Search Command */}
+      <Section id="search" title="Commande search">
+        <p className="text-muted-foreground mb-4">
+          Recherchez des composants par nom ou description.
+        </p>
+
+        <CodeBlock
+          code={`# Rechercher par nom
+npx wakastellar-ui search button
+
+# Rechercher par fonctionnalité
+npx wakastellar-ui search "date picker"
+npx wakastellar-ui search chart
+npx wakastellar-ui search authentication`}
+          language="bash"
+        />
+
+        <h3 className="text-lg font-semibold mt-6 mb-4">Exemple de sortie</h3>
+        <div className="p-4 rounded-lg border bg-muted/30 font-mono text-xs sm:text-sm space-y-2 overflow-x-auto">
+          <p className="text-primary">🔍 Recherche : "button"</p>
+          <p></p>
+          <p><span className="text-green-500">button</span> <span className="text-muted-foreground">(ui)</span></p>
+          <p className="text-muted-foreground pl-4">Bouton avec variantes et tailles</p>
+          <p></p>
+          <p><span className="text-green-500">waka-haptic-button</span> <span className="text-muted-foreground">(component)</span></p>
+          <p className="text-muted-foreground pl-4">Bouton avec retour haptique</p>
+          <p></p>
+          <p><span className="text-green-500">waka-magnetic-button</span> <span className="text-muted-foreground">(component)</span></p>
+          <p className="text-muted-foreground pl-4">Bouton avec effet magnétique au survol</p>
+          <p></p>
+          <p className="text-muted-foreground">3 résultats trouvés</p>
+        </div>
       </Section>
 
       {/* components.json */}
       <Section id="components-json" title="Configuration components.json">
         <p className="text-muted-foreground mb-4">
           Le fichier <code className="px-1.5 py-0.5 rounded bg-muted text-sm">components.json</code> stocke la configuration de votre projet.
+          Il est créé automatiquement par la commande <code className="px-1.5 py-0.5 rounded bg-muted text-sm">init</code>.
         </p>
 
         <CodeBlock
           code={`{
   "$schema": "https://wakastellar.dev/schema.json",
   "style": "default",
-  "rsc": true,
-  "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": ""
+    "version": "v4",
+    "css": "app/globals.css"
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "components": "@/components/ui",
+    "utils": "@/lib/utils"
   }
 }`}
           language="json"
@@ -165,60 +261,33 @@ npx @wakastellar/cli add --list`}
             <tbody>
               <tr className="border-b">
                 <td className="py-3 px-4 font-mono text-sm">style</td>
-                <td className="py-3 px-4 text-muted-foreground">Style des composants (default, new-york)</td>
+                <td className="py-3 px-4 text-muted-foreground">Style des composants (default)</td>
               </tr>
               <tr className="border-b">
-                <td className="py-3 px-4 font-mono text-sm">rsc</td>
-                <td className="py-3 px-4 text-muted-foreground">Support React Server Components</td>
-              </tr>
-              <tr className="border-b">
-                <td className="py-3 px-4 font-mono text-sm">tsx</td>
-                <td className="py-3 px-4 text-muted-foreground">Utiliser TypeScript (.tsx) ou JavaScript (.jsx)</td>
-              </tr>
-              <tr className="border-b">
-                <td className="py-3 px-4 font-mono text-sm">tailwind.config</td>
-                <td className="py-3 px-4 text-muted-foreground">Chemin vers le fichier de config Tailwind</td>
+                <td className="py-3 px-4 font-mono text-sm">tailwind.version</td>
+                <td className="py-3 px-4 text-muted-foreground">Version de Tailwind (v3, v4)</td>
               </tr>
               <tr className="border-b">
                 <td className="py-3 px-4 font-mono text-sm">tailwind.css</td>
                 <td className="py-3 px-4 text-muted-foreground">Chemin vers le fichier CSS global</td>
               </tr>
               <tr className="border-b">
-                <td className="py-3 px-4 font-mono text-sm">tailwind.baseColor</td>
-                <td className="py-3 px-4 text-muted-foreground">Couleur de base (slate, gray, zinc, neutral, stone)</td>
+                <td className="py-3 px-4 font-mono text-sm">aliases.components</td>
+                <td className="py-3 px-4 text-muted-foreground">Alias d'import pour les composants</td>
               </tr>
               <tr className="border-b">
-                <td className="py-3 px-4 font-mono text-sm">aliases</td>
-                <td className="py-3 px-4 text-muted-foreground">Alias d'import pour les différents dossiers</td>
+                <td className="py-3 px-4 font-mono text-sm">aliases.utils</td>
+                <td className="py-3 px-4 text-muted-foreground">Alias d'import pour les utilitaires (cn)</td>
               </tr>
             </tbody>
           </table>
         </div>
       </Section>
 
-      {/* Diff Command */}
-      <Section id="diff" title="Commande diff">
+      {/* Alternative: Package complet */}
+      <Section id="alternative" title="Alternative : Package complet">
         <p className="text-muted-foreground mb-4">
-          Vérifiez les différences entre vos composants locaux et la dernière version.
-        </p>
-
-        <CodeBlock
-          code={`# Voir les différences pour un composant
-npx @wakastellar/cli diff button
-
-# Voir les différences pour tous les composants
-npx @wakastellar/cli diff
-
-# Appliquer les mises à jour
-npx @wakastellar/cli diff button --apply`}
-          language="bash"
-        />
-      </Section>
-
-      {/* Current Alternative */}
-      <Section id="alternative" title="En attendant le CLI">
-        <p className="text-muted-foreground mb-4">
-          En attendant la sortie du CLI, vous pouvez utiliser la méthode d'installation standard :
+          Vous pouvez aussi installer le package complet sans utiliser le CLI :
         </p>
 
         <CodeBlock
@@ -227,17 +296,17 @@ pnpm add @wakastellar/ui
 
 # 2. Importer les styles dans votre globals.css
 # Pour Tailwind v4:
-import "@wakastellar/ui/styles"
+@import "@wakastellar/ui/styles";
 
 # Pour Tailwind v3:
-import "@wakastellar/ui/styles/v3"
+@import "@wakastellar/ui/styles/v3";
 
 # 3. Importer et utiliser les composants
 import { Button, Card, Input } from "@wakastellar/ui"`}
           language="bash"
         />
 
-        <Callout type="tip" title="Avantage">
+        <Callout type="tip" title="Avantage du package complet">
           Avec l'installation du package complet, vous avez accès à tous les 200+ composants
           sans avoir à les ajouter un par un. Le tree-shaking de votre bundler s'occupe
           d'inclure uniquement les composants que vous utilisez dans le build final.

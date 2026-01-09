@@ -18,7 +18,7 @@ export function SidebarNav({ mobile = false, onNavigate }: SidebarNavProps) {
     <aside
       className={cn(
         "border-r bg-background",
-        mobile ? "h-full" : "hidden lg:block w-64 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)]"
+        mobile ? "h-full" : "hidden lg:block w-56 xl:w-64 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)]"
       )}
     >
       <ScrollArea className="h-full py-6 px-4">
