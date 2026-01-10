@@ -25,6 +25,9 @@ import {
   Megaphone,
   MessageCircle,
   Wrench,
+  ShoppingCart,
+  Gamepad2,
+  Server,
   X,
   ChevronRight,
   Check,
@@ -40,6 +43,9 @@ const categoryIcons: Record<BlockCategory, React.ReactNode> = {
   Marketing: <Megaphone className="h-4 w-4" />,
   Communication: <MessageCircle className="h-4 w-4" />,
   Utilities: <Wrench className="h-4 w-4" />,
+  "E-commerce": <ShoppingCart className="h-4 w-4" />,
+  Gaming: <Gamepad2 className="h-4 w-4" />,
+  DevOps: <Server className="h-4 w-4" />,
 }
 
 export default function BlocksPage() {

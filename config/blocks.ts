@@ -15,6 +15,9 @@ export type BlockCategory =
   | "Marketing"
   | "Communication"
   | "Utilities"
+  | "E-commerce"
+  | "Gaming"
+  | "DevOps"
 
 export const blockCategories: { id: BlockCategory; label: string; description: string }[] = [
   { id: "Layout", label: "Layout", description: "Structure et mise en page" },
@@ -24,6 +27,9 @@ export const blockCategories: { id: BlockCategory; label: string; description: s
   { id: "Marketing", label: "Marketing", description: "Landing pages et pricing" },
   { id: "Communication", label: "Communication", description: "Chat, notifications et activité" },
   { id: "Utilities", label: "Utilitaires", description: "États vides, erreurs et assistants" },
+  { id: "E-commerce", label: "E-commerce", description: "Panier, checkout et paiements" },
+  { id: "Gaming", label: "Gaming", description: "Profils joueurs, achievements et stats" },
+  { id: "DevOps", label: "DevOps", description: "Déploiements, pipelines et monitoring" },
 ]
 
 export const blocks: BlockDefinition[] = [
@@ -378,6 +384,107 @@ export const blocks: BlockDefinition[] = [
       "Import/Export JSON",
       "Ajout de clés et langues",
       "Indicateurs d'état (manquant, identique, valide)",
+    ],
+  },
+
+  // Data Management - KPI
+  {
+    name: "DashboardKPI",
+    slug: "dashboard-kpi",
+    description: "Dashboard KPI complet avec métriques, sparklines et objectifs.",
+    category: "Data Management",
+    features: [
+      "Cartes KPI avec tendances",
+      "Mini sparklines intégrées",
+      "Sélecteur de période",
+      "Section objectifs avec progression",
+      "Métriques secondaires",
+      "Support graphiques personnalisés",
+      "Indicateur de dernière mise à jour",
+    ],
+  },
+
+  // E-commerce
+  {
+    name: "CheckoutFlow",
+    slug: "checkout-flow",
+    description: "Flux de checkout e-commerce complet en plusieurs étapes.",
+    category: "E-commerce",
+    features: [
+      "Indicateur d'étapes (panier, livraison, paiement, confirmation)",
+      "Récapitulatif du panier",
+      "Formulaire d'adresse de livraison",
+      "Sélection méthode de livraison",
+      "Sélection méthode de paiement",
+      "Application de codes promo",
+      "Récapitulatif avant confirmation",
+    ],
+  },
+
+  // Gaming
+  {
+    name: "PlayerProfile",
+    slug: "player-profile",
+    description: "Profil joueur gamifié avec XP, achievements et historique.",
+    category: "Gaming",
+    features: [
+      "Barre de progression XP",
+      "Niveau et rang du joueur",
+      "Badges et titres",
+      "Statistiques détaillées",
+      "Achievements avec raretés",
+      "Historique des matchs",
+      "Streak de connexion",
+    ],
+  },
+
+  // Authentication - 2FA
+  {
+    name: "Auth2FA",
+    slug: "auth-2fa",
+    description: "Configuration de l'authentification à deux facteurs.",
+    category: "Authentication",
+    features: [
+      "Support authenticator app (QR code)",
+      "Support SMS et email",
+      "Support clés hardware",
+      "Codes de récupération",
+      "Activation/désactivation",
+      "Conseils de sécurité",
+    ],
+  },
+
+  // Communication - Chat Interface
+  {
+    name: "ChatInterface",
+    slug: "chat-interface",
+    description: "Interface de chat complète avec conversations et messages.",
+    category: "Communication",
+    features: [
+      "Liste de conversations",
+      "Bulles de messages",
+      "Indicateurs de statut (envoyé, lu)",
+      "Indicateur de frappe",
+      "Support fichiers joints",
+      "Réactions aux messages",
+      "Appels audio/vidéo",
+    ],
+  },
+
+  // DevOps
+  {
+    name: "DeploymentDashboard",
+    slug: "deployment-dashboard",
+    description: "Dashboard de déploiement avec pipelines et environnements.",
+    category: "DevOps",
+    features: [
+      "Liste des déploiements récents",
+      "Pipelines CI/CD avec étapes",
+      "Statut des environnements",
+      "Déploiement manuel",
+      "Rollback rapide",
+      "Logs de déploiement",
+      "Métriques de santé",
     ],
   },
 ]

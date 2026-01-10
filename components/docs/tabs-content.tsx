@@ -18,7 +18,7 @@ interface DocTabProps {
 export function DocTabs({ defaultValue, children, className }: DocTabsProps) {
   return (
     <Tabs defaultValue={defaultValue} className={cn("my-6", className)}>
-      {children}
+      {children as any}
     </Tabs>
   )
 }
@@ -26,7 +26,7 @@ export function DocTabs({ defaultValue, children, className }: DocTabsProps) {
 export function DocTabsList({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <TabsList className={cn("w-full justify-start rounded-none border-b bg-transparent p-0 h-auto", className)}>
-      {children}
+      {children as any}
     </TabsList>
   )
 }
@@ -37,7 +37,7 @@ export function DocTabsTrigger({ value, children }: { value: string; children: R
       value={value}
       className="relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-medium text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
     >
-      {children}
+      {children as any}
     </TabsTrigger>
   )
 }
@@ -45,7 +45,7 @@ export function DocTabsTrigger({ value, children }: { value: string; children: R
 export function DocTabsContent({ value, children }: { value: string; children: React.ReactNode }) {
   return (
     <TabsContent value={value} className="mt-4">
-      {children}
+      {children as any}
     </TabsContent>
   )
 }

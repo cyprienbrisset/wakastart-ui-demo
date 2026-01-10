@@ -56,6 +56,28 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  // New blocks
+  DashboardKPI,
+  defaultKPIMetrics,
+  defaultGoals,
+  CheckoutFlow,
+  defaultCartItems,
+  defaultShippingMethods,
+  defaultPaymentMethods,
+  PlayerProfile,
+  defaultPlayerStats,
+  defaultAchievements,
+  defaultBadges,
+  defaultMatchHistory,
+  Auth2FA,
+  ChatInterface,
+  defaultChatInterfaceUsers,
+  defaultChatInterfaceConversations,
+  defaultChatInterfaceMessages,
+  DeploymentDashboard,
+  defaultDeployments,
+  defaultPipelines,
+  defaultEnvironments,
 } from "@wakastellar/ui"
 import { Home, Users, Settings, FileText, Bell, Shield, CreditCard, Mail, Calendar, DollarSign, ShoppingCart, Activity, Folder, ChevronRight, Twitter, Github, Plus, Search, Upload, Zap, Globe } from "lucide-react"
 
@@ -1692,6 +1714,130 @@ export function I18nEditorPreview() {
   )
 }
 
+// Dashboard KPI Preview
+export function DashboardKPIPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4">
+        <DashboardKPI
+          metrics={defaultKPIMetrics}
+          goals={defaultGoals}
+          onPeriodChange={(period) => console.log("Period:", period)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Checkout Flow Preview
+export function CheckoutFlowPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4">
+        <CheckoutFlow
+          items={defaultCartItems}
+          shippingMethods={defaultShippingMethods}
+          paymentMethods={defaultPaymentMethods}
+          onApplyCoupon={async (code) => { console.log("Coupon:", code); return { discount: 10, type: "percent" as const }; }}
+          onSubmitOrder={async (data) => console.log("Order:", data)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Player Profile Preview
+export function PlayerProfilePreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4">
+        <PlayerProfile
+          name="Alex Storm"
+          title="Veteran Player"
+          level={42}
+          currentXP={8750}
+          maxXP={10000}
+          totalXP={125000}
+          rank="Diamond"
+          streak={7}
+          joinDate={new Date("2023-01-15")}
+          isOnline
+          stats={defaultPlayerStats}
+          achievements={defaultAchievements}
+          badges={defaultBadges}
+          matchHistory={defaultMatchHistory}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Auth 2FA Preview
+export function Auth2FAPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4">
+        <Auth2FA
+          status={{ enabled: false }}
+          availableMethods={["authenticator", "sms", "email"]}
+          qrCodeUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+          secretKey="JBSWY3DPEHPK3PXP"
+          backupCodes={[
+            { code: "ABC123", used: false },
+            { code: "DEF456", used: true },
+            { code: "GHI789", used: false },
+          ]}
+          onEnable={async (method, code) => { console.log("Enable:", method, code); return true; }}
+          onDisable={async (code) => { console.log("Disable:", code); return true; }}
+          onRegenerateBackupCodes={async () => [{ code: "NEW123", used: false }]}
+          onSendCode={async (method) => { console.log("Send code:", method); return true; }}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Chat Interface Preview
+export function ChatInterfacePreview() {
+  const [selectedConv, setSelectedConv] = useState(defaultChatInterfaceConversations[0])
+
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="h-[500px]">
+        <ChatInterface
+          currentUser={defaultChatInterfaceUsers[0]}
+          conversations={defaultChatInterfaceConversations}
+          messages={defaultChatInterfaceMessages}
+          selectedConversation={selectedConv}
+          onSelectConversation={(conv) => setSelectedConv(conv)}
+          onSendMessage={(content) => console.log("Send:", content)}
+          showSidebar
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Deployment Dashboard Preview
+export function DeploymentDashboardPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4">
+        <DeploymentDashboard
+          deployments={defaultDeployments}
+          pipelines={defaultPipelines}
+          environments={defaultEnvironments}
+          branches={["main", "develop", "staging", "feature/new-api"]}
+          onDeploy={(env, branch) => console.log("Deploy:", env, branch)}
+          onRollback={(id) => console.log("Rollback:", id)}
+          onCancel={(id) => console.log("Cancel:", id)}
+          onRetry={(id) => console.log("Retry:", id)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
 // Export preview map
 export const blockPreviews: Record<string, React.ComponentType> = {
   layout: LayoutPreview,
@@ -1718,4 +1864,11 @@ export const blockPreviews: Record<string, React.ComponentType> = {
   "file-manager": FileManagerPreview,
   "theme-creator-block": ThemeCreatorBlockPreview,
   "i18n-editor": I18nEditorPreview,
+  // New blocks
+  "dashboard-kpi": DashboardKPIPreview,
+  "checkout-flow": CheckoutFlowPreview,
+  "player-profile": PlayerProfilePreview,
+  "auth-2fa": Auth2FAPreview,
+  "chat-interface": ChatInterfacePreview,
+  "deployment-dashboard": DeploymentDashboardPreview,
 }
