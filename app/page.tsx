@@ -95,7 +95,7 @@ export default function HomePage() {
       <section className="text-center py-8 sm:py-12 lg:py-20 px-4 sm:px-0">
         <div className="inline-flex items-center rounded-full border px-3 py-1 text-sm mb-4 sm:mb-6 bg-primary/5">
           <span className="text-muted-foreground">Version</span>
-          <span className="ml-2 font-semibold text-primary">2.1.1</span>
+          <span className="ml-2 font-semibold text-primary">2.1.2</span>
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
           @wakastellar/ui
