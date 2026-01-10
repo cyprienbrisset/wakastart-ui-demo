@@ -3,7 +3,7 @@ import { Inter } from "next/font/google"
 import "@wakastellar/ui/styles"
 import "./globals.css"
 import { Providers } from "@/components/providers"
-import { SiteHeader } from "@/components/layout/site-header"
+import { MinimalHeader } from "@/components/layout/minimal-header"
 import { MainContent } from "@/components/layout/main-content"
 import { AppNavigation } from "@/components/layout/app-navigation"
 
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="relative min-h-screen flex flex-col">
-            <SiteHeader />
+            <MinimalHeader />
             <MainContent>{children}</MainContent>
             <AppNavigation />
           </div>

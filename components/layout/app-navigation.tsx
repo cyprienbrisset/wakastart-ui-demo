@@ -2,7 +2,25 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { WakaDock, useTheme } from "@wakastellar/ui"
+import {
+  WakaDock,
+  useTheme,
+  useLanguage,
+  ThemeSelector,
+  LanguageSelector,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@wakastellar/ui"
 import { cn } from "@/lib/utils"
 import {
   Home,
@@ -14,16 +32,147 @@ import {
   Terminal,
   Moon,
   Sun,
+  Search,
+  Globe,
+  Palette,
+  FileText,
+  Layers,
+  Box,
 } from "lucide-react"
+import { components, categories } from "@/config/components"
+import { blocks } from "@/config/blocks"
 
 // Navigation items configuration
 const navItems = [
   { id: "home", label: "Accueil", href: "/", icon: Home },
   { id: "components", label: "Composants", href: "/components", icon: Component },
   { id: "blocks", label: "Blocs", href: "/blocks", icon: Blocks },
-  { id: "docs", label: "Documentation", href: "/docs/installation", icon: BookOpen },
-  { id: "cli", label: "CLI", href: "/docs/cli", icon: Terminal },
+  { id: "docs", label: "Docs", href: "/docs/installation", icon: BookOpen },
 ]
+
+// Command Palette Hook
+function useCommandPalette() {
+  const [open, setOpen] = React.useState(false)
+  const router = useRouter()
+  const { isDarkMode, toggleDarkMode } = useTheme()
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((open) => !open)
+      }
+    }
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
+
+  const runCommand = React.useCallback((command: () => void) => {
+    setOpen(false)
+    command()
+  }, [])
+
+  const componentsByCategory = React.useMemo(() => {
+    return categories.reduce((acc, category) => {
+      const categoryComponents = components.filter((c) => c.category === category)
+      if (categoryComponents.length > 0) {
+        acc[category] = categoryComponents
+      }
+      return acc
+    }, {} as Record<string, typeof components>)
+  }, [])
+
+  return {
+    open,
+    setOpen,
+    router,
+    isDarkMode,
+    toggleDarkMode,
+    runCommand,
+    componentsByCategory,
+  }
+}
+
+// Command Palette Dialog
+function CommandPaletteDialog() {
+  const {
+    open,
+    setOpen,
+    router,
+    isDarkMode,
+    toggleDarkMode,
+    runCommand,
+    componentsByCategory,
+  } = useCommandPalette()
+
+  return (
+    <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandInput placeholder="Rechercher un composant, block, page..." />
+      <CommandList>
+        <CommandEmpty>Aucun résultat trouvé.</CommandEmpty>
+
+        <CommandGroup heading="Navigation">
+          <CommandItem onSelect={() => runCommand(() => router.push("/"))}>
+            <Home className="mr-2 h-4 w-4" />
+            <span>Accueil</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => router.push("/docs"))}>
+            <BookOpen className="mr-2 h-4 w-4" />
+            <span>Documentation</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => router.push("/components"))}>
+            <Layers className="mr-2 h-4 w-4" />
+            <span>Composants</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => router.push("/blocks"))}>
+            <Box className="mr-2 h-4 w-4" />
+            <span>Blocks</span>
+          </CommandItem>
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        <CommandGroup heading="Actions">
+          <CommandItem onSelect={() => runCommand(() => toggleDarkMode())}>
+            {isDarkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+            <span>{isDarkMode ? "Mode clair" : "Mode sombre"}</span>
+            <CommandShortcut>⌘D</CommandShortcut>
+          </CommandItem>
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        <CommandGroup heading="Blocks">
+          {blocks.slice(0, 8).map((block) => (
+            <CommandItem
+              key={block.slug}
+              onSelect={() => runCommand(() => router.push(`/blocks/${block.slug}`))}
+            >
+              <Box className="mr-2 h-4 w-4" />
+              <span>{block.name}</span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        {Object.entries(componentsByCategory).slice(0, 3).map(([category, categoryComponents]) => (
+          <CommandGroup key={category} heading={`${category}`}>
+            {categoryComponents.slice(0, 4).map((component) => (
+              <CommandItem
+                key={component.slug}
+                onSelect={() => runCommand(() => router.push(`/components/${component.slug}`))}
+              >
+                <Layers className="mr-2 h-4 w-4" />
+                <span>{component.name}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        ))}
+      </CommandList>
+    </CommandDialog>
+  )
+}
 
 // Mobile Floating Menu Button
 function MobileFloatingMenu() {
@@ -31,12 +180,15 @@ function MobileFloatingMenu() {
   const pathname = usePathname()
   const router = useRouter()
   const { isDarkMode, toggleDarkMode } = useTheme()
-  const isDark = isDarkMode
+  const { currentLanguage, languages, changeLanguage } = useLanguage()
+  const { setOpen: setCommandOpen } = useCommandPalette()
 
   const handleNavigation = (href: string) => {
     router.push(href)
     setIsOpen(false)
   }
+
+  const currentLang = languages.find((l) => l.code === currentLanguage)
 
   return (
     <>
@@ -76,7 +228,65 @@ function MobileFloatingMenu() {
             : "opacity-0 scale-95 translate-y-4 pointer-events-none"
         )}
       >
-        {/* Theme Toggle */}
+        {/* Search */}
+        <button
+          onClick={() => {
+            setIsOpen(false)
+            // Trigger command palette via keyboard event
+            const event = new KeyboardEvent("keydown", {
+              key: "k",
+              metaKey: true,
+              bubbles: true,
+            })
+            document.dispatchEvent(event)
+          }}
+          className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-xl",
+            "bg-background border shadow-lg",
+            "hover:bg-accent transition-colors"
+          )}
+        >
+          <Search className="h-5 w-5" />
+          <span className="font-medium">Rechercher</span>
+          <kbd className="ml-auto text-xs bg-muted px-1.5 py-0.5 rounded">⌘K</kbd>
+        </button>
+
+        {/* Language */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-xl",
+                "bg-background border shadow-lg",
+                "hover:bg-accent transition-colors"
+              )}
+            >
+              <Globe className="h-5 w-5" />
+              <span className="font-medium">{currentLang?.flagEmoji} {currentLang?.label}</span>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-48 p-2">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => {
+                  changeLanguage(lang.code)
+                  setIsOpen(false)
+                }}
+                className={cn(
+                  "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left",
+                  "hover:bg-accent transition-colors",
+                  currentLanguage === lang.code && "bg-accent"
+                )}
+              >
+                <span>{lang.flagEmoji}</span>
+                <span>{lang.label}</span>
+              </button>
+            ))}
+          </PopoverContent>
+        </Popover>
+
+        {/* Theme */}
         <button
           onClick={() => toggleDarkMode()}
           className={cn(
@@ -85,8 +295,8 @@ function MobileFloatingMenu() {
             "hover:bg-accent transition-colors"
           )}
         >
-          {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          <span className="font-medium">{isDark ? "Mode clair" : "Mode sombre"}</span>
+          {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          <span className="font-medium">{isDarkMode ? "Mode clair" : "Mode sombre"}</span>
         </button>
 
         {/* Separator */}
@@ -129,33 +339,95 @@ function DesktopDock() {
   const pathname = usePathname()
   const router = useRouter()
   const { isDarkMode, toggleDarkMode } = useTheme()
-  const isDark = isDarkMode
+  const { currentLanguage, languages, changeLanguage } = useLanguage()
+  const [langPopoverOpen, setLangPopoverOpen] = React.useState(false)
+  const [themePopoverOpen, setThemePopoverOpen] = React.useState(false)
 
-  const dockItems = navItems.map((item) => {
-    const isActive = pathname === item.href ||
-      (item.href !== "/" && pathname.startsWith(item.href))
-    const Icon = item.icon
+  const currentLang = languages.find((l) => l.code === currentLanguage)
 
-    return {
-      id: item.id,
-      label: item.label,
-      icon: <Icon className="h-6 w-6" />,
-      onClick: () => router.push(item.href),
-      active: isActive,
-    }
-  })
+  const dockItems = [
+    // Search
+    {
+      id: "search",
+      label: "Rechercher (⌘K)",
+      icon: <Search className="h-6 w-6" />,
+      onClick: () => {
+        const event = new KeyboardEvent("keydown", {
+          key: "k",
+          metaKey: true,
+          bubbles: true,
+        })
+        document.dispatchEvent(event)
+      },
+      active: false,
+    },
+    // Navigation
+    ...navItems.map((item) => {
+      const isActive = pathname === item.href ||
+        (item.href !== "/" && pathname.startsWith(item.href))
+      const Icon = item.icon
 
-  // Add theme toggle
-  dockItems.push({
-    id: "theme",
-    label: isDark ? "Mode clair" : "Mode sombre",
-    icon: isDark ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />,
-    onClick: () => toggleDarkMode(),
-    active: false,
-  })
+      return {
+        id: item.id,
+        label: item.label,
+        icon: <Icon className="h-6 w-6" />,
+        onClick: () => router.push(item.href),
+        active: isActive,
+      }
+    }),
+    // Theme toggle
+    {
+      id: "theme",
+      label: isDarkMode ? "Mode clair" : "Mode sombre",
+      icon: isDarkMode ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />,
+      onClick: () => toggleDarkMode(),
+      active: false,
+    },
+    // Language
+    {
+      id: "language",
+      label: `${currentLang?.flagEmoji || "🌐"} ${currentLang?.label || "Langue"}`,
+      icon: <span className="text-xl">{currentLang?.flagEmoji || "🌐"}</span>,
+      onClick: () => setLangPopoverOpen(true),
+      active: false,
+    },
+  ]
 
   return (
     <div className="hidden lg:block">
+      {/* Language Popover */}
+      <Popover open={langPopoverOpen} onOpenChange={setLangPopoverOpen}>
+        <PopoverTrigger asChild>
+          <div className="fixed bottom-20 left-1/2 -translate-x-1/2 pointer-events-none" />
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-48 p-2"
+          side="top"
+          align="center"
+        >
+          <div className="text-sm font-medium text-muted-foreground mb-2 px-2">
+            Langue
+          </div>
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => {
+                changeLanguage(lang.code)
+                setLangPopoverOpen(false)
+              }}
+              className={cn(
+                "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left",
+                "hover:bg-accent transition-colors",
+                currentLanguage === lang.code && "bg-accent"
+              )}
+            >
+              <span>{lang.flagEmoji}</span>
+              <span>{lang.label}</span>
+            </button>
+          ))}
+        </PopoverContent>
+      </Popover>
+
       <WakaDock
         items={dockItems}
         position="bottom"
@@ -174,6 +446,7 @@ function DesktopDock() {
 export function AppNavigation() {
   return (
     <>
+      <CommandPaletteDialog />
       <MobileFloatingMenu />
       <DesktopDock />
     </>
