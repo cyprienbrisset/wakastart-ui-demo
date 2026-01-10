@@ -29,13 +29,11 @@ import {
   BookOpen,
   Menu,
   X,
-  Terminal,
   Moon,
   Sun,
   Search,
   Globe,
   Palette,
-  FileText,
   Layers,
   Box,
 } from "lucide-react"
@@ -338,7 +336,6 @@ function MobileFloatingMenu() {
 function DesktopDock() {
   const pathname = usePathname()
   const router = useRouter()
-  const { isDarkMode, toggleDarkMode } = useTheme()
   const { currentLanguage, languages, changeLanguage } = useLanguage()
   const [langPopoverOpen, setLangPopoverOpen] = React.useState(false)
   const [themePopoverOpen, setThemePopoverOpen] = React.useState(false)
@@ -375,18 +372,18 @@ function DesktopDock() {
         active: isActive,
       }
     }),
-    // Theme toggle
+    // Theme selector
     {
       id: "theme",
-      label: isDarkMode ? "Mode clair" : "Mode sombre",
-      icon: isDarkMode ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />,
-      onClick: () => toggleDarkMode(),
+      label: "Thème",
+      icon: <Palette className="h-6 w-6" />,
+      onClick: () => setThemePopoverOpen(true),
       active: false,
     },
     // Language
     {
       id: "language",
-      label: `${currentLang?.flagEmoji || "🌐"} ${currentLang?.label || "Langue"}`,
+      label: currentLang?.label || "Langue",
       icon: <span className="text-xl">{currentLang?.flagEmoji || "🌐"}</span>,
       onClick: () => setLangPopoverOpen(true),
       active: false,
@@ -395,36 +392,49 @@ function DesktopDock() {
 
   return (
     <div className="hidden lg:block">
-      {/* Language Popover */}
+      {/* Theme Popover */}
+      <Popover open={themePopoverOpen} onOpenChange={setThemePopoverOpen}>
+        <PopoverTrigger asChild>
+          <div className="fixed bottom-20 left-1/2 -translate-x-1/2 pointer-events-none" />
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-56 p-2"
+          side="top"
+          align="center"
+        >
+          <ThemeSelector variant="default" className="w-full" />
+        </PopoverContent>
+      </Popover>
+
+      {/* Language Popover - flags only */}
       <Popover open={langPopoverOpen} onOpenChange={setLangPopoverOpen}>
         <PopoverTrigger asChild>
           <div className="fixed bottom-20 left-1/2 -translate-x-1/2 pointer-events-none" />
         </PopoverTrigger>
         <PopoverContent
-          className="w-48 p-2"
+          className="w-auto p-2"
           side="top"
           align="center"
         >
-          <div className="text-sm font-medium text-muted-foreground mb-2 px-2">
-            Langue
+          <div className="flex gap-1">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => {
+                  changeLanguage(lang.code)
+                  setLangPopoverOpen(false)
+                }}
+                title={lang.label}
+                className={cn(
+                  "flex items-center justify-center w-10 h-10 rounded-lg text-xl",
+                  "hover:bg-accent transition-colors",
+                  currentLanguage === lang.code && "bg-accent ring-2 ring-primary"
+                )}
+              >
+                {lang.flagEmoji}
+              </button>
+            ))}
           </div>
-          {languages.map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => {
-                changeLanguage(lang.code)
-                setLangPopoverOpen(false)
-              }}
-              className={cn(
-                "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left",
-                "hover:bg-accent transition-colors",
-                currentLanguage === lang.code && "bg-accent"
-              )}
-            >
-              <span>{lang.flagEmoji}</span>
-              <span>{lang.label}</span>
-            </button>
-          ))}
         </PopoverContent>
       </Popover>
 
