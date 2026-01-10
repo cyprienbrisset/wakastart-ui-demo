@@ -5,6 +5,7 @@ import "./globals.css"
 import { Providers } from "@/components/providers"
 import { SiteHeader } from "@/components/layout/site-header"
 import { MainContent } from "@/components/layout/main-content"
+import { AppNavigation } from "@/components/layout/app-navigation"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <div className="relative min-h-screen flex flex-col">
             <SiteHeader />
             <MainContent>{children}</MainContent>
+            <AppNavigation />
           </div>
         </Providers>
       </body>
