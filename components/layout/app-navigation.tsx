@@ -336,6 +336,7 @@ function MobileFloatingMenu() {
 function DesktopDock() {
   const pathname = usePathname()
   const router = useRouter()
+  const { isDarkMode, toggleDarkMode } = useTheme()
   const { currentLanguage, languages, changeLanguage } = useLanguage()
   const [langPopoverOpen, setLangPopoverOpen] = React.useState(false)
   const [themePopoverOpen, setThemePopoverOpen] = React.useState(false)
@@ -372,6 +373,14 @@ function DesktopDock() {
         active: isActive,
       }
     }),
+    // Dark/Light toggle
+    {
+      id: "dark-mode",
+      label: isDarkMode ? "Mode clair" : "Mode sombre",
+      icon: isDarkMode ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />,
+      onClick: () => toggleDarkMode(),
+      active: false,
+    },
     // Theme selector
     {
       id: "theme",
