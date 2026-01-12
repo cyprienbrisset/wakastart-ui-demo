@@ -11591,16 +11591,13 @@ export const sidebarShowcase: ComponentShowcaseConfig = {
 />`,
     },
     {
-      title: "Personnalisation des couleurs",
-      description: "Sidebar avec couleurs dynamiques selon le theme",
+      title: "Couleurs adaptatives au thème",
+      description: "Sidebar sans props de couleur - utilise automatiquement le thème actif",
       preview: (
         <div className="border rounded-lg overflow-hidden" style={{ height: 400 }}>
           <WakaSidebar
             position="relative"
             width={240}
-            backgroundColor="hsl(var(--sidebar-background))"
-            activeColor="hsl(var(--primary))"
-            textColor="hsl(var(--sidebar-foreground))"
             logo={{
               title: "THEMED UI",
             }}
@@ -11637,10 +11634,8 @@ export const sidebarShowcase: ComponentShowcaseConfig = {
           />
         </div>
       ),
-      code: `<WakaSidebar
-  backgroundColor="hsl(var(--sidebar-background))"
-  activeColor="hsl(var(--primary))"
-  textColor="hsl(var(--sidebar-foreground))"
+      code: `{/* Sans props de couleur, la sidebar s'adapte au thème */}
+<WakaSidebar
   logo={{ title: "THEMED UI" }}
   menu={[
     { id: "home", label: "Accueil", icon: <Home />, active: true },
