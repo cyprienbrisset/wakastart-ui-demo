@@ -11592,17 +11592,17 @@ export const sidebarShowcase: ComponentShowcaseConfig = {
     },
     {
       title: "Personnalisation des couleurs",
-      description: "Sidebar avec theme de couleurs personnalise",
+      description: "Sidebar avec couleurs dynamiques selon le theme",
       preview: (
         <div className="border rounded-lg overflow-hidden" style={{ height: 400 }}>
           <WakaSidebar
             position="relative"
             width={240}
-            backgroundColor="hsl(262 47% 15%)"
-            activeColor="hsl(262 83% 58%)"
-            textColor="hsl(262 20% 90%)"
+            backgroundColor="hsl(var(--sidebar-background))"
+            activeColor="hsl(var(--primary))"
+            textColor="hsl(var(--sidebar-foreground))"
             logo={{
-              title: "PURPLE UI",
+              title: "THEMED UI",
             }}
             menu={[
               {
@@ -11631,17 +11631,17 @@ export const sidebarShowcase: ComponentShowcaseConfig = {
             userPosition="top"
             user={{
               name: "Admin",
-              email: "admin@purple.ui",
+              email: "admin@themed.ui",
             }}
             showHamburger={false}
           />
         </div>
       ),
       code: `<WakaSidebar
-  backgroundColor="hsl(262 47% 15%)"
-  activeColor="hsl(262 83% 58%)"
-  textColor="hsl(262 20% 90%)"
-  logo={{ title: "PURPLE UI" }}
+  backgroundColor="hsl(var(--sidebar-background))"
+  activeColor="hsl(var(--primary))"
+  textColor="hsl(var(--sidebar-foreground))"
+  logo={{ title: "THEMED UI" }}
   menu={[
     { id: "home", label: "Accueil", icon: <Home />, active: true },
     { id: "products", label: "Produits", icon: <Box /> },
@@ -11651,7 +11651,7 @@ export const sidebarShowcase: ComponentShowcaseConfig = {
   userPosition="top"
   user={{
     name: "Admin",
-    email: "admin@purple.ui",
+    email: "admin@themed.ui",
   }}
 />`,
     },
