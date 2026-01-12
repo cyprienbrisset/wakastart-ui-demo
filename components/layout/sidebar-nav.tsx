@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ScrollArea } from "@wakastellar/ui"
+import { ScrollArea, Badge } from "@wakastellar/ui"
 import { cn } from "@/lib/utils"
 import { navigation } from "@/config/navigation"
 
@@ -17,15 +17,15 @@ export function SidebarNav({ mobile = false, onNavigate }: SidebarNavProps) {
   return (
     <aside
       className={cn(
-        "border-r bg-background",
+        "border-r bg-card text-card-foreground",
         mobile ? "h-full" : "hidden lg:block w-56 xl:w-64 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)]"
       )}
     >
       <ScrollArea className="h-full py-6 px-4">
-        <div className="space-y-6">
+        <nav className="space-y-6">
           {navigation.map((section) => (
             <div key={section.title}>
-              <h4 className="mb-2 px-2 text-sm font-semibold tracking-tight text-foreground">
+              <h4 className="mb-2 px-2 text-sm font-semibold tracking-tight">
                 {section.title}
               </h4>
               <div className="space-y-1">
@@ -35,24 +35,24 @@ export function SidebarNav({ mobile = false, onNavigate }: SidebarNavProps) {
                     href={item.href}
                     onClick={onNavigate}
                     className={cn(
-                      "block rounded-md px-2 py-1.5 text-sm transition-colors",
+                      "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors",
                       pathname === item.href
-                        ? "bg-accent text-accent-foreground font-medium"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                        ? "bg-primary text-primary-foreground font-medium"
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
                     )}
                   >
-                    {item.title}
+                    <span className="truncate">{item.title}</span>
                     {item.isNew && (
-                      <span className="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-xs text-primary">
+                      <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0 h-4">
                         New
-                      </span>
+                      </Badge>
                     )}
                   </Link>
                 ))}
               </div>
             </div>
           ))}
-        </div>
+        </nav>
       </ScrollArea>
     </aside>
   )

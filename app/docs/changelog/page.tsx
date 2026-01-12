@@ -1,8 +1,8 @@
 "use client"
 
 import { Section } from "@/components/docs/section"
-import { Badge } from "@wakastellar/ui"
-import { Tag, GitCommit, Plus, Wrench, AlertTriangle, Sparkles } from "lucide-react"
+import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, WakaTimeline, Separator } from "@wakastellar/ui"
+import { Tag, GitCommit, Plus, Wrench, AlertTriangle, Sparkles, Shield, ShieldCheck } from "lucide-react"
 
 interface ChangelogEntry {
   version: string
@@ -15,6 +15,36 @@ interface ChangelogEntry {
 }
 
 const changelog: ChangelogEntry[] = [
+  {
+    version: "2.3.2",
+    date: "2026-01-12",
+    type: "patch",
+    changes: [
+      { type: "added", description: "Variables CSS --success, --warning, --info pour le theming sémantique" },
+      { type: "changed", description: "15 composants migrés vers CSS variables pour meilleur support dark mode" },
+      { type: "changed", description: "WakaXPBar, WakaLeaderboard, WakaPlayerCard utilisent les tokens de thème" },
+      { type: "changed", description: "WakaHealthPulse, WakaServerRack adaptés aux thèmes personnalisés" },
+      { type: "changed", description: "Charts (RadarScore, QuotaBar, FunnelChart, etc.) supportent les thèmes" },
+      { type: "added", description: "Tests unitaires pour WakaHealthPulse, WakaSuccessExplosion, WakaQuotaBar" },
+      { type: "fixed", description: "Couleurs hardcodées remplacées par hsl(var(--semantic-token))" },
+    ],
+  },
+  {
+    version: "2.3.1",
+    date: "2026-01-12",
+    type: "patch",
+    changes: [
+      { type: "security", description: "Validation des URLs avant navigation (protection contre javascript: XSS)" },
+      { type: "security", description: "Échappement des caractères spéciaux regex dans DataTable highlight (protection ReDoS)" },
+      { type: "security", description: "Mise à jour Storybook vers >=9.1.17 (fix XSS)" },
+      { type: "security", description: "Mise à jour esbuild vers >=0.25.0" },
+      { type: "security", description: "peerDep jspdf mise à jour vers >=4.0.0" },
+      { type: "added", description: "Utilitaires de sécurité : sanitizeUrl, safeNavigate, escapeRegex, escapeHtml" },
+      { type: "added", description: "Documentation SECURITY.md avec guide de sécurité complet" },
+      { type: "added", description: "15 composants Advertising (WakaAdBanner, WakaAdProvider, WakaSponsoredCard, etc.)" },
+      { type: "changed", description: "WakaSpotlight et WakaCommandBar utilisent safeNavigate() pour les URLs" },
+    ],
+  },
   {
     version: "2.3.0",
     date: "2026-01-12",
@@ -294,7 +324,7 @@ export default function ChangelogPage() {
           <h1 className="text-4xl font-bold tracking-tight">Changelog</h1>
           <Badge variant="outline">
             <Tag className="h-3 w-3 mr-1" />
-            v2.3.0
+            v2.3.2
           </Badge>
         </div>
         <p className="text-xl text-muted-foreground">
@@ -356,15 +386,16 @@ export default function ChangelogPage() {
               <p className="text-sm text-muted-foreground mb-4">
                 Suivez les releases sur GitHub pour être notifié des nouvelles versions et fonctionnalités.
               </p>
-              <a
-                href="https://github.com/wakastellar/ui/releases"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-              >
-                <GitCommit className="h-4 w-4" />
-                Voir sur GitHub
-              </a>
+              <Button asChild>
+                <a
+                  href="https://github.com/wakastellar/ui/releases"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <GitCommit className="h-4 w-4 mr-2" />
+                  Voir sur GitHub
+                </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -377,32 +408,38 @@ export default function ChangelogPage() {
         </p>
 
         <div className="space-y-3">
-          <div className="p-4 rounded-lg border">
-            <div className="flex items-center gap-2 mb-2">
+          <Card>
+            <CardHeader className="pb-2">
               <Badge className={versionTypeConfig.major.color}>Major (X.0.0)</Badge>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Changements incompatibles avec les versions précédentes. Migration peut être nécessaire.
-            </p>
-          </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <CardDescription>
+                Changements incompatibles avec les versions précédentes. Migration peut être nécessaire.
+              </CardDescription>
+            </CardContent>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <div className="flex items-center gap-2 mb-2">
+          <Card>
+            <CardHeader className="pb-2">
               <Badge className={versionTypeConfig.minor.color}>Minor (0.X.0)</Badge>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Nouvelles fonctionnalités rétro-compatibles. Mise à jour sans risque.
-            </p>
-          </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <CardDescription>
+                Nouvelles fonctionnalités rétro-compatibles. Mise à jour sans risque.
+              </CardDescription>
+            </CardContent>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <div className="flex items-center gap-2 mb-2">
+          <Card>
+            <CardHeader className="pb-2">
               <Badge className={versionTypeConfig.patch.color}>Patch (0.0.X)</Badge>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Corrections de bugs et petites améliorations. Mise à jour recommandée.
-            </p>
-          </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <CardDescription>
+                Corrections de bugs et petites améliorations. Mise à jour recommandée.
+              </CardDescription>
+            </CardContent>
+          </Card>
         </div>
       </Section>
     </div>

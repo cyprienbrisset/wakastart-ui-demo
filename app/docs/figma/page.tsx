@@ -2,7 +2,7 @@
 
 import { Section } from "@/components/docs/section"
 import { Callout } from "@/components/docs/callout"
-import { Badge } from "@wakastellar/ui"
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from "@wakastellar/ui"
 import { Figma, Download, Layers, Palette, Grid3X3, Copy } from "lucide-react"
 
 export default function FigmaPage() {
@@ -22,34 +22,50 @@ export default function FigmaPage() {
       {/* Overview */}
       <Section id="overview" title="Vue d'ensemble">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Layers className="h-6 w-6 text-purple-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">200+ Composants</p>
-              <p className="text-sm text-muted-foreground">Tous les composants de la librairie</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Palette className="h-6 w-6 text-blue-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Variables de couleurs</p>
-              <p className="text-sm text-muted-foreground">Thèmes light et dark configurables</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Grid3X3 className="h-6 w-6 text-green-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Auto Layout</p>
-              <p className="text-sm text-muted-foreground">Composants responsives et flexibles</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Copy className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Variants</p>
-              <p className="text-sm text-muted-foreground">Toutes les variantes de chaque composant</p>
-            </div>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Layers className="h-6 w-6 text-purple-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">200+ Composants</CardTitle>
+                  <CardDescription>Tous les composants de la librairie</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Palette className="h-6 w-6 text-blue-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Variables de couleurs</CardTitle>
+                  <CardDescription>Thèmes light et dark configurables</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Grid3X3 className="h-6 w-6 text-green-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Auto Layout</CardTitle>
+                  <CardDescription>Composants responsives et flexibles</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Copy className="h-6 w-6 text-orange-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Variants</CardTitle>
+                  <CardDescription>Toutes les variantes de chaque composant</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
         </div>
 
         <Callout type="info" title="En développement">
@@ -70,40 +86,50 @@ export default function FigmaPage() {
       {/* Features */}
       <Section id="features" title="Fonctionnalités">
         <div className="space-y-4">
-          <div className="p-4 rounded-lg border">
-            <h4 className="font-medium mb-2">Composants de base</h4>
-            <p className="text-sm text-muted-foreground">
-              Button, Input, Select, Checkbox, Radio, Switch, Slider, Toggle, Badge, Avatar...
-            </p>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Composants de base</CardTitle>
+              <CardDescription>
+                Button, Input, Select, Checkbox, Radio, Switch, Slider, Toggle, Badge, Avatar...
+              </CardDescription>
+            </CardHeader>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <h4 className="font-medium mb-2">Composants de layout</h4>
-            <p className="text-sm text-muted-foreground">
-              Card, Dialog, Sheet, Tabs, Accordion, Collapsible, Separator...
-            </p>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Composants de layout</CardTitle>
+              <CardDescription>
+                Card, Dialog, Sheet, Tabs, Accordion, Collapsible, Separator...
+              </CardDescription>
+            </CardHeader>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <h4 className="font-medium mb-2">Composants de data</h4>
-            <p className="text-sm text-muted-foreground">
-              Table, DataTable, Charts, Calendar, DatePicker, Progress...
-            </p>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Composants de data</CardTitle>
+              <CardDescription>
+                Table, DataTable, Charts, Calendar, DatePicker, Progress...
+              </CardDescription>
+            </CardHeader>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <h4 className="font-medium mb-2">Composants de navigation</h4>
-            <p className="text-sm text-muted-foreground">
-              Navigation Menu, Breadcrumb, Pagination, Tabs, Command Palette...
-            </p>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Composants de navigation</CardTitle>
+              <CardDescription>
+                Navigation Menu, Breadcrumb, Pagination, Tabs, Command Palette...
+              </CardDescription>
+            </CardHeader>
+          </Card>
 
-          <div className="p-4 rounded-lg border">
-            <h4 className="font-medium mb-2">Composants Waka</h4>
-            <p className="text-sm text-muted-foreground">
-              Gamification, Infrastructure, Analytics, E-commerce, Onboarding...
-            </p>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Composants Waka</CardTitle>
+              <CardDescription>
+                Gamification, Infrastructure, Analytics, E-commerce, Onboarding...
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </Section>
 
@@ -165,23 +191,25 @@ export default function FigmaPage() {
                 dès sa sortie et bénéficier d'un accès anticipé.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a
-                  href="https://github.com/wakastellar/ui"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-                >
-                  <Download className="h-4 w-4" />
-                  S'inscrire à la newsletter
-                </a>
-                <a
-                  href="https://github.com/wakastellar/ui"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium hover:bg-muted transition-colors"
-                >
-                  Suivre sur GitHub
-                </a>
+                <Button asChild>
+                  <a
+                    href="https://github.com/wakastellar/ui"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    S'inscrire à la newsletter
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a
+                    href="https://github.com/wakastellar/ui"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Suivre sur GitHub
+                  </a>
+                </Button>
               </div>
             </div>
           </div>

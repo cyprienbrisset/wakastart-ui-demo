@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@wakastellar/ui"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 
@@ -14,29 +15,34 @@ interface LinkCardProps {
 }
 
 export function LinkCard({ href, title, description, icon, className, external }: LinkCardProps) {
-  const Wrapper = external ? "a" : Link
-
-  return (
-    <Wrapper
-      href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={cn(
-        "group flex flex-col gap-2 rounded-lg border p-4 transition-all hover:bg-muted/50 hover:border-primary/20",
-        className
-      )}
-    >
-      <div className="flex items-center gap-3">
-        {icon && <div className="text-muted-foreground group-hover:text-primary transition-colors">{icon}</div>}
-        <h3 className="font-semibold group-hover:text-primary transition-colors flex items-center gap-2">
-          {title}
-          <ArrowRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-        </h3>
-      </div>
+  const content = (
+    <Card className={cn("group h-full transition-all hover:bg-muted/50 hover:border-primary/20", className)}>
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-3">
+          {icon && <div className="text-muted-foreground group-hover:text-primary transition-colors">{icon}</div>}
+          <CardTitle className="text-base group-hover:text-primary transition-colors flex items-center gap-2">
+            {title}
+            <ArrowRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+          </CardTitle>
+        </div>
+      </CardHeader>
       {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <CardContent className="pt-0">
+          <CardDescription>{description}</CardDescription>
+        </CardContent>
       )}
-    </Wrapper>
+    </Card>
   )
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    )
+  }
+
+  return <Link href={href}>{content}</Link>
 }
 
 interface LinkCardGridProps {

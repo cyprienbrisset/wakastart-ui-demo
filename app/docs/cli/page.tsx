@@ -4,7 +4,7 @@ import { Section } from "@/components/docs/section"
 import { CodeBlock } from "@/components/docs/code-block"
 import { Callout } from "@/components/docs/callout"
 import { PackageManagerTabs } from "@/components/docs/tabs-content"
-import { Badge } from "@wakastellar/ui"
+import { Badge, Card, CardHeader, CardTitle, CardDescription } from "@wakastellar/ui"
 import { Terminal, Zap, Settings, Download, Search, List } from "lucide-react"
 
 export default function CLIPage() {
@@ -24,48 +24,72 @@ export default function CLIPage() {
       {/* Overview */}
       <Section id="overview" title="Vue d'ensemble">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Zap className="h-6 w-6 text-yellow-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Initialisation rapide</p>
-              <p className="text-sm text-muted-foreground">Configurez votre projet en une commande</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Download className="h-6 w-6 text-blue-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Ajout de composants</p>
-              <p className="text-sm text-muted-foreground">Ajoutez des composants individuellement</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <List className="h-6 w-6 text-purple-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Liste des composants</p>
-              <p className="text-sm text-muted-foreground">Explorez les 200+ composants disponibles</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Search className="h-6 w-6 text-green-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Recherche</p>
-              <p className="text-sm text-muted-foreground">Trouvez des composants par nom ou description</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Settings className="h-6 w-6 text-muted-foreground shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Configuration</p>
-              <p className="text-sm text-muted-foreground">Personnalisez via components.json</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-lg border">
-            <Terminal className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
-            <div>
-              <p className="font-medium">Interactif</p>
-              <p className="text-sm text-muted-foreground">Prompts pour guider la configuration</p>
-            </div>
-          </div>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Zap className="h-6 w-6 text-yellow-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Initialisation rapide</CardTitle>
+                  <CardDescription>Configurez votre projet en une commande</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Download className="h-6 w-6 text-blue-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Ajout de composants</CardTitle>
+                  <CardDescription>Ajoutez des composants individuellement</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <List className="h-6 w-6 text-purple-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Liste des composants</CardTitle>
+                  <CardDescription>Explorez les 200+ composants disponibles</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Search className="h-6 w-6 text-green-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Recherche</CardTitle>
+                  <CardDescription>Trouvez des composants par nom ou description</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Settings className="h-6 w-6 text-muted-foreground shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Configuration</CardTitle>
+                  <CardDescription>Personnalisez via components.json</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <div className="flex items-start gap-3">
+                <Terminal className="h-6 w-6 text-orange-500 shrink-0" />
+                <div>
+                  <CardTitle className="text-base">Interactif</CardTitle>
+                  <CardDescription>Prompts pour guider la configuration</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
         </div>
       </Section>
 

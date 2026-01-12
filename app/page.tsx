@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@wakastellar/ui"
-import { ArrowRight, Palette, Globe, Table, BarChart3, Accessibility, Zap, Blocks, Component, Gamepad2, ShieldCheck, MessageSquare, TrendingUp } from "lucide-react"
+import { ArrowRight, Palette, Globe, Table, BarChart3, Accessibility, Zap, Blocks, Component, Gamepad2, ShieldCheck, MessageSquare, TrendingUp, Megaphone } from "lucide-react"
 
 const features = [
   {
@@ -86,6 +86,14 @@ const categories = [
     href: "/components",
     color: "text-cyan-500",
   },
+  {
+    icon: Megaphone,
+    title: "Publicite",
+    count: 15,
+    description: "Banners, Video ads, Native ads, Sponsoring",
+    href: "/components",
+    color: "text-yellow-500",
+  },
 ]
 
 export default function HomePage() {
@@ -95,7 +103,7 @@ export default function HomePage() {
       <section className="text-center py-8 sm:py-12 lg:py-20 px-4 sm:px-0">
         <div className="inline-flex items-center rounded-full border px-3 py-1 text-sm mb-4 sm:mb-6 bg-primary/5">
           <span className="text-muted-foreground">Version</span>
-          <span className="ml-2 font-semibold text-primary">2.3.0</span>
+          <span className="ml-2 font-semibold text-primary">2.3.1</span>
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
           @wakastellar/ui
@@ -108,7 +116,7 @@ export default function HomePage() {
         {/* Stats */}
         <div className="flex justify-center gap-4 sm:gap-8 mb-8 sm:mb-10">
           <div className="text-center">
-            <div className="text-2xl sm:text-4xl font-bold text-primary">218</div>
+            <div className="text-2xl sm:text-4xl font-bold text-primary">233</div>
             <div className="text-xs sm:text-sm text-muted-foreground">Composants</div>
           </div>
           <div className="text-center">

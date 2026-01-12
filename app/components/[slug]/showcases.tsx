@@ -3,6 +3,7 @@
 import * as React from "react"
 import { ReactNode } from "react"
 import { devopsShowcases } from "./showcases/devops"
+import { advertisingShowcases } from "./showcases/advertising"
 import {
   Button,
   Input,
@@ -12560,4 +12561,6 @@ export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
   "region-map": regionMapShowcase,
   // DevOps components (new)
   ...devopsShowcases,
+  // Advertising components
+  ...advertisingShowcases,
 }

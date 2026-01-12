@@ -3430,6 +3430,217 @@ export const components: ComponentDefinition[] = [
       { name: "showRows", type: "boolean", default: "true", description: "Afficher les estimations de lignes" },
     ],
   },
+
+  // ==================== Advertising - Display ====================
+  {
+    name: "WakaAdProvider",
+    slug: "ad-provider",
+    description: "Provider de contexte pour la configuration des publicités.",
+    category: "Advertising",
+    importPath: "WakaAdProvider, useAdContext, useAdVisibility, useAdConsent, useAdSlot, AD_SIZES",
+    props: [
+      { name: "config", type: "AdConfig", required: true, description: "Configuration globale des publicités" },
+      { name: "onEvent", type: "(event: AdEvent) => void", description: "Callback pour les événements publicitaires" },
+      { name: "children", type: "ReactNode", required: true, description: "Contenu de l'application" },
+    ],
+  },
+  {
+    name: "WakaAdBanner",
+    slug: "ad-banner",
+    description: "Bannière publicitaire standard (leaderboard, rectangle, skyscraper).",
+    category: "Advertising",
+    importPath: "WakaAdBanner",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "size", type: "AdSize", default: '"rectangle"', description: "Taille de la bannière" },
+      { name: "lazy", type: "boolean", default: "true", description: "Chargement différé" },
+      { name: "refreshInterval", type: "number", default: "0", description: "Intervalle de rafraîchissement (secondes)" },
+      { name: "showBadge", type: "boolean", default: "true", description: "Afficher le badge Sponsored" },
+    ],
+  },
+  {
+    name: "WakaAdSidebar",
+    slug: "ad-sidebar",
+    description: "Publicité sticky dans la sidebar.",
+    category: "Advertising",
+    importPath: "WakaAdSidebar",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "sticky", type: "boolean", default: "true", description: "Rester visible au scroll" },
+      { name: "stickyOffset", type: "number", default: "20", description: "Offset depuis le haut (px)" },
+      { name: "showRelated", type: "boolean", default: "false", description: "Afficher le contenu connexe" },
+    ],
+  },
+  {
+    name: "WakaAdInline",
+    slug: "ad-inline",
+    description: "Publicité intégrée dans le contenu.",
+    category: "Advertising",
+    importPath: "WakaAdInline",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "position", type: '"left" | "center" | "right"', default: '"center"', description: "Position horizontale" },
+      { name: "margin", type: '"none" | "sm" | "md" | "lg"', default: '"md"', description: "Marge autour de la publicité" },
+      { name: "maxWidth", type: "number", description: "Largeur maximale (px)" },
+    ],
+  },
+  {
+    name: "WakaAdInterstitial",
+    slug: "ad-interstitial",
+    description: "Publicité interstitielle plein écran.",
+    category: "Advertising",
+    importPath: "WakaAdInterstitial",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "open", type: "boolean", required: true, description: "Contrôle l'affichage" },
+      { name: "onClose", type: "() => void", required: true, description: "Callback de fermeture" },
+      { name: "closeAfter", type: "number", default: "5", description: "Délai avant fermeture possible (secondes)" },
+      { name: "showSkipCountdown", type: "boolean", default: "true", description: "Afficher le compte à rebours" },
+    ],
+  },
+  {
+    name: "WakaAdStickyFooter",
+    slug: "ad-sticky-footer",
+    description: "Bannière publicitaire fixée en bas de l'écran.",
+    category: "Advertising",
+    importPath: "WakaAdStickyFooter",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "dismissable", type: "boolean", default: "true", description: "Peut être fermée" },
+      { name: "showCloseAfter", type: "number", default: "0", description: "Délai avant affichage du bouton fermer" },
+      { name: "animation", type: '"slide" | "fade" | "none"', default: '"slide"', description: "Animation d'entrée" },
+      { name: "safeAreaPadding", type: "boolean", default: "true", description: "Padding pour safe area mobile" },
+    ],
+  },
+
+  // ==================== Advertising - Native ====================
+  {
+    name: "WakaSponsoredCard",
+    slug: "sponsored-card",
+    description: "Carte de contenu sponsorisé native.",
+    category: "Advertising",
+    importPath: "WakaSponsoredCard",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "variant", type: '"article" | "product" | "compact" | "horizontal"', default: '"article"', description: "Style de la carte" },
+      { name: "showBadge", type: "boolean", default: "true", description: "Afficher le badge Sponsored" },
+      { name: "aspectRatio", type: '"video" | "square" | "wide"', default: '"video"', description: "Ratio de l'image" },
+    ],
+  },
+  {
+    name: "WakaSponsoredFeed",
+    slug: "sponsored-feed",
+    description: "Feed de contenu avec publicités natives intégrées.",
+    category: "Advertising",
+    importPath: "WakaSponsoredFeed",
+    props: [
+      { name: "items", type: "FeedItem[]", required: true, description: "Items du feed" },
+      { name: "adSlotIds", type: "string[]", required: true, description: "IDs des slots publicitaires" },
+      { name: "adFrequency", type: "number", default: "5", description: "Fréquence des publicités (tous les N items)" },
+      { name: "renderItem", type: "(item: FeedItem) => ReactNode", required: true, description: "Rendu d'un item" },
+    ],
+  },
+  {
+    name: "WakaContentRecommendation",
+    slug: "content-recommendation",
+    description: "Widget de recommandations de contenu sponsorisé (style Taboola/Outbrain).",
+    category: "Advertising",
+    importPath: "WakaContentRecommendation",
+    props: [
+      { name: "title", type: "string", default: '"You May Also Like"', description: "Titre du widget" },
+      { name: "slotIds", type: "string[]", required: true, description: "IDs des slots" },
+      { name: "layout", type: '"grid" | "carousel" | "list"', default: '"grid"', description: "Mise en page" },
+      { name: "columns", type: "2 | 3 | 4", default: "3", description: "Nombre de colonnes (grid)" },
+      { name: "autoScroll", type: "boolean", default: "false", description: "Défilement auto (carousel)" },
+    ],
+  },
+
+  // ==================== Advertising - Video ====================
+  {
+    name: "WakaVideoAd",
+    slug: "video-ad",
+    description: "Lecteur de publicité vidéo avec contrôles.",
+    category: "Advertising",
+    importPath: "WakaVideoAd",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "autoPlay", type: "boolean", default: "true", description: "Lecture automatique" },
+      { name: "muted", type: "boolean", default: "true", description: "Son coupé par défaut" },
+      { name: "skipAfter", type: "number", default: "5", description: "Délai avant skip possible (secondes)" },
+      { name: "showControls", type: "boolean", default: "true", description: "Afficher les contrôles" },
+      { name: "onComplete", type: "() => void", description: "Callback fin de vidéo" },
+      { name: "onSkip", type: "() => void", description: "Callback skip" },
+    ],
+  },
+  {
+    name: "WakaOutstreamVideo",
+    slug: "outstream-video",
+    description: "Publicité vidéo outstream (s'affiche dans le contenu).",
+    category: "Advertising",
+    importPath: "WakaOutstreamVideo",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "triggerPoint", type: "number", default: "0.5", description: "Point de déclenchement (0-1)" },
+      { name: "pauseOnScroll", type: "boolean", default: "true", description: "Pause au scroll hors vue" },
+      { name: "collapseOnComplete", type: "boolean", default: "true", description: "Réduire après lecture" },
+      { name: "stickyOnScroll", type: "boolean", default: "false", description: "Rester visible au scroll" },
+    ],
+  },
+  {
+    name: "WakaVideoOverlay",
+    slug: "video-overlay",
+    description: "Overlay publicitaire sur une vidéo.",
+    category: "Advertising",
+    importPath: "WakaVideoOverlay",
+    props: [
+      { name: "slotId", type: "string", required: true, description: "ID du slot publicitaire" },
+      { name: "visible", type: "boolean", default: "true", description: "Contrôle la visibilité" },
+      { name: "position", type: '"bottom" | "top" | "corner"', default: '"bottom"', description: "Position de l'overlay" },
+      { name: "dismissable", type: "boolean", default: "true", description: "Peut être fermé" },
+      { name: "hideAfter", type: "number", default: "0", description: "Auto-masquage (secondes, 0 = manuel)" },
+    ],
+  },
+
+  // ==================== Advertising - Utilities ====================
+  {
+    name: "WakaAdPlaceholder",
+    slug: "ad-placeholder",
+    description: "Placeholder de chargement pour les publicités.",
+    category: "Advertising",
+    importPath: "WakaAdPlaceholder",
+    props: [
+      { name: "size", type: "AdSize", default: '"rectangle"', description: "Taille du placeholder" },
+      { name: "animated", type: "boolean", default: "true", description: "Animation de chargement" },
+      { name: "showLabel", type: "boolean", default: "true", description: "Afficher le label" },
+    ],
+  },
+  {
+    name: "WakaAdFallback",
+    slug: "ad-fallback",
+    description: "Contenu de secours quand aucune publicité n'est disponible.",
+    category: "Advertising",
+    importPath: "WakaAdFallback",
+    props: [
+      { name: "variant", type: '"house" | "empty" | "custom"', default: '"house"', description: "Type de fallback" },
+      { name: "title", type: "string", description: "Titre personnalisé" },
+      { name: "description", type: "string", description: "Description personnalisée" },
+      { name: "ctaText", type: "string", description: "Texte du CTA" },
+      { name: "ctaUrl", type: "string", description: "URL du CTA" },
+    ],
+  },
+  {
+    name: "WakaSponsoredBadge",
+    slug: "sponsored-badge",
+    description: "Badge indicateur de contenu sponsorisé.",
+    category: "Advertising",
+    importPath: "WakaSponsoredBadge",
+    props: [
+      { name: "variant", type: '"default" | "subtle" | "dark"', default: '"default"', description: "Style du badge" },
+      { name: "size", type: '"sm" | "md"', default: '"md"', description: "Taille du badge" },
+      { name: "sponsor", type: "string", description: "Nom du sponsor" },
+      { name: "showIcon", type: "boolean", default: "true", description: "Afficher l'icône" },
+    ],
+  },
 ]
 
 export function getComponentBySlug(slug: string): ComponentDefinition | undefined {
@@ -3461,4 +3672,5 @@ export const categories = [
   "Communication",
   "Analytics",
   "DevOps",
+  "Advertising",
 ]
