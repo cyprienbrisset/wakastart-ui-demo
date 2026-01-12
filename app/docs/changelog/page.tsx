@@ -16,6 +16,25 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.3.4",
+    date: "2026-01-12",
+    type: "patch",
+    changes: [
+      { type: "added", description: "Variables CSS --sidebar-* pour le theming de la sidebar" },
+      { type: "changed", description: "WakaSidebar utilise --muted-foreground comme couleur de texte par défaut" },
+      { type: "fixed", description: "Couleurs de texte de la sidebar adaptées au thème actif" },
+    ],
+  },
+  {
+    version: "2.3.3",
+    date: "2026-01-12",
+    type: "patch",
+    changes: [
+      { type: "added", description: "Variables CSS --sidebar-background, --sidebar-foreground dans tous les thèmes" },
+      { type: "changed", description: "Sidebar supporte les thèmes personnalisés (forest, twilight, sunset, etc.)" },
+    ],
+  },
+  {
     version: "2.3.2",
     date: "2026-01-12",
     type: "patch",
@@ -324,7 +343,7 @@ export default function ChangelogPage() {
           <h1 className="text-4xl font-bold tracking-tight">Changelog</h1>
           <Badge variant="outline">
             <Tag className="h-3 w-3 mr-1" />
-            v2.3.2
+            v2.3.4
           </Badge>
         </div>
         <p className="text-xl text-muted-foreground">
