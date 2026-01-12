@@ -16,8 +16,57 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
-    version: "1.0.12",
-    date: "2024-01-08",
+    version: "2.3.0",
+    date: "2026-01-12",
+    type: "minor",
+    changes: [
+      { type: "fixed", description: "Correction des previews de composants avec overflow" },
+      { type: "fixed", description: "Scrollbar visible dans les composants avec ScrollArea" },
+      { type: "fixed", description: "Props incorrectes dans les blocks DevOps (IncidentManager, CICDBuilder, etc.)" },
+      { type: "changed", description: "Amélioration du ComponentShowcase avec max-height et scroll" },
+    ],
+  },
+  {
+    version: "2.2.0",
+    date: "2026-01-10",
+    type: "minor",
+    changes: [
+      { type: "added", description: "19 nouveaux composants DevOps (Monitoring, Kubernetes, CI/CD, Configuration, Database)" },
+      { type: "added", description: "WakaLogViewer - Visualiseur de logs temps réel avec filtrage et recherche" },
+      { type: "added", description: "WakaTraceViewer - Visualisation des traces distribuées" },
+      { type: "added", description: "WakaAlertPanel - Panneau de gestion des alertes" },
+      { type: "added", description: "WakaContainerList - Gestion des conteneurs Docker" },
+      { type: "added", description: "WakaKubernetesOverview - Vue d'ensemble cluster K8s" },
+      { type: "added", description: "WakaPodCard - Carte détaillée d'un pod" },
+      { type: "added", description: "WakaServiceGraph - Graphe du maillage de services" },
+      { type: "added", description: "WakaBuildMatrix - Matrice de builds CI/CD" },
+      { type: "added", description: "WakaTestReport - Rapport de tests avec couverture" },
+      { type: "added", description: "WakaArtifactList - Liste des artefacts de build" },
+      { type: "added", description: "WakaSecurityScanResult - Résultats scan de sécurité" },
+      { type: "added", description: "WakaDependencyTree - Arbre des dépendances" },
+      { type: "added", description: "WakaEnvVarEditor - Éditeur de variables d'environnement" },
+      { type: "added", description: "WakaSecretCard - Gestion des secrets" },
+      { type: "added", description: "WakaConfigComparator - Comparateur de configurations" },
+      { type: "added", description: "WakaFeatureFlagRow - Gestion des feature flags" },
+      { type: "added", description: "WakaDatabaseCard - Carte de statut base de données" },
+      { type: "added", description: "WakaMigrationList - Liste des migrations DB" },
+      { type: "added", description: "WakaQueryExplain - Visualisation EXPLAIN SQL" },
+      { type: "added", description: "10 nouveaux blocks DevOps (IncidentManager, InfrastructureMap, CICDBuilder, etc.)" },
+      { type: "added", description: "IncidentManager - Gestion des incidents avec timeline" },
+      { type: "added", description: "InfrastructureMap - Carte de l'infrastructure cloud" },
+      { type: "added", description: "CICDBuilder - Constructeur de pipelines CI/CD" },
+      { type: "added", description: "ReleaseNotes - Gestion des notes de version" },
+      { type: "added", description: "OnCallScheduleBlock - Planification des astreintes" },
+      { type: "added", description: "CloudCostDashboard - Dashboard des coûts cloud" },
+      { type: "added", description: "GitOpsSyncStatus - Statut de synchronisation GitOps" },
+      { type: "added", description: "APMOverview - Vue d'ensemble APM" },
+      { type: "added", description: "ContainerOrchestrator - Orchestration de conteneurs" },
+      { type: "added", description: "DatabaseAdmin - Administration de base de données" },
+    ],
+  },
+  {
+    version: "2.1.2",
+    date: "2026-01-09",
     type: "patch",
     changes: [
       { type: "added", description: "Support Tailwind CSS v4 avec zero-config" },
@@ -29,8 +78,8 @@ const changelog: ChangelogEntry[] = [
     ],
   },
   {
-    version: "1.0.11",
-    date: "2024-01-05",
+    version: "2.1.1",
+    date: "2026-01-08",
     type: "patch",
     changes: [
       { type: "added", description: "70+ nouveaux composants Waka (gamification, infrastructure, etc.)" },
@@ -40,8 +89,112 @@ const changelog: ChangelogEntry[] = [
     ],
   },
   {
+    version: "2.1.0",
+    date: "2026-01-05",
+    type: "minor",
+    changes: [
+      { type: "added", description: "WakaBottomSheet - Sheet mobile-first avec gestes" },
+      { type: "added", description: "WakaHapticButton - Bouton avec retour haptique" },
+      { type: "added", description: "WakaMorphButton - Bouton avec animation de morphing" },
+      { type: "added", description: "WakaPullToRefresh - Pull to refresh mobile" },
+      { type: "added", description: "WakaSwipeCard - Cartes swipeable style Tinder" },
+      { type: "added", description: "30+ composants gamification (XP, achievements, leaderboards)" },
+      { type: "changed", description: "Amélioration des performances de rendu des composants complexes" },
+    ],
+  },
+  {
+    version: "2.0.1",
+    date: "2025-12-28",
+    type: "patch",
+    changes: [
+      { type: "fixed", description: "Correction des imports circulaires dans les composants Waka" },
+      { type: "fixed", description: "WakaKanban - Correction du z-index des cartes en drag" },
+      { type: "fixed", description: "WakaTimeline - Alignement des connecteurs sur mobile" },
+    ],
+  },
+  {
+    version: "2.0.0",
+    date: "2025-12-20",
+    type: "major",
+    changes: [
+      { type: "added", description: "Nouvelle architecture modulaire avec tree-shaking optimisé" },
+      { type: "added", description: "6 nouveaux blocks (Auth2FA, ChatInterface, CheckoutFlow, etc.)" },
+      { type: "added", description: "WakaAdmincrumb - Fil d'ariane pour interfaces admin" },
+      { type: "changed", description: "Migration vers React 19 et Next.js 15" },
+      { type: "changed", description: "Refonte complète du système de theming" },
+      { type: "changed", description: "API unifiée pour tous les composants de formulaire" },
+      { type: "deprecated", description: "Anciens hooks useTheme v1 (utiliser useTheme v2)" },
+      { type: "removed", description: "Support de React 17" },
+    ],
+  },
+  {
+    version: "1.2.0",
+    date: "2025-11-15",
+    type: "minor",
+    changes: [
+      { type: "added", description: "WakaCommandBar - Palette de commandes style VS Code" },
+      { type: "added", description: "WakaSpotlight - Recherche globale avec raccourcis" },
+      { type: "added", description: "WakaDock - Dock macOS-style pour navigation" },
+      { type: "added", description: "Support des animations Framer Motion v11" },
+      { type: "changed", description: "Amélioration de l'accessibilité (WCAG 2.1 AA)" },
+    ],
+  },
+  {
+    version: "1.1.2",
+    date: "2025-10-28",
+    type: "patch",
+    changes: [
+      { type: "fixed", description: "DataTableAdvanced - Correction du tri multi-colonnes" },
+      { type: "fixed", description: "WakaModal - Focus trap sur les modales imbriquées" },
+      { type: "fixed", description: "Correction des styles CSS pour Safari 17" },
+    ],
+  },
+  {
+    version: "1.1.1",
+    date: "2025-10-15",
+    type: "patch",
+    changes: [
+      { type: "fixed", description: "WakaCarousel - Correction du swipe sur iOS" },
+      { type: "fixed", description: "ThemeProvider - SSR hydration mismatch" },
+      { type: "changed", description: "Optimisation du bundle size (-15%)" },
+    ],
+  },
+  {
+    version: "1.1.0",
+    date: "2025-10-01",
+    type: "minor",
+    changes: [
+      { type: "added", description: "WakaKanban - Board Kanban avec drag & drop" },
+      { type: "added", description: "WakaTimeline - Composant timeline interactif" },
+      { type: "added", description: "WakaStat - Cartes de statistiques animées" },
+      { type: "added", description: "WakaVirtualList - Liste virtualisée haute performance" },
+      { type: "added", description: "Support de pnpm et bun comme gestionnaires de paquets" },
+      { type: "changed", description: "Migration vers Radix UI v2" },
+    ],
+  },
+  {
+    version: "1.0.12",
+    date: "2025-09-15",
+    type: "patch",
+    changes: [
+      { type: "fixed", description: "WakaTree - Expansion des nœuds avec clavier" },
+      { type: "fixed", description: "WakaCombobox - Recherche avec caractères spéciaux" },
+      { type: "security", description: "Mise à jour de dépendances (CVE-2025-XXXX)" },
+    ],
+  },
+  {
+    version: "1.0.11",
+    date: "2025-08-28",
+    type: "patch",
+    changes: [
+      { type: "fixed", description: "WakaNumberInput - Gestion des valeurs décimales" },
+      { type: "fixed", description: "WakaDateRangePicker - Sélection sur fuseaux horaires" },
+      { type: "changed", description: "Amélioration des messages d'erreur TypeScript" },
+    ],
+  },
+  {
     version: "1.0.10",
-    date: "2024-01-02",
+    date: "2025-08-15",
     type: "minor",
     changes: [
       { type: "added", description: "WakaDateTimePicker - Sélecteur date/heure complet" },
@@ -141,7 +294,7 @@ export default function ChangelogPage() {
           <h1 className="text-4xl font-bold tracking-tight">Changelog</h1>
           <Badge variant="outline">
             <Tag className="h-3 w-3 mr-1" />
-            v1.0.12
+            v2.3.0
           </Badge>
         </div>
         <p className="text-xl text-muted-foreground">

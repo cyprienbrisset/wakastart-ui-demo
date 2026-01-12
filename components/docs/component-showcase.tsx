@@ -175,11 +175,11 @@ export function ComponentShowcase({
                 {/* Preview Content */}
                 <div
                   className={cn(
-                    "flex items-center justify-center p-8 min-h-[200px] transition-colors",
+                    "flex items-center justify-center p-8 min-h-[200px] transition-colors overflow-hidden",
                     isDarkPreview ? "bg-zinc-950 dark" : "bg-background"
                   )}
                 >
-                  <div className={cn("w-full", isDarkPreview ? "dark" : "")}>
+                  <div className={cn("w-full max-h-[600px] overflow-auto", isDarkPreview ? "dark" : "")}>
                     {example.preview}
                   </div>
                 </div>

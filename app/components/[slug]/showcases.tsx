@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { ReactNode } from "react"
+import { devopsShowcases } from "./showcases/devops"
 import {
   Button,
   Input,
@@ -12557,4 +12558,6 @@ export const componentShowcases: Record<string, ComponentShowcaseConfig> = {
   "pipeline-view": pipelineViewShowcase,
   "rollback-slider": rollbackSliderShowcase,
   "region-map": regionMapShowcase,
+  // DevOps components (new)
+  ...devopsShowcases,
 }

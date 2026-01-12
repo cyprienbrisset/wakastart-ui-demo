@@ -78,6 +78,30 @@ import {
   defaultDeployments,
   defaultPipelines,
   defaultEnvironments,
+  // New DevOps blocks
+  IncidentManager,
+  defaultIncidents,
+  InfrastructureMap,
+  defaultInfraResources,
+  CICDBuilder,
+  defaultPipeline,
+  ReleaseNotes,
+  defaultReleases,
+  OnCallScheduleBlock,
+  defaultOnCallSchedule,
+  CloudCostDashboard,
+  defaultCloudCostSummary,
+  defaultCloudCostItems,
+  defaultCostAnomalies,
+  GitOpsSyncStatus,
+  defaultGitOpsApplications,
+  APMOverview,
+  defaultAPMServices,
+  defaultAPMTransactions,
+  ContainerOrchestrator,
+  defaultOrchestratorServices,
+  DatabaseAdmin,
+  defaultDatabaseInstance,
 } from "@wakastellar/ui"
 import { Home, Users, Settings, FileText, Bell, Shield, CreditCard, Mail, Calendar, DollarSign, ShoppingCart, Activity, Folder, ChevronRight, Twitter, Github, Plus, Search, Upload, Zap, Globe } from "lucide-react"
 
@@ -1838,6 +1862,170 @@ export function DeploymentDashboardPreview() {
   )
 }
 
+// Incident Manager Preview
+export function IncidentManagerPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <IncidentManager
+          incidents={defaultIncidents}
+          onCreateIncident={() => console.log("Create incident")}
+          onAcknowledge={(incident) => console.log("Acknowledge:", incident.id)}
+          onResolve={(incident) => console.log("Resolve:", incident.id)}
+          onEscalate={(incident) => console.log("Escalate:", incident.id)}
+          onAssign={(incident, responder) => console.log("Assign:", incident.id, responder)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Infrastructure Map Preview
+export function InfrastructureMapPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <InfrastructureMap
+          resources={defaultInfraResources}
+          onResourceClick={(resource) => console.log("Click:", resource)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// CI/CD Builder Preview
+export function CICDBuilderPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <CICDBuilder
+          pipeline={defaultPipeline}
+          onPipelineChange={(pipeline) => console.log("Change:", pipeline)}
+          onSave={() => console.log("Save pipeline")}
+          onRun={() => console.log("Run pipeline")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Release Notes Preview
+export function ReleaseNotesPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <ReleaseNotes
+          releases={defaultReleases}
+          onCreateRelease={() => console.log("Create release")}
+          onEditRelease={(release) => console.log("Edit:", release.id)}
+          onPublishRelease={(release) => console.log("Publish:", release.id)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// On-Call Schedule Preview
+export function OnCallSchedulePreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <OnCallScheduleBlock
+          schedule={defaultOnCallSchedule}
+          onEditSchedule={() => console.log("Edit schedule")}
+          onAddOverride={(date) => console.log("Add override:", date)}
+          onSwapShift={(shift) => console.log("Swap shift:", shift)}
+          onContactOnCall={(user) => console.log("Contact:", user)}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Cloud Cost Dashboard Preview
+export function CloudCostDashboardPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <CloudCostDashboard
+          summary={defaultCloudCostSummary}
+          items={defaultCloudCostItems}
+          anomalies={defaultCostAnomalies}
+          onExport={() => console.log("Export")}
+          onRefresh={() => console.log("Refresh")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// GitOps Sync Status Preview
+export function GitOpsSyncStatusPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <GitOpsSyncStatus
+          applications={defaultGitOpsApplications}
+          onSync={(app) => console.log("Sync:", app)}
+          onRefresh={() => console.log("Refresh")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// APM Overview Preview
+export function APMOverviewPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <APMOverview
+          services={defaultAPMServices}
+          recentTransactions={defaultAPMTransactions}
+          onServiceClick={(service) => console.log("Service:", service)}
+          onTransactionClick={(tx) => console.log("Transaction:", tx)}
+          onRefresh={() => console.log("Refresh")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Container Orchestrator Preview
+export function ContainerOrchestratorPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <ContainerOrchestrator
+          services={defaultOrchestratorServices}
+          onScaleService={(service, replicas) => console.log("Scale:", service.id, replicas)}
+          onRestartService={(service) => console.log("Restart:", service.id)}
+          onViewLogs={(container) => console.log("Logs:", container.id)}
+          onRefresh={() => console.log("Refresh")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
+// Database Admin Preview
+export function DatabaseAdminPreview() {
+  return (
+    <PreviewWrapper fullWidth>
+      <div className="p-4 h-[600px] overflow-auto">
+        <DatabaseAdmin
+          instance={defaultDatabaseInstance}
+          onCreateBackup={() => console.log("Create backup")}
+          onRestoreBackup={(backup) => console.log("Restore:", backup.id)}
+          onKillConnection={(connection) => console.log("Kill connection:", connection.id)}
+          onRefresh={() => console.log("Refresh")}
+        />
+      </div>
+    </PreviewWrapper>
+  )
+}
+
 // Export preview map
 export const blockPreviews: Record<string, React.ComponentType> = {
   layout: LayoutPreview,
@@ -1871,4 +2059,15 @@ export const blockPreviews: Record<string, React.ComponentType> = {
   "auth-2fa": Auth2FAPreview,
   "chat-interface": ChatInterfacePreview,
   "deployment-dashboard": DeploymentDashboardPreview,
+  // DevOps blocks
+  "incident-manager": IncidentManagerPreview,
+  "infrastructure-map": InfrastructureMapPreview,
+  "cicd-builder": CICDBuilderPreview,
+  "release-notes": ReleaseNotesPreview,
+  "on-call-schedule": OnCallSchedulePreview,
+  "cloud-cost-dashboard": CloudCostDashboardPreview,
+  "gitops-sync-status": GitOpsSyncStatusPreview,
+  "apm-overview": APMOverviewPreview,
+  "container-orchestrator": ContainerOrchestratorPreview,
+  "database-admin": DatabaseAdminPreview,
 }
